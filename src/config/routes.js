@@ -1,16 +1,32 @@
 import pages from '../pages';
 import {
     VIEW_HOME_PATH,
-    VIEW_AUTH_PATH
+    VIEW_AUTH_PATH,
+    VIEW_ADMIN_PATH
 } from './paths';
 
 export const VIEW_HOME = {
-    path: VIEW_HOME_PATH,
-    component: pages.Home,
+    path: '/',
+    layout: (<div>Ceci est un Layout</div>),
     childRoutes: [
-        {path:'/login', component: pages.Authentification, /*isIndex: true*/},
-        {path:'', component: pages.Home, /*isIndex: true*/},
+        {path:'/', component: pages.Home},
+        {path:'/contact', component: pages.Authentification},
+        {path:'/login', component: pages.Authentification},
     ]
 };
 
-export default [VIEW_HOME];
+export const VIEW_ADMIN = {
+    path: '/admin',
+    // layout: pages.Home,
+    childRoutes: [
+        {path:'/', component: pages.Authentification},
+        {path:'/test', component: pages.Authentification},
+    ]
+};
+
+export const ERROR = {
+    path: '*',
+    component: pages.Error404,
+};
+
+export default [VIEW_HOME, VIEW_ADMIN, ERROR];
