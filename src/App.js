@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.scss';
 import AppRoute from './components/AppRoute';
@@ -49,8 +49,26 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Switch>
-          {routes.map(route => (
+        <AppRoute />
+        {/* <Switch>
+          <Route exact path="/login" render={() => <div>Login</div>} /> 
+          <Route exact path={["/", "/contact"]}>
+            <h1>TITLE</h1>
+            <Switch>
+              <Route exact path="/" render={() => <div>Home</div>} />
+              <Route exact path="/contact" render={() => <div>Contact</div>} />
+            </Switch>
+          </Route>    
+          <Route exact path={["/admin", "/admin/test", "/admin/test2"]}>
+            <Switch>
+              <Route exact path="/admin/" render={() => <div>test0 admin</div>} />
+              <Route exact path="/admin/test" render={() => <div>test1 admin</div>} />
+              <Route exact path="/admin/test2" render={() => <div>test2 admin</div>} />
+            </Switch>
+          </Route>
+          <Route exact path="*" render={() => <div>404</div>} /> */}
+          
+          {/* {routes.map(route => (
             <AppRoute 
               key={route.path}
               path={route.path}
@@ -58,7 +76,7 @@ class App extends Component {
               isPrivate={route.isPrivate}
             >
               <Switch>
-                {route.childRoutes.map(child => (
+                {route.childRoutes && route.childRoutes.map(child => (
                   <AppRoute 
                     key={child.path}
                     path={child.path}
@@ -68,8 +86,8 @@ class App extends Component {
                 ))}
               </Switch>
             </AppRoute>
-          ))}
-        </Switch>
+          ))} */}
+        {/* </Switch> */}
       </Router>
     );
   }
