@@ -7,7 +7,7 @@ import {
 
 export const VIEW_HOME = {
     path: '/',
-    layout: (<div>Ceci est un Layout</div>),
+    // layout: (<div>Ceci est un Layout</div>),
     childRoutes: [
         {path:'/', component: pages.Home},
         {path:'/contact', component: pages.Authentification},
