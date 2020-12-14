@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import logo from '../../logo.svg';
-import './Authentification.scss';
 import * as exampleActions from '../../redux/example/actions';
 
 function Authentification() {

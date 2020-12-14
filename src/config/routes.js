@@ -10,6 +10,7 @@ export const VIEW_HOME = {
     // layout: (<div>Ceci est un Layout</div>),
     childRoutes: [
         {path:'/', component: pages.Home},
+        {path:'/player', component: pages.Player},
         {path:'/contact', component: pages.Authentification},
         {path:'/login', component: pages.Authentification},
     ]
