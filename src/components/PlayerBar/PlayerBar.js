@@ -3,10 +3,26 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Image } from 'react-bootstrap';
-import { ArrowRightShort, PlayFill, SkipEndFill, SkipStartFill } from 'react-bootstrap-icons';
+import { ArrowRightShort, PlayFill, PauseFill, SkipEndFill, SkipStartFill, VolumeMuteFill, VolumeUpFill, ThreeDots, ArrowCounterclockwise, ArrowClockwise } from 'react-bootstrap-icons';
 import * as exampleActions from '../../redux/example/actions';
 
 import music from '../../assets/music/charles_ludig_victoire.mp3';
+
+function BtnPlayPause(props){
+  if(props.timebar.played) {
+    return (<PauseFill className="player-bar-btn-play h-100"/>)
+  } else {
+    return(<PlayFill className="player-bar-btn-play h-100"/>)
+  }
+}
+
+function BtnMute(props){
+  if(props.timebar.mute) {
+    return (<VolumeMuteFill className="player-bar-btn-mute h-100"/>)
+  } else {
+    return(<VolumeUpFill className="player-bar-btn-mute h-100"/>)
+  }
+}
 
 export class PlayerBar extends Component {
   static propTypes = {
@@ -23,98 +39,192 @@ export class PlayerBar extends Component {
         'img': 'https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_768/https://blog.snappa.com/wp-content/uploads/2018/06/Podcast-Cover-Art-Size-768x768.jpg',
         'podcast': 'Bagad Heol',
         'title': '#01 - L\'Avenir nous tend les bras',
-        'desc': 'Aujourd\'hui on parle de la Bretagne après Covid mais surtout on découvre les bruits de l\'océan à des fins humoristiques.'
+        'desc': 'Aujourd\'hui on parle de la Bretagne après Covid mais surtout on découvre les bruits de l\'océan à des fins humoristiques.',
       },
-      timebar:{
+      timebar: {
+        audio: new Audio(music),
+
         isMouseDown: false,
+        mousePositionX: null,
         select: document.getElementById('timecode-select'),
         bar: document.getElementById('timecode-bar'),
         pastBar: document.getElementById('timecode-past'),
+        width: null,
+
+        //commande
+        played: false,
+        mute: false,
       }
     };
   }
 
   componentDidMount() {
-    let {isMouseDown, select, bar, pastBar} = this.state.timebar;
-    let audio = new Audio(this.state.podcast.url);
-
-    // let select = document.getElementById('timecode-select');
-    // let bar = document.getElementById('timecode-bar');
-    // let pastBar = document.getElementById('timecode-past');
-    // let width = select.getBoundingClientRect().left - bar.getBoundingClientRect().left + (select.getBoundingClientRect().width / 2); //en PX
-    let width = (select.getBoundingClientRect().left - bar.getBoundingClientRect().left + (select.getBoundingClientRect().width / 2)) / bar.getBoundingClientRect().width * 100;
-    pastBar.style.width = width + '%';
-
-    let isDown = false;
-    let mousePositionX;
-    let offsetX = 0;
-    let limit = [0, bar.getBoundingClientRect().width]; //pour le PX
-    select.addEventListener('mousedown', function(e) {
-      isDown = true;
-      offsetX = select.offsetLeft - e.clientX;
-    }, true);
-  
-    //click timecode
-    bar.addEventListener('mousedown', function(e) {
-      isDown = true;
-      // let leftClicked = e.clientX - bar.getBoundingClientRect().left; //en PX
-      let leftClicked = (e.clientX - bar.getBoundingClientRect().left) / bar.getBoundingClientRect().width * 100;
-      if (leftClicked >= 0 && leftClicked <= 100) {
-        select.style.left = leftClicked + '%';
-        document.getElementById('timecode-past').style.width = leftClicked + '%';
+    
+    this.setState(prevState => ({
+      timebar:{
+        ...prevState.timebar,
+        // audio: new Audio(this.state.podcast.url),
+        select: document.getElementById('timecode-select'),
+        bar: document.getElementById('timecode-bar'),
+        pastBar: document.getElementById('timecode-past'),
       }
-      offsetX = select.offsetLeft - e.clientX;
-    }, true);
+    }));
+    
+    const self = this;
+    let preAudio = self.state.timebar.audio;
+    let duration;
+    preAudio.onloadedmetadata = function() {
+      self.setState(prevState => ({
+        timebar:{
+          ...prevState.timebar,
+          duration: preAudio.duration
+        }
+      }));
+    };
 
     //drag select timecode
     document.addEventListener('mousemove', function(e) {
       e.preventDefault();
-      if (isDown) {
-        mousePositionX = e.clientX;
+      let { audio, isMouseDown, mousePositionX, select, bar, pastBar, offsetX } = self.state.timebar;
+
+      if (isMouseDown) {
+        self.setState(prevState => ({
+          timebar:{
+            ...prevState.timebar,
+            mousePositionX: e.clientX,
+          }
+        }));
         let width = (offsetX + mousePositionX) / bar.getBoundingClientRect().width * 100;
 
         if (width >= 0 && width <= 100) {
           select.style.left = width + '%';
-          document.getElementById('timecode-past').style.width = width + '%';
+          pastBar.style.width = width + '%';
         }
-
-        // if ((mousePositionX + offsetX) >= limit[0] && (mousePositionX + offsetX) <= limit[1]) {
-        //   select.style.left = (mousePositionX + offsetX) + 'px';
-        //   document.getElementById('timecode-past').style.width = (mousePositionX + offsetX) + 'px';
-        // }
       }
     }, true);
 
+    //mouse up
     document.addEventListener('mouseup', function() {
-      if (isDown) {
+      let { audio, isMouseDown, mousePositionX, select, bar, pastBar, offsetX } = self.state.timebar;
+      if (isMouseDown) {
         let width = (pastBar.getBoundingClientRect().width) / bar.getBoundingClientRect().width * 100;
         let time  = (width / 100) *  audio.duration;
-        console.log(document.getElementById('timecode-past').style.width, time, audio.duration);
         audio.currentTime = time;
       }
-      isDown = false;
-      
-      // audio.currentTime = ;
+      self.setState(prevState => ({
+        timebar:{
+          ...prevState.timebar,
+          isMouseDown: false,
+        }
+      }));
     }, true);
+  }
 
-    let played = false;
-    document.getElementById('player-bar-play').addEventListener('click', function() {
-      if (played) {
-        audio.pause();
-        played = false;
-      } else {
-        audio.play();
-        window.setInterval(function(){
-          if (!isDown) {
-            let currentTimeAudio = audio.currentTime / audio.duration * 100;
-            select.style.left = currentTimeAudio + '%';
-            document.getElementById('timecode-past').style.width = currentTimeAudio + '%';
-          }
-        }, 500);
-        
-        played = true;
+  onMouseDownSelect(e) {
+    let { select } = this.state.timebar;
+    this.setState(prevState => ({
+      timebar: {
+        ...prevState.timebar,
+        isMouseDown: true,
+        offsetX: select.offsetLeft - e.clientX,
       }
-    }, true);
+    }));
+  }
+
+  onMouseDownBar(e){
+    let { select, bar, pastBar } = this.state.timebar;
+    this.setState(prevState => ({
+      timebar: {
+        ...prevState.timebar,
+        isMouseDown: true,
+      }
+    }));
+    let leftClicked = (e.clientX - bar.getBoundingClientRect().left) / bar.getBoundingClientRect().width * 100;
+    if (leftClicked >= 0 && leftClicked <= 100) {
+      select.style.left = leftClicked + '%';
+      pastBar.style.width = leftClicked + '%';
+    }
+    this.setState(prevState => ({
+      timebar: {
+        ...prevState.timebar,
+        offsetX: select.offsetLeft - e.clientX,
+      }
+    }));
+  }
+
+  onClickSelectTimeCode(){
+    let { audio, played, select, pastBar } = this.state.timebar;
+    if (played) {
+      audio.pause();
+      this.setState(prevState => ({
+        timebar: {
+          ...prevState.timebar,
+          played: false,
+        }
+      }));
+    } else {
+      audio.play();
+      this.setState(prevState => ({
+        timebar: {
+          ...prevState.timebar,
+          played: true,
+        }
+      }));
+
+      let intervalTimeCode = setInterval(() => {
+        let { isMouseDown } = this.state.timebar;
+        this.setState(prevState => ({
+          timebar: {
+            ...prevState.timebar,
+            currentTime: audio.currentTime,
+          }
+        }));
+        if (!isMouseDown) {
+          let currentTimeAudio = audio.currentTime / audio.duration * 100;
+          select.style.left = currentTimeAudio + '%';
+          pastBar.style.width = currentTimeAudio + '%';
+        }
+      }, 500);
+    }
+  }
+
+  onClickMuteSound(){
+    let { audio, mute } = this.state.timebar;
+    if (mute) {
+      audio.volume = 1;
+      this.setState(prevState => ({
+        timebar: {
+          ...prevState.timebar,
+          mute: false,
+        }
+      }));
+    } else {
+      audio.volume = 0;
+      this.setState(prevState => ({
+        timebar: {
+          ...prevState.timebar,
+          mute: true,
+        }
+      }));
+    }
+  }
+
+  formatTimecode(seconds) {
+    const format = val => `0${Math.floor(val)}`.slice(-2);
+    const hours = seconds / 3600;
+    const minutes = (seconds % 3600) / 60;
+
+  
+    if (!hours || !minutes || !seconds) {
+      return '00:00';
+    }
+
+    if (`0${Math.floor(hours)}`.slice(-2) == 0) {
+      return [minutes, seconds % 60].map(format).join(':');
+    } else {
+      return [hours, minutes, seconds % 60].map(format).join(':');
+    }
+    
   }
 
   handleChange(e) {
@@ -125,9 +235,9 @@ export class PlayerBar extends Component {
     return (
       <div className="player-bar">
         <div className="player-bar-timecode-box w-100">
-          <div id="timecode-bar" className="timecode-bar">
+          <div id="timecode-bar" className="timecode-bar" onMouseDown={(e) => this.onMouseDownBar(e)}>
             <div id="timecode-past" className="timecode-past"></div>
-            <span id="timecode-select" className="timecode-select"></span>
+            <span id="timecode-select" className="timecode-select" onMouseDown={(e) => this.onMouseDownSelect(e)}></span>
           </div>
         </div>
         <Container fluid className="player-bar-container">
@@ -139,19 +249,39 @@ export class PlayerBar extends Component {
             </linearGradient>
           </svg>
           <Row className="h-100">
-            <Col md={4} className="h-100"></Col>
-            <Col md={4} className="h-100 d-flex justify-content-center align-items-center">
-              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box">
-                <SkipStartFill className="player-bar-btn h-100"/>
-              </div>
-              <div id="player-bar-play" className="rounded-circle player-bar-btn-play-box">
-                <PlayFill className="player-bar-btn-play h-100"/>
-              </div>
-              <div id="player-bar-next" className="rounded-circle player-bar-btn-box">
-                <SkipEndFill className="player-bar-btn h-100"/>
+            <Col md={4} className="h-100 player-bar-info d-flex align-items-center" align="left">
+              <div className="player-bar-cover mr-3"></div>
+              <div>
+                <h2>Bagad Heol</h2>
+                <h3 className="mb-2">{this.state.podcast.title}</h3>
+                <span>{this.formatTimecode(this.state.timebar.currentTime)} / {this.formatTimecode(this.state.timebar.duration)}</span>
               </div>
             </Col>
-            <Col md={4} className="h-100"></Col>
+            <Col md={4} className="h-100 d-flex justify-content-center align-items-center">
+              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box">
+                <ArrowCounterclockwise className="player-bar-btn-little-adv h-100"/>
+              </div>
+              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box ml-3">
+                <SkipStartFill className="player-bar-btn h-100"/>
+              </div>
+              <div id="player-bar-play" className="rounded-circle player-bar-btn-play-box" onMouseDown={(e) => this.onClickSelectTimeCode()}>
+                <BtnPlayPause timebar={this.state.timebar}/>
+              </div>
+              <div id="player-bar-next" className="rounded-circle player-bar-btn-box mr-3">
+                <SkipEndFill className="player-bar-btn h-100"/>
+              </div>
+              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box">
+                <ArrowClockwise className="player-bar-btn-little-adv h-100"/>
+              </div>
+            </Col>
+            <Col md={4} className="h-100 d-flex justify-content-end align-items-center" align="right">
+              <div id="player-bar-mute" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickMuteSound()}>
+                <BtnMute timebar={this.state.timebar}/>
+              </div>
+              <div id="player-bar-mute" className="rounded-circle player-bar-btn-box ml-3">
+                <ThreeDots className="player-bar-btn-more h-100"/>
+              </div>
+            </Col>
           </Row>
         </Container>
       </div>

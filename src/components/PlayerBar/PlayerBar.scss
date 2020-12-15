@@ -1,6 +1,7 @@
 .player-bar{
-  height: 7%;
-  background: rgba(245, 245, 245, 0.8);
+  height: 10%;
+  min-height: 100px;
+  background: rgba(235, 235, 235, 0.6);
   width: 100%;
   position: absolute !important;
   bottom: 0;
@@ -18,20 +19,37 @@
       box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.30);
     }
     .player-bar-btn{
-      font-size: 2rem;
+      font-size: 2.6rem;
+      padding: 2px
+      // fill: url(#gradient-heol);
+    }
+    .player-bar-btn-little-adv{
+      font-size: 1.9rem;
+      font-weight: bold;
+      padding: 2px
+      // fill: url(#gradient-heol);
+    }
+    .player-bar-btn-mute{
+      font-size: 2.2rem;
+      padding: 5px
+      // fill: url(#gradient-heol);
+    }
+    .player-bar-btn-more{
+      font-size: 2.2rem;
+      padding: 5px
       // fill: url(#gradient-heol);
     }
   }
   .player-bar-btn-play-box{
     background: whitesmoke;
     border: 1px solid rgba(255, 255, 255, 0.80);
-    margin:0 5px;
+    margin:0 2.5%;
     &:hover{
       cursor: pointer;
       box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.30);
     }
     .player-bar-btn-play{
-      font-size: 3rem;
+      font-size: 3.6rem;
       fill: url(#gradient-heol);
     }
   }
@@ -63,6 +81,11 @@
         // transition: all 0.5s ease; 
       }
     }
+    &:active {
+      .timecode-select{
+        opacity: 1;
+      }
+    }
     &:hover{
       cursor: pointer;
       .timecode-select{
@@ -70,48 +93,21 @@
       }
     }
   }
-
-  .player-bar-timecode{
-    -webkit-appearance: none;
-    background-color: #ddd;
-    height: 10px;
-    overflow: hidden;
-    width: 100%;
-  }
-  .player-bar-timecode::-webkit-slider-runnable-track {
-    -webkit-appearance: none;
-    height: 20px;
-  }
-  .player-bar-timecode::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    background: #333;
-    border-radius: 50%;
-    box-shadow: -210px 0 0 200px red;
-    cursor: pointer;
-    height: 20px;
-    width: 20px;
-    border: 0;
-  }
-  .player-bar-timecode::-moz-range-thumb {
-    background: #333;
-    border-radius: 50%;
-    box-shadow: -1010px 0 0 1000px #666;
-    cursor: pointer;
-    height: 20px;
-    width: 20px;
-    border: 0;
-  }
-  .player-bar-timecode::-moz-range-track {
-    background-color: #ddd;
-  }
-  .player-bar-timecode::-moz-range-progress {
-    background-color: #666;
-    height: 20px
-  }
-  .player-bar-timecode::-ms-fill-upper {
-    background-color: #ddd;
-  }
-  .player-bar-timecode::-ms-fill-lower {
-    background-color: #666;
+  .player-bar-info{
+    .player-bar-cover{
+      background: gray;
+      width: 85px;
+      height: 85px;
+    }
+    h2{
+      font-size: 1.4rem;
+      margin: 0;
+    }
+    h3{
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 0;
+    }
+   
   }
 }
