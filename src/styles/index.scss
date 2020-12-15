@@ -1,2 +1,11 @@
+@import "~bootstrap/scss/bootstrap";
 @import './global';
+
+//Importez vos pages ici
 @import '../pages/Home/Home';
+@import '../pages/Player/Player';
+@import '../pages/Authentification/Authentification';
+@import '../pages/404/404';
+
+//Importez vos components ici
+@import '../components/PlayerBar/PlayerBar'

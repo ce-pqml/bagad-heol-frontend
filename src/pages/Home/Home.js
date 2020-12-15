@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import './Home.scss';
 import * as exampleActions from '../../redux/example/actions';
 
 export class Home extends Component {
@@ -33,14 +32,12 @@ export class Home extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     examples: state.examples,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...exampleActions }, dispatch)
