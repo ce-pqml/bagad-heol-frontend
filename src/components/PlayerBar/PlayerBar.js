@@ -33,18 +33,28 @@ export class PlayerBar extends Component {
     this.state = {
       timebar: {
         isMouseDown: false,
+        isMouseDownOnSound: false,
         mousePositionX: null,
         audio: null,
         currentTime: null,
         duration: null,
+
+        //timebar
         select: document.getElementById('timecode-select'),
         bar: document.getElementById('timecode-bar'),
         pastBar: document.getElementById('timecode-past'),
+
+        //soundbar
+        soundSelect: document.getElementById('sound-select'),
+        soundBar: document.getElementById('sound-bar'),
+        soundPastBar: document.getElementById('sound-past'),
+
         isPausedInterval: false,
 
         //commande
         played: false,
         mute: false,
+        volume: 0.5,
       }
     };
   }
@@ -63,15 +73,31 @@ export class PlayerBar extends Component {
     this.setState(prevState => ({
       timebar:{
         ...prevState.timebar,
+        //timebar
         select: document.getElementById('timecode-select'),
         bar: document.getElementById('timecode-bar'),
         pastBar: document.getElementById('timecode-past'),
+        //soundbar
+        soundSelect: document.getElementById('sound-select'),
+        soundBar: document.getElementById('sound-bar'),
+        soundPastBar: document.getElementById('sound-past'),
       }
     }));
     
     const self = this;
     let preAudio = self.state.timebar.audio;
+
+    let startVolume = self.state.timebar.volume;
+    let widthSoundStart = startVolume * 100;
+    if (widthSoundStart >= 0 && widthSoundStart <= 100) {
+      document.getElementById('sound-select').style.left = widthSoundStart + '%';
+      document.getElementById('sound-past').style.width = widthSoundStart + '%';
+    }
+
     preAudio.onloadedmetadata = function() {
+      if (widthSoundStart >= 0 && widthSoundStart <= 100) {
+        preAudio.volume = startVolume;
+      }
       self.setState(prevState => ({
         timebar:{
           ...prevState.timebar,
@@ -80,10 +106,10 @@ export class PlayerBar extends Component {
       }));
     };
 
-    //drag select timecode
+    //drag select timecode and select volume
     document.addEventListener('mousemove', function(e) {
       e.preventDefault();
-      let { audio, isMouseDown, mousePositionX, select, bar, pastBar, offsetX } = self.state.timebar;
+      let { isMouseDown, isMouseDownOnSound, mousePositionX, select, bar, pastBar, soundSelect, soundBar, soundPastBar, offsetX } = self.state.timebar;
 
       if (isMouseDown) {
         self.setState(prevState => ({
@@ -99,20 +125,54 @@ export class PlayerBar extends Component {
           pastBar.style.width = width + '%';
         }
       }
+
+      if (isMouseDownOnSound) {
+        self.setState(prevState => ({
+          timebar:{
+            ...prevState.timebar,
+            mousePositionX: e.clientX,
+          }
+        }));
+        let widthSound = (offsetX + mousePositionX) / soundBar.getBoundingClientRect().width * 100;
+
+        if (widthSound >= 0 && widthSound <= 100) {
+          soundSelect.style.left = widthSound + '%';
+          soundPastBar.style.width = widthSound + '%';
+          self.setState(prevState => ({
+            timebar:{
+              ...prevState.timebar,
+              mute: false,
+            }
+          }));
+        }
+      }
     }, true);
 
     //mouse up
     document.addEventListener('mouseup', function() {
-      let { audio, isMouseDown, mousePositionX, select, bar, pastBar, offsetX } = self.state.timebar;
+      let { audio, isMouseDown, isMouseDownOnSound, bar, pastBar, soundBar, soundPastBar } = self.state.timebar;
       if (isMouseDown) {
         let width = (pastBar.getBoundingClientRect().width) / bar.getBoundingClientRect().width * 100;
         let time  = (width / 100) *  audio.duration;
         audio.currentTime = time;
       }
+
+      if (isMouseDownOnSound) {
+        let soundWidth = (soundPastBar.getBoundingClientRect().width) / soundBar.getBoundingClientRect().width * 100;
+        let volume = soundWidth / 100;
+        audio.volume = volume;
+        self.setState(prevState => ({
+          timebar:{
+            ...prevState.timebar,
+            volume: volume
+          }
+        }));
+      }
       self.setState(prevState => ({
         timebar:{
           ...prevState.timebar,
           isMouseDown: false,
+          isMouseDownOnSound: false,
         }
       }));
     }, true);
@@ -152,7 +212,45 @@ export class PlayerBar extends Component {
     }));
   }
 
-  onClickSelectTimeCode(){
+  onMouseDownSoundSelect(e) {
+    let { soundSelect } = this.state.timebar;
+    this.setState(prevState => ({
+      timebar: {
+        ...prevState.timebar,
+        isMouseDownOnSound: true,
+        offsetX: soundSelect.offsetLeft - e.clientX,
+      }
+    }));
+  }
+
+  onMouseDownSoundBar(e){
+    let { soundSelect, soundBar, soundPastBar } = this.state.timebar;
+    this.setState(prevState => ({
+      timebar: {
+        ...prevState.timebar,
+        isMouseDownOnSound: true,
+      }
+    }));
+    let leftClicked = (e.clientX - soundBar.getBoundingClientRect().left) / soundBar.getBoundingClientRect().width * 100;
+    if (leftClicked >= 0 && leftClicked <= 100) {
+      soundSelect.style.left = leftClicked + '%';
+      soundPastBar.style.width = leftClicked + '%';
+      this.setState(prevState => ({
+        timebar:{
+          ...prevState.timebar,
+          mute: false,
+        }
+      }));
+    }
+    this.setState(prevState => ({
+      timebar: {
+        ...prevState.timebar,
+        offsetX: soundSelect.offsetLeft - e.clientX,
+      }
+    }));
+  }
+
+  onClickPlayBtn(){
     let { audio, played, select, pastBar } = this.state.timebar;
     if (played) {
       audio.pause();
@@ -174,9 +272,9 @@ export class PlayerBar extends Component {
   }
 
   onClickMuteSound(){
-    let { audio, mute } = this.state.timebar;
+    let { audio, mute, volume } = this.state.timebar;
     if (mute) {
-      audio.volume = 1;
+      audio.volume = volume;
       this.setState(prevState => ({
         timebar: {
           ...prevState.timebar,
@@ -198,7 +296,7 @@ export class PlayerBar extends Component {
     let currentIndex = this.props.podcast.listPodcast.findIndex(element => element.id == this.props.podcast.currentPodcast.id);
     if (this.props.podcast.listPodcast[currentIndex - 1]) {
       let prevPodcast = this.props.podcast.listPodcast[currentIndex - 1];
-      let { audio, mute, intervalTimeCode } = this.state.timebar;
+      let { audio, mute, volume, intervalTimeCode } = this.state.timebar;
       audio.pause();
       this.props.actions.setCurrentPodcast(prevPodcast)
       // clearInterval(intervalTimeCode);
@@ -215,6 +313,8 @@ export class PlayerBar extends Component {
         }));
         if (mute) {
           prevAudio.volume = 0;
+        } else {
+          prevAudio.volume = volume;
         }
         prevAudio.play();
       };
@@ -227,7 +327,7 @@ export class PlayerBar extends Component {
     let currentIndex = this.props.podcast.listPodcast.findIndex(element => element.id == this.props.podcast.currentPodcast.id);
     if (this.props.podcast.listPodcast[currentIndex + 1]) {
       let nextPodcast = this.props.podcast.listPodcast[currentIndex + 1];
-      let { audio, mute, intervalTimeCode } = this.state.timebar;
+      let { audio, mute, volume, intervalTimeCode } = this.state.timebar;
       audio.pause();
       this.props.actions.setCurrentPodcast(nextPodcast)
       // clearInterval(intervalTimeCode);
@@ -244,6 +344,8 @@ export class PlayerBar extends Component {
         }));
         if (mute) {
           nextAudio.volume = 0;
+        } else {
+          nextAudio.volume = volume;
         }
         nextAudio.play();
       };
@@ -251,6 +353,17 @@ export class PlayerBar extends Component {
       this.intervalTimeCode();
     }
   }
+
+  onClickPrev15Sec(){
+    let { audio } = this.state.timebar;
+    audio.currentTime = audio.currentTime - 10;
+  }
+
+  onClickNext15Sec(){
+    let { audio } = this.state.timebar;
+    audio.currentTime = audio.currentTime + 10;
+  }
+
 
   intervalTimeCode() {
     let intervalTimeCode = setInterval(() => {
@@ -326,19 +439,19 @@ export class PlayerBar extends Component {
               </div>
             </Col>
             <Col md={4} className="h-100 d-flex justify-content-center align-items-center">
-              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box">
+              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickPrev15Sec()}>
                 <ArrowCounterclockwise className="player-bar-btn-little-adv h-100"/>
               </div>
               <div id="player-bar-prev" className="rounded-circle player-bar-btn-box ml-3" onClick={(e) => this.onClickPrev()}>
                 <SkipStartFill className="player-bar-btn h-100"/>
               </div>
-              <div id="player-bar-play" className="rounded-circle player-bar-btn-play-box" onMouseDown={(e) => this.onClickSelectTimeCode()}>
+              <div id="player-bar-play" className="rounded-circle player-bar-btn-play-box" onMouseDown={(e) => this.onClickPlayBtn()}>
                 <BtnPlayPause timebar={this.state.timebar}/>
               </div>
               <div id="player-bar-next" className="rounded-circle player-bar-btn-box mr-3" onClick={(e) => this.onClickNext()}>
                 <SkipEndFill className="player-bar-btn h-100"/>
               </div>
-              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box">
+              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickNext15Sec()}>
                 <ArrowClockwise className="player-bar-btn-little-adv h-100"/>
               </div>
             </Col>
@@ -346,10 +459,10 @@ export class PlayerBar extends Component {
               <div id="player-bar-mute" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickMuteSound()}>
                 <BtnMute timebar={this.state.timebar}/>
               </div>
-              <div className="player-bar-sound-box w-100">
-                <div id="sound-bar" className="sound-bar">
+              <div className="player-bar-sound-box w-50 pl-3">
+                <div id="sound-bar" className="sound-bar" onMouseDown={(e) => this.onMouseDownSoundBar(e)}>
                   <div id="sound-past" className="sound-past"></div>
-                  <span id="sound-select" className="sound-select"></span>
+                  <span id="sound-select" className="sound-select" onMouseDown={(e) => this.onMouseDownSoundSelect(e)}></span>
                 </div>
               </div>
               {/* <div id="player-bar-mute" className="rounded-circle player-bar-btn-box ml-3">
