@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
-import { Play, Envelope, FileEarmark, House, Image, QuestionCircle, ChevronDoubleRight, ChevronDoubleLeft } from 'react-bootstrap-icons';
+import { Play, Envelope, FileEarmark, House, Image, QuestionCircle, ChevronDoubleRight, ChevronDoubleLeft, PersonBadge, List } from 'react-bootstrap-icons';
 import { Link } from "react-router-dom";
 import * as menuAsideActions from '../../redux/menu-aside/actions';
 
@@ -64,10 +64,18 @@ export class MenuAside extends Component {
     element.classList.toggle("active");
   }
 
+  collapse() {
+    let element = document.getElementById("sidebar");
+    element.classList.toggle("active");
+  }
+
   render() {
     console.log(this.props.menuAside.menuRetract)
     return (
       <nav id="sidebar" className={this.props.menuAside.menuRetract ? "active" : ""}>
+        <div id="sidebarCollapse" className="justify-content-center align-items-center" onClick={(e) => this.collapse()}>
+          <List />
+        </div>
         <div class="sidebar-header">
           <h3>Bagad Heol</h3>
           <strong>BH</strong>
@@ -108,7 +116,7 @@ export class MenuAside extends Component {
               <span>Player</span>
             </Link>
           </li>
-          <li className={this.props.menuAside.currentPage === "Pages" ? "active" : ""} onClick={(e) => this.setCurrentPage("Pages")}>
+          {/* <li className={this.props.menuAside.currentPage === "Pages" ? "active" : ""} onClick={(e) => this.setCurrentPage("Pages")}>
             <Dropdown>
               <Dropdown.Toggle as={CustomToggle} className="d-flex align-items-center">
                 <FileEarmark />
@@ -121,7 +129,7 @@ export class MenuAside extends Component {
                 <li><Dropdown.Item href="#/action-3">Something else</Dropdown.Item></li>
               </Dropdown.Menu>
             </Dropdown>
-          </li>
+          </li> */}
           <li className={this.props.menuAside.currentPage === "Equipe" ? "active" : ""} onClick={(e) => this.setCurrentPage("Equipe")}>
             {/* <a href="#" className="d-flex align-items-center">
               <Image />
@@ -150,6 +158,16 @@ export class MenuAside extends Component {
             <Link to="/contact">
               <Envelope />
               <span>Contact</span>
+            </Link>
+          </li>
+          <li className={this.props.menuAside.currentPage === "EspaceMembre" ? "active" : ""} onClick={(e) => this.setCurrentPage("EspaceMembre")}>
+            {/* <a href="#" className="d-flex align-items-center">
+              <Image />
+              <span>Equipe</span>
+            </a> */}
+            <Link to="/espace-membre">
+              <PersonBadge />
+              <span>Espace Membre</span>
             </Link>
           </li>
           <li id="retractInsideMenu" onClick={(e) => this.setMenuRetract()}>

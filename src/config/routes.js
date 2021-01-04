@@ -1,4 +1,5 @@
 import pages from '../pages';
+import MenuAside from '../components/MenuAside/MenuAside';
 import {
     VIEW_HOME_PATH,
     VIEW_AUTH_PATH,
@@ -8,9 +9,11 @@ import {
 export const VIEW_HOME = {
     path: '/',
     // layout: (<div>Ceci est un Layout</div>),
+    layout: (<MenuAside />),
     childRoutes: [
         {path:'/', component: pages.Home},
         {path:'/player', component: pages.Player},
+        {path:'/espace-membre', component: pages.EspaceMembre/*, isPrivate: true*/},
         {path:'/contact', component: pages.Authentification},
         {path:'/login', component: pages.Authentification},
     ]
@@ -27,6 +30,7 @@ export const VIEW_ADMIN = {
 
 export const ERROR = {
     path: '*',
+    layout: (<MenuAside />),
     component: pages.Error404,
 };
 
