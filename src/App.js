@@ -4,6 +4,9 @@ import logo from './logo.svg';
 // import './App.scss';
 import AppRoute from './components/AppRoute';
 import routes from './config/routes';
+import MenuAside from './components/MenuAside/MenuAside';
+import { List } from 'react-bootstrap-icons';
+import { Container } from 'react-bootstrap';
 
 // function App() {
 //   return (
@@ -46,10 +49,24 @@ import routes from './config/routes';
 // export default connect() (App);
 
 class App extends Component {
+  collapse() {
+    let element = document.getElementById("sidebar");
+    element.classList.toggle("active");
+  }
+
   render() {
     return (
       <Router>
-        <AppRoute />
+        <div className="wrapper">
+          <MenuAside />
+          <Container fluid className="p-0">
+            <div id="sidebarCollapse" className="justify-content-center align-items-center" onClick={(e) => this.collapse()}>
+              <List />
+            </div>
+            <AppRoute />
+          </Container>
+        </div>
+        
         {/* <Switch>
           <Route exact path="/login" render={() => <div>Login</div>} /> 
           <Route exact path={["/", "/contact"]}>

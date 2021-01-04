@@ -4,9 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { ArrowRightShort, PlayFill, PauseFill, SkipEndFill, SkipStartFill, VolumeMuteFill, VolumeUpFill, ThreeDots, ArrowCounterclockwise, ArrowClockwise } from 'react-bootstrap-icons';
-import * as exampleActions from '../../redux/example/actions';
-
-import music from '../../assets/music/charles_ludig_victoire.mp3';
+import * as podcastActions from '../../redux/podcast/actions';
 
 function BtnPlayPause(props){
   if(props.timebar.played) {
@@ -26,30 +24,23 @@ function BtnMute(props){
 
 export class PlayerBar extends Component {
   static propTypes = {
-    examples: PropTypes.object.isRequired,
+    podcast: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      value: 256,
-      podcast: {
-        'url': 'https://file04.ausha.co/kUPETcdI6l9OgPtCguWUkjn7oaBye9KpacmUZal9.mp3?token=9pwyyeeL7WImf0URbG0TpA&expires=1607961635',
-        'img': 'https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_768/https://blog.snappa.com/wp-content/uploads/2018/06/Podcast-Cover-Art-Size-768x768.jpg',
-        'podcast': 'Bagad Heol',
-        'title': '#01 - L\'Avenir nous tend les bras',
-        'desc': 'Aujourd\'hui on parle de la Bretagne après Covid mais surtout on découvre les bruits de l\'océan à des fins humoristiques.',
-      },
       timebar: {
-        audio: new Audio(music),
-
         isMouseDown: false,
         mousePositionX: null,
+        audio: null,
+        currentTime: null,
+        duration: null,
         select: document.getElementById('timecode-select'),
         bar: document.getElementById('timecode-bar'),
         pastBar: document.getElementById('timecode-past'),
-        width: null,
+        isPausedInterval: false,
 
         //commande
         played: false,
@@ -58,12 +49,20 @@ export class PlayerBar extends Component {
     };
   }
 
-  componentDidMount() {
-    
+  componentWillMount() {
+    this.props.actions.setCurrentPodcast(this.props.podcast.listPodcast.slice(-1)[0]);
     this.setState(prevState => ({
       timebar:{
         ...prevState.timebar,
-        // audio: new Audio(this.state.podcast.url),
+        audio: new Audio(this.props.podcast.listPodcast.slice(-1)[0].url),
+      }
+    }));
+  }
+
+  componentDidMount() {
+    this.setState(prevState => ({
+      timebar:{
+        ...prevState.timebar,
         select: document.getElementById('timecode-select'),
         bar: document.getElementById('timecode-bar'),
         pastBar: document.getElementById('timecode-past'),
@@ -72,7 +71,6 @@ export class PlayerBar extends Component {
     
     const self = this;
     let preAudio = self.state.timebar.audio;
-    let duration;
     preAudio.onloadedmetadata = function() {
       self.setState(prevState => ({
         timebar:{
@@ -118,6 +116,8 @@ export class PlayerBar extends Component {
         }
       }));
     }, true);
+
+    this.intervalTimeCode();
   }
 
   onMouseDownSelect(e) {
@@ -170,21 +170,6 @@ export class PlayerBar extends Component {
           played: true,
         }
       }));
-
-      let intervalTimeCode = setInterval(() => {
-        let { isMouseDown } = this.state.timebar;
-        this.setState(prevState => ({
-          timebar: {
-            ...prevState.timebar,
-            currentTime: audio.currentTime,
-          }
-        }));
-        if (!isMouseDown) {
-          let currentTimeAudio = audio.currentTime / audio.duration * 100;
-          select.style.left = currentTimeAudio + '%';
-          pastBar.style.width = currentTimeAudio + '%';
-        }
-      }, 500);
     }
   }
 
@@ -209,6 +194,90 @@ export class PlayerBar extends Component {
     }
   }
 
+  onClickPrev(){
+    let currentIndex = this.props.podcast.listPodcast.findIndex(element => element.id == this.props.podcast.currentPodcast.id);
+    if (this.props.podcast.listPodcast[currentIndex - 1]) {
+      let prevPodcast = this.props.podcast.listPodcast[currentIndex - 1];
+      let { audio, mute, intervalTimeCode } = this.state.timebar;
+      audio.pause();
+      this.props.actions.setCurrentPodcast(prevPodcast)
+      // clearInterval(intervalTimeCode);
+
+      let prevAudio = new Audio(prevPodcast.url);
+      prevAudio.onloadedmetadata = () => {
+        this.setState(prevState => ({
+          timebar:{
+            ...prevState.timebar,
+            audio: prevAudio,
+            duration: prevAudio.duration,
+            played: true,
+          }
+        }));
+        if (mute) {
+          prevAudio.volume = 0;
+        }
+        prevAudio.play();
+      };
+
+      this.intervalTimeCode();
+    }
+  }
+
+  onClickNext(){
+    let currentIndex = this.props.podcast.listPodcast.findIndex(element => element.id == this.props.podcast.currentPodcast.id);
+    if (this.props.podcast.listPodcast[currentIndex + 1]) {
+      let nextPodcast = this.props.podcast.listPodcast[currentIndex + 1];
+      let { audio, mute, intervalTimeCode } = this.state.timebar;
+      audio.pause();
+      this.props.actions.setCurrentPodcast(nextPodcast)
+      // clearInterval(intervalTimeCode);
+
+      let nextAudio = new Audio(nextPodcast.url);
+      nextAudio.onloadedmetadata = () => {
+        this.setState(prevState => ({
+          timebar:{
+            ...prevState.timebar,
+            audio: nextAudio,
+            duration: nextAudio.duration,
+            played: true,
+          }
+        }));
+        if (mute) {
+          nextAudio.volume = 0;
+        }
+        nextAudio.play();
+      };
+
+      this.intervalTimeCode();
+    }
+  }
+
+  intervalTimeCode() {
+    let intervalTimeCode = setInterval(() => {
+      let { isMouseDown, isPausedInterval } = this.state.timebar;
+      if (!isPausedInterval) {
+        let { audio, select, pastBar } = this.state.timebar;
+        this.setState(prevState => ({
+          timebar: {
+            ...prevState.timebar,
+            currentTime: audio.currentTime,
+          }
+        }));
+        if (!isMouseDown) {
+          let currentTimeAudio = audio.currentTime / audio.duration * 100;
+          select.style.left = currentTimeAudio + '%';
+          pastBar.style.width = currentTimeAudio + '%';
+        }
+      }
+    }, 1); //500 TODO: Valider la valeur
+    this.setState(prevState => ({
+      timebar:{
+        ...prevState.timebar,
+        intervalTimeCode: intervalTimeCode,
+      }
+    }));
+  }
+
   formatTimecode(seconds) {
     const format = val => `0${Math.floor(val)}`.slice(-2);
     const hours = seconds / 3600;
@@ -227,11 +296,9 @@ export class PlayerBar extends Component {
     
   }
 
-  handleChange(e) {
-    this.setState({value: e.target.value});
-  };
-
   render() {
+    let {listPodcast, currentPodcast} = this.props.podcast;
+
     return (
       <div className="player-bar">
         <div className="player-bar-timecode-box w-100">
@@ -250,10 +317,11 @@ export class PlayerBar extends Component {
           </svg>
           <Row className="h-100">
             <Col md={4} className="h-100 player-bar-info d-flex align-items-center" align="left">
-              <div className="player-bar-cover mr-3"></div>
+              {/* <div className="player-bar-cover mr-3"></div> */}
+              <img src={this.props.podcast.currentPodcast.img} className="player-bar-cover mr-3" />
               <div>
                 <h2>Bagad Heol</h2>
-                <h3 className="mb-2">{this.state.podcast.title}</h3>
+                <h3 className="mb-2">{this.props.podcast.currentPodcast.title}</h3>
                 <span>{this.formatTimecode(this.state.timebar.currentTime)} / {this.formatTimecode(this.state.timebar.duration)}</span>
               </div>
             </Col>
@@ -261,13 +329,13 @@ export class PlayerBar extends Component {
               <div id="player-bar-prev" className="rounded-circle player-bar-btn-box">
                 <ArrowCounterclockwise className="player-bar-btn-little-adv h-100"/>
               </div>
-              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box ml-3">
+              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box ml-3" onClick={(e) => this.onClickPrev()}>
                 <SkipStartFill className="player-bar-btn h-100"/>
               </div>
               <div id="player-bar-play" className="rounded-circle player-bar-btn-play-box" onMouseDown={(e) => this.onClickSelectTimeCode()}>
                 <BtnPlayPause timebar={this.state.timebar}/>
               </div>
-              <div id="player-bar-next" className="rounded-circle player-bar-btn-box mr-3">
+              <div id="player-bar-next" className="rounded-circle player-bar-btn-box mr-3" onClick={(e) => this.onClickNext()}>
                 <SkipEndFill className="player-bar-btn h-100"/>
               </div>
               <div id="player-bar-prev" className="rounded-circle player-bar-btn-box">
@@ -278,9 +346,15 @@ export class PlayerBar extends Component {
               <div id="player-bar-mute" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickMuteSound()}>
                 <BtnMute timebar={this.state.timebar}/>
               </div>
-              <div id="player-bar-mute" className="rounded-circle player-bar-btn-box ml-3">
-                <ThreeDots className="player-bar-btn-more h-100"/>
+              <div className="player-bar-sound-box w-100">
+                <div id="sound-bar" className="sound-bar">
+                  <div id="sound-past" className="sound-past"></div>
+                  <span id="sound-select" className="sound-select"></span>
+                </div>
               </div>
+              {/* <div id="player-bar-mute" className="rounded-circle player-bar-btn-box ml-3">
+                <ThreeDots className="player-bar-btn-more h-100"/>
+              </div> */}
             </Col>
           </Row>
         </Container>
@@ -291,13 +365,13 @@ export class PlayerBar extends Component {
 
 function mapStateToProps(state) {
   return {
-    examples: state.examples,
+    podcast: state.podcast,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...exampleActions }, dispatch)
+    actions: bindActionCreators({ ...podcastActions }, dispatch)
   };
 }
 
