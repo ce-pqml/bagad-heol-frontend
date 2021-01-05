@@ -11,7 +11,7 @@ export const VIEW_HOME = {
     childRoutes: [
         {path:'/', component: pages.Home},
         {path:'/player', component: pages.Player},
-        {path:'/contact', component: pages.Authentification},
+        {path:'/contact', component: pages.Contact},
         {path:'/login', component: pages.Authentification},
     ]
 };
