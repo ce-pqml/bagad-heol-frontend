@@ -64,16 +64,10 @@ export class MenuAside extends Component {
     element.classList.toggle("active");
   }
 
-  collapse() {
-    let element = document.getElementById("sidebar");
-    element.classList.toggle("active");
-  }
-
   render() {
-    console.log(this.props.menuAside.menuRetract)
     return (
       <nav id="sidebar" className={this.props.menuAside.menuRetract ? "active" : ""}>
-        <div id="sidebarCollapse" className="justify-content-center align-items-center" onClick={(e) => this.collapse()}>
+        <div id="sidebarCollapse" className="justify-content-center align-items-center" onClick={(e) => this.setMenuRetract()}>
           <List />
         </div>
         <div class="sidebar-header">
