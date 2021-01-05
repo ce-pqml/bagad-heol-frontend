@@ -1,10 +1,8 @@
 import initialState from './initialState';
-import { reducer as getPodcastReducer } from './actions/getPodcast';
-import { reducer as setCurrentPodcastReducer } from './actions/setCurrentPodcast';
+import { reducer as setMessageReducer } from './actions/setMessage';
 
 const reducers = [
-  getPodcastReducer,
-  setCurrentPodcastReducer,
+  setMessageReducer
 ];
 
 export default function reducer(state = initialState, action) {

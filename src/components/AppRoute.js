@@ -27,6 +27,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import routes from '../config/routes';
+import PrivateRoute from '../pages/Authentification/PrivateRoute';
 
 function buildRoute(routes) {
   let routeDom = [];
@@ -50,7 +51,8 @@ function buildRoute(routes) {
       })
       routeDom.push(<Route key={item.path} path={allChildPath} exact>{layout}<Switch>{childRoute}</Switch></Route>);
     } else {
-      routeDom.push(<Route key={item.path} path={item.path} render={() => isPrivate(item)} exact/>);
+      // routeDom.push(<Route key={item.path} path={item.path} render={() => isPrivate(item)} exact/>);
+      routeDom.push(<Route key={item.path} path={item.path} exact>{layout}{isPrivate(item)}</Route>);
     }
   });
   
@@ -59,7 +61,8 @@ function buildRoute(routes) {
 
 function isPrivate(item) {
   if (item.isPrivate) {
-    return <div>Merci de vous connectez !</div>
+    // return <div>Merci de vous connectez !</div>
+    return <PrivateRoute />
   } else {
     return <item.component />
   }

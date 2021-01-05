@@ -1,3 +1,8 @@
+#root{
+    display: flex;
+    align-items: stretch;
+}
+
 @import "~bootstrap/scss/bootstrap";
 @import './global';
 
@@ -5,7 +10,11 @@
 @import '../pages/Home/Home';
 @import '../pages/Player/Player';
 @import '../pages/Authentification/Authentification';
+@import '../pages/EspaceMembre/EspaceMembre';
+@import '../pages/Authentification/PrivateRoute';
 @import '../pages/404/404';
 
 //Importez vos components ici
-@import '../components/PlayerBar/PlayerBar'
+@import '../components/PlayerBar/PlayerBar';
+@import '../components/MenuAside/MenuAside';
+@import '../components/ModalConfirmation/ModalConfirmation';
