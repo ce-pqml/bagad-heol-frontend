@@ -15,7 +15,10 @@ export const VIEW_HOME = {
         {path:'/player', component: pages.Player},
         {path:'/espace-membre', component: pages.EspaceMembre/*, isPrivate: true*/},
         {path:'/contact', component: pages.Contact},
-        {path:'/login', component: pages.Authentification},
+        {path:'/login', component: pages.Login},
+        {path:'/register', component: pages.Register},
+        {path:'/resetpassword', component: pages.AskResetPassword},
+        {path:'/resetpassword/new', component: pages.ResetPassword},
     ]
 };
 

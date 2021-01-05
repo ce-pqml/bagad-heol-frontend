@@ -1,0 +1,55 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // justify-content: space-around;
+
+  .block-bagad-heol {
+    width: 20%;
+    background: rgba(199, 199, 199, 0.3);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.6);
+    border-radius: 5px;
+    padding: 15px;
+    color: white;
+  }
+
+  .block-bagad-heol-mdp {
+    width: 20%;
+    color: white;
+    text-align: right;
+
+    .btn-bagad-heol-mdp {
+      text-align: right;
+      border-bottom: 1px solid;
+
+      &:hover {
+        color: black;
+        border-bottom: 1px solid black;
+      }
+    }
+  }
+  
+  h3 {
+    border-bottom: 1px solid;
+  }
+}
+
+// #logo_bagad{
+//     height: 60%;
+//     width: 40%;
+//     border-radius: 10%;
+//     margin-left: 30%;
+//     margin-right: 30%;
+//   }
+  
+//   #mdp{
+//     padding-left: 60%;
+//   }
+  
+//   #pasDeCompte{
+//     margin-top: 10%;
+//   }
+  
+//   #lienCreation{
+//     text-align: center;
+//   }

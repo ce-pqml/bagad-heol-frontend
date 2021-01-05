@@ -40,15 +40,15 @@ export class EspaceMembre extends Component {
                 <Row>
                   <Container>
                     <Row>
-                      <Col>
-                        <div className="d-flex justify-content-between align-items-end">
+                      <Col md={6}>
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">Pseudonyme</label>
                           <p className="option-desc m-0">Affiché sur le forum, commentaire, en public</p>
                         </div>
                         <input type="text" className="w-100 form-control form-control-sm" />
                       </Col>
-                      <Col>
-                        <div className="d-flex justify-content-between align-items-end">
+                      <Col md={6}>
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">E-mail</label>
                           <p className="option-desc m-0">Pour les notifications, contact</p>
                         </div>
@@ -70,7 +70,7 @@ export class EspaceMembre extends Component {
                   <Container>
                     <Row>
                       <Col md={6}>
-                        <div className="d-flex justify-content-between align-items-end">
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">Mot de passe</label>
                           <p className="option-desc m-0">Avant toute modification, entrez votre mot de passe actuel</p>
                         </div>
@@ -79,14 +79,14 @@ export class EspaceMembre extends Component {
                     </Row>
                     <Row>
                       <Col md={6}>
-                        <div className="d-flex justify-content-between align-items-end">
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">Nouveau mot de passe</label>
                           <p className="option-desc m-0"></p>
                         </div>
                         <input type="text" className="w-100 form-control form-control-sm" />
                       </Col>
                       <Col md={6}>
-                        <div className="d-flex justify-content-between align-items-end">
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">Confirmer le nouveau mot de passe</label>
                           <p className="option-desc m-0"></p>
                         </div>
@@ -120,7 +120,7 @@ export class EspaceMembre extends Component {
                     </Row>
                     <Row>
                       <Col>
-                        <div className="d-flex justify-content-between align-items-end">
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">Nouveau podcast</label>
                           <p className="option-desc m-0">Si un nouveau podcast sort</p>
                         </div>
@@ -131,7 +131,7 @@ export class EspaceMembre extends Component {
                         />
                       </Col>
                       <Col>
-                        <div className="d-flex justify-content-between align-items-end">
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">Nouvel épisode</label>
                           <p className="option-desc m-0">Si un nouvel épisode de podcast sort</p>
                         </div>
@@ -149,7 +149,7 @@ export class EspaceMembre extends Component {
                     </Row>
                     <Row>
                       <Col>
-                        <div className="d-flex justify-content-between align-items-end">
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">Réponse à mon post</label>
                           <p className="option-desc m-0">Quand quelqu'un répond à mon post forum</p>
                         </div>
@@ -160,7 +160,7 @@ export class EspaceMembre extends Component {
                         />
                       </Col>
                       <Col>
-                        <div className="d-flex justify-content-between align-items-end">
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">Réponse à mon commentaire</label>
                           <p className="option-desc m-0">Si quelqu'un répond à mon commentaire</p>
                         </div>
@@ -178,7 +178,7 @@ export class EspaceMembre extends Component {
                     </Row>
                     <Row>
                       <Col md={6}>
-                        <div className="d-flex justify-content-between align-items-end">
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
                           <label className="m-0">Reception newsletter</label>
                           <p className="option-desc m-0">Recevoir les newsletters</p>
                         </div>
