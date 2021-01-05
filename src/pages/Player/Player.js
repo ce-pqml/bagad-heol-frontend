@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { PlayFill } from 'react-bootstrap-icons';
 import PlayerBar from '../../components/PlayerBar/PlayerBar';
-import * as exampleActions from '../../redux/example/actions';
+import * as podcastActions from '../../redux/podcast/actions';
 
 import album from '../../assets/img/album-img.png';
 import profil from '../../assets/img/profil.png';
@@ -13,21 +13,9 @@ import profil from '../../assets/img/profil.png';
 
 export class Player extends Component {
   static propTypes = {
-    examples: PropTypes.object.isRequired,
+    podcast: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 256,
-      podcast: {
-        'url': 'https://file04.ausha.co/kUPETcdI6l9OgPtCguWUkjn7oaBye9KpacmUZal9.mp3?token=9pwyyeeL7WImf0URbG0TpA&expires=1607961635',
-        'img': 'https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_768/https://blog.snappa.com/wp-content/uploads/2018/06/Podcast-Cover-Art-Size-768x768.jpg',
-        'title': '#01 - L\'Avenir nous tend les bras',
-        'desc': 'Aujourd\'hui on parle de la Bretagne après Covid mais surtout on découvre les bruits de l\'océan à des fins humoristiques.'
-    }};
-  }
 
   componentDidMount() {
     let coverH = document.getElementById('cover-box').clientHeight;
@@ -59,13 +47,11 @@ export class Player extends Component {
       );
     };
 
-    const itemsAlbum = [];
-    for (let i = 0; i < 35; i++) {
-      itemsAlbum.push(
-        <img src={album} />
-        // <p>TEST</p>
-      );
-    };
+    let currentIndex = this.props.podcast.listPodcast.findIndex(element => element.id == this.props.podcast.currentPodcast.id);
+    let elementStyle = document.querySelector('.player');
+    if (elementStyle) {
+      elementStyle.style.setProperty('--background', `url(${this.props.podcast.currentPodcast.img}) center`);
+    }
     
     return (
       <div className="player d-flex justify-content-center align-items-center">
@@ -74,8 +60,8 @@ export class Player extends Component {
             <Row>
               <Col className="title-player" align="right" md={8}>
                 <p>podcast en cours</p>
-                <h2>Bagad Heol</h2>
-                <h3>{this.state.podcast.title}</h3>
+                <h2>{this.props.podcast.currentPodcast.podcast}</h2>
+                <h3>{this.props.podcast.currentPodcast.title}</h3>
               </Col>
               <Col className="title-msg align-self-end" md={4}>
                 <h2>Discussions</h2>
@@ -84,16 +70,19 @@ export class Player extends Component {
             <Row>
               <Col md={8} align="center">
                 <div id="cover-box" className="w-50">
-                  <div className="cover-before"></div>
+                  {/* <div className="cover-before"></div> */}
+                  {this.props.podcast.listPodcast[currentIndex - 1] && <img src={this.props.podcast.listPodcast[currentIndex - 1].img} className="cover-before" />}
                   <div className="cover-now w-100">
                     <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                      <img src={this.state.podcast.img} className="w-100" />
+                      <img src={this.props.podcast.currentPodcast.img} className="w-100" />
                       {/* <div className="rounded-circle w-25 h-25 bg-dark">
                         <PlayFill size={96} />
                       </div> */}
                     </div>
                   </div>
-                  <div className="cover-after"></div>
+                  {/* <div className="cover-after"></div> */}
+                  {console.log("debug", this.props.podcast.listPodcast[currentIndex + 1])}
+                  {this.props.podcast.listPodcast[currentIndex + 1] && <img src={this.props.podcast.listPodcast[currentIndex + 1].img} className="cover-after" />}
                 </div>
               </Col>
               <Col md={4}>
@@ -104,7 +93,7 @@ export class Player extends Component {
             </Row>
             <Row>
               <Col>
-                <p className="desc-player mt-5">{this.state.podcast.desc}</p>
+                <p className="desc-player mt-5">{this.props.podcast.currentPodcast.desc}</p>
               </Col>
             </Row>
           </Container>
@@ -117,13 +106,13 @@ export class Player extends Component {
 
 function mapStateToProps(state) {
   return {
-    examples: state.examples,
+    podcast: state.podcast,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...exampleActions }, dispatch)
+    actions: bindActionCreators({ ...podcastActions }, dispatch)
   };
 }
 

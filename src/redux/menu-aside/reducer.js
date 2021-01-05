@@ -1,10 +1,11 @@
 import initialState from './initialState';
-import { reducer as getPodcastReducer } from './actions/getPodcast';
-import { reducer as setCurrentPodcastReducer } from './actions/setCurrentPodcast';
+import { reducer as setCurrentPageReducer } from './actions/setCurrentPage';
+import { reducer as setMenuRetractReducer } from './actions/setMenuRetract';
+
 
 const reducers = [
-  getPodcastReducer,
-  setCurrentPodcastReducer,
+  setCurrentPageReducer,
+  setMenuRetractReducer,
 ];
 
 export default function reducer(state = initialState, action) {

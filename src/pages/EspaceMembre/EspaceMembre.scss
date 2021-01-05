@@ -1,0 +1,26 @@
+.espace-membre {
+  background: rgb(255,51,105);
+  background: linear-gradient(90deg, rgba(255,51,105,1) 22%, rgba(255,122,54,1) 57%, rgba(255,219,28,1) 100%);
+  width: 100%;
+  min-height: 100vh;
+
+  .block-user {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.6);
+    border-radius: 5px;
+
+    .block-title h3{
+      border-bottom: 1px solid;
+      font-weight: bold;
+    }
+
+    .option-desc {
+      font-size: 0.8rem;
+      color: gray;
+    }
+
+    .switch-notif {
+      width: 100px;
+    }
+  }
+}

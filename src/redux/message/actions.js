@@ -1,0 +1,1 @@
+export { setMessage } from './actions/setMessage';
