@@ -1,6 +1,9 @@
-export { createCustomer } from './actions/createCustomer';
-export { getCustomer } from './actions/getCustomer';
-export { updateCustomer } from './actions/updateCustomer';
-export { deleteCustomer } from './actions/deleteCustomer';
+export { createUser } from './actions/createUser';
+export { getUser } from './actions/getUser';
+export { updateUser } from './actions/updateUser';
+export { deleteUser } from './actions/deleteUser';
+
+export { changePassword } from './actions/changePassword';
+export { forgotPassword } from './actions/forgotPassword';
 
 export { setCurrent } from './actions/setCurrent';

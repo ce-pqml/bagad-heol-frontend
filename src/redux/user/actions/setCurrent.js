@@ -1,18 +1,18 @@
-import { CUSTOMER_SET_CURRENT } from './constants';
+import { USER_SET_CURRENT } from './constants';
 
 export function setCurrent(obj) {
   return {
-    type: CUSTOMER_SET_CURRENT,
+    type: USER_SET_CURRENT,
     data: obj,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case CUSTOMER_SET_CURRENT:
+    case USER_SET_CURRENT:
       return {
         ...state,
-        message: action.data,
+        currentUser: action.data,
       };
 
     default:

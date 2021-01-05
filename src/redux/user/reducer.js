@@ -1,17 +1,22 @@
 import initialState from './initialState';
-import { reducer as createCustomerReducer } from './actions/createCustomer';
-import { reducer as getCustomerReducer } from './actions/getCustomer';
-import { reducer as updateCustomerReducer } from './actions/updateCustomer';
-import { reducer as deleteCustomerReducer } from './actions/deleteCustomer';
+import { reducer as createUserReducer } from './actions/createUser';
+import { reducer as getUserReducer } from './actions/getUser';
+import { reducer as updateUserReducer } from './actions/updateUser';
+import { reducer as deleteUserReducer } from './actions/deleteUser';
+
+import { reducer as changePasswordReducer } from './actions/changePassword';
+import { reducer as forgotPasswordReducer } from './actions/forgotPassword';
 
 import { reducer as setCurrentReducer } from './actions/setCurrent';
 
 const reducers = [
-  createCustomerReducer,
-  getCustomerReducer,
-  updateCustomerReducer,
-  deleteCustomerReducer,
-  setCurrentReducer
+  createUserReducer,
+  getUserReducer,
+  updateUserReducer,
+  deleteUserReducer,
+  setCurrentReducer,
+  changePasswordReducer,
+  forgotPasswordReducer
 ];
 
 export default function reducer(state = initialState, action) {

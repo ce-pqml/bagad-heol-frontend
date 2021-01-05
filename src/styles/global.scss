@@ -23,8 +23,11 @@ p {
 
 $prim-bg: rgba(255,51,105,1);
 $prim-dark-bg: rgb(253, 18, 81);
+$prim-disabled: rgb(168, 60, 89);
 $sec-bg: rgba(255,122,54,1);
 $ter-bg: rgba(255,219,28,1);
+
+$alert-color: rgb(255, 0, 68);
 
 $block-bg: rgba(199, 199, 199, 0.3);
 
@@ -54,6 +57,33 @@ $block-bg: rgba(199, 199, 199, 0.3);
 
   &:hover {
     background: white;
-    color: $prim-bg;
+    &:not([disabled]) {
+      color: $prim-bg;
+    }
   }
+
+  &:disabled {
+    border: 2px solid $prim-disabled;
+    background: $prim-disabled;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.alert-input {
+  border: 1px solid $alert-color;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0.2rem;
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+}
+
+.alert-color {
+  color: white;
+  background: $alert-color;
+  padding: 0rem 0.2rem;
+  border-bottom-left-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
 }
