@@ -16,3 +16,44 @@ p {
   font-size: 1.5rem ;
 }
 
+#root{
+  display: flex;
+  align-items: stretch;
+}
+
+$prim-bg: rgba(255,51,105,1);
+$prim-dark-bg: rgb(253, 18, 81);
+$sec-bg: rgba(255,122,54,1);
+$ter-bg: rgba(255,219,28,1);
+
+$block-bg: rgba(199, 199, 199, 0.3);
+
+.bg-bagad-heol {
+  background: rgb(255,51,105);
+  background: linear-gradient(90deg, rgba(255,51,105,1) 22%, rgba(255,122,54,1) 57%, rgba(255,219,28,1) 100%);
+}
+
+.btn-bagad-heol {
+  background: $prim-bg;
+  color: #fff;
+  text-transform: uppercase;
+  display: block;
+  padding: 5px;
+  border: 2px solid $prim-dark-bg;
+  transition: all 0.3s;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  // width: 30%;
+  height: 40px;
+  // line-height: 30px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: white;
+    color: $prim-bg;
+  }
+}

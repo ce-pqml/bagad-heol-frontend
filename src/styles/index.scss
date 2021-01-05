@@ -1,17 +1,18 @@
-#root{
-    display: flex;
-    align-items: stretch;
-}
-
 @import "~bootstrap/scss/bootstrap";
 @import './global';
 
 //Importez vos pages ici
 @import '../pages/Home/Home';
 @import '../pages/Player/Player';
+
 @import '../pages/Authentification/Authentification';
-@import '../pages/EspaceMembre/EspaceMembre';
 @import '../pages/Authentification/PrivateRoute';
+@import '../pages/Authentification/Login';
+@import '../pages/Authentification/Register';
+
+@import '../pages/ResetPassword/ResetPassword';
+
+@import '../pages/EspaceMembre/EspaceMembre';
 @import '../pages/404/404';
 @import '../pages/Contact/Contact';
 
