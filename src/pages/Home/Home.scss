@@ -1,40 +1,46 @@
-@import "~bootstrap/scss/bootstrap";
+.screen-1 {
+  background: rgb(255,51,105);
+  background: linear-gradient(90deg, rgba(255,51,105,1) 22%, rgba(255,122,54,1) 57%, rgba(255,219,28,1) 100%);
+  width: 100%;
+  min-height: 100vh;
+  // -webkit-text-stroke: 0.5px black;
+  // -webkit-text-fill-color: white;
+  color: white;
+  display: flex;
+  align-items: center;
 
-.App {
+  .title {
+    margin-left: 5%;
+    h1 {
+      margin-bottom: 5rem;
+    }
+
+    p {
+      margin: 2rem 0;
+      width:70%;
+    }
+  }
+}
+.line{
+  display: inline-block;
+  width: 70%;
+  border: 1px solid #eee;
+}
+.line-home{
+  display: inline-block;
+  width: 70%;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.line-title{
+  display: inline-block;
+  width: 20%;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.podcasts-list, .articles-list{
+  display: inline-block;
+  width: 70%;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.podcast, .line-article{
+  display: inline-block;
+  border: 1px solid #eee;
+  margin: 15px;
 }

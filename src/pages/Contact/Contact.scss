@@ -1,0 +1,91 @@
+.screen-1 {
+  background: rgb(255,51,105);
+  background: linear-gradient(90deg, rgba(255,51,105,1) 22%, rgba(255,122,54,1) 57%, rgba(255,219,28,1) 100%);
+  width: 100%;
+  min-height: 100vh;
+  // -webkit-text-stroke: 0.5px black;
+  // -webkit-text-fill-color: white;
+  color: white;
+  display: inline-block;
+  align-items: center;
+  text-align: center;
+
+  .title {
+    margin-left: 0;
+    width: 100%;
+
+    h1 {
+      margin-bottom: 5rem;
+    }
+
+    p {
+      display: inline-block;
+      margin: 2rem 0;
+      width: 50%;
+    }
+  }
+}
+.block_row{
+  float: left;
+  padding: 1rem 0.5rem 1.5rem;
+}
+.formulaire{
+  float: none;
+  display: inline-block;
+  text-align: center;
+  width: 30%;
+  padding: 15px;
+  margin: 15px;
+  background-color: rgba(255, 235, 205, 0.3);
+}
+#divfield1{
+  width: 20%;
+}
+#divfield2{
+  width: 40%;
+}
+#divfield3{
+  width: 40%;
+}
+#divfield4, #divfield5, #divfield6, #captcha, .submit{
+  width: 100%;
+}
+
+.formulaire .wrap-consentement{
+  position: relative;
+  padding-left: 30px;
+  padding-top: 0;
+}
+.formulaire .wrap-consentement .label{
+  display: block;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 140%;
+}
+.formulaire .wrap-consentement .label.error{
+  color: inherit;
+}
+.formulaire .wrap-consentement .field{
+  position: absolute;
+  left: 10px;
+  top: 0;
+  width: auto;
+}
+.formulaire .wrap-consentement .field input{
+  padding: 0;
+  margin: 0;
+}
+
+.submitid{
+  background: rgb(173, 80, 201);
+  color: #fff;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 1.2rem;
+  border-radius: 5px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  width: 40%;
+}
+
+
