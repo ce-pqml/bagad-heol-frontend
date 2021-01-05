@@ -14,7 +14,7 @@ export const VIEW_HOME = {
         {path:'/', component: pages.Home},
         {path:'/player', component: pages.Player},
         {path:'/espace-membre', component: pages.EspaceMembre/*, isPrivate: true*/},
-        {path:'/contact', component: pages.Authentification},
+        {path:'/contact', component: pages.Contact},
         {path:'/login', component: pages.Authentification},
     ]
 };

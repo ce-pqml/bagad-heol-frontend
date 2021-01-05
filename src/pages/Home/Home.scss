@@ -21,3 +21,26 @@
     }
   }
 }
+.line{
+  display: inline-block;
+  width: 70%;
+  border: 1px solid #eee;
+}
+.line-home{
+  display: inline-block;
+  width: 70%;
+  text-align: center;
+}
+.line-title{
+  display: inline-block;
+  width: 20%;
+}
+.podcasts-list, .articles-list{
+  display: inline-block;
+  width: 70%;
+}
+.podcast, .line-article{
+  display: inline-block;
+  border: 1px solid #eee;
+  margin: 15px;
+}
