@@ -17,6 +17,7 @@ export function login(args) {
       const doRequest = axios.post(WEB_SERVICE_URL + AUTH_URL, args);
       doRequest.then(
         res => {
+          localStorage.setItem('token', res.data.token);
           dispatch({
             type: AUTH_LOGIN_SUCCESS,
             data: res.data,

@@ -139,15 +139,46 @@
       width: 85px;
       height: 85px;
     }
+    .player-bar-text-info {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     h2{
       font-size: 1.4rem;
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     h3{
       font-size: 1.2rem;
       font-weight: bold;
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-   
+  }
+}
+
+@media (max-width: 1200px) {
+  .player-bar{
+    .player-bar-cover {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .player-bar{
+    #player-bar-prev-sec, #player-bar-next-sec, .player-bar-volume-box {
+      display: none !important;
+    }
+    .player-bar-cmd {
+      & > div {
+        width: 50%;
+      }
+    }
   }
 }

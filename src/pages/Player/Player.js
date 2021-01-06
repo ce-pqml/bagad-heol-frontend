@@ -54,52 +54,109 @@ export class Player extends Component {
     }
     
     return (
-      <div className="player d-flex justify-content-center align-items-center">
-        <Container fluid>
-          <Container>
-            <Row>
-              <Col className="title-player" align="right" md={8}>
-                <p>podcast en cours</p>
-                <h2>{this.props.podcast.currentPodcast.podcast}</h2>
-                <h3>{this.props.podcast.currentPodcast.title}</h3>
-              </Col>
-              <Col className="title-msg align-self-end" md={4}>
-                <h2>Discussions</h2>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={8} align="center">
-                <div id="cover-box" className="w-50">
-                  {/* <div className="cover-before"></div> */}
-                  {this.props.podcast.listPodcast[currentIndex - 1] && <img src={this.props.podcast.listPodcast[currentIndex - 1].img} className="cover-before" />}
-                  <div className="cover-now w-100">
-                    <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                      <img src={this.props.podcast.currentPodcast.img} className="w-100" />
-                      {/* <div className="rounded-circle w-25 h-25 bg-dark">
-                        <PlayFill size={96} />
-                      </div> */}
+      // <div className="player d-flex justify-content-center align-items-center">
+      //   <Container fluid>
+      //     <Container>
+      //       <Row>
+      //         <Col className="title-player" align="right" md={8}>
+      //           <p>podcast en cours</p>
+      //           <h2>{this.props.podcast.currentPodcast.podcast}</h2>
+      //           <h3>{this.props.podcast.currentPodcast.title}</h3>
+      //         </Col>
+      //         <Col className="title-msg align-self-end" md={4}>
+      //           <h2>Discussions</h2>
+      //         </Col>
+      //       </Row>
+      //       <Row>
+      //         <Col md={8} align="center">
+      //           <div id="cover-box" className="w-50">
+      //             {/* <div className="cover-before"></div> */}
+      //             {this.props.podcast.listPodcast[currentIndex - 1] && <img src={this.props.podcast.listPodcast[currentIndex - 1].img} className="cover-before" />}
+      //             <div className="cover-now w-100">
+      //               <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+      //                 <img src={this.props.podcast.currentPodcast.img} className="w-100" />
+      //                 {/* <div className="rounded-circle w-25 h-25 bg-dark">
+      //                   <PlayFill size={96} />
+      //                 </div> */}
+      //               </div>
+      //             </div>
+      //             {/* <div className="cover-after"></div> */}
+      //             {console.log("debug", this.props.podcast.listPodcast[currentIndex + 1])}
+      //             {this.props.podcast.listPodcast[currentIndex + 1] && <img src={this.props.podcast.listPodcast[currentIndex + 1].img} className="cover-after" />}
+      //           </div>
+      //         </Col>
+      //         <Col md={4}>
+      //           <div id="max-h-child" className="overflow-auto">
+      //             {items}
+      //           </div>
+      //         </Col>
+      //       </Row>
+      //       <Row>
+      //         <Col>
+      //           <p className="desc-player mt-5">{this.props.podcast.currentPodcast.desc}</p>
+      //         </Col>
+      //       </Row>
+      //     </Container>
+      //   </Container>
+      //   <PlayerBar />
+      // </div>
+      <Container className="player d-flex justify-content-center align-items-center overflow-hidden" fluid>
+        <Container>
+          <Row>
+            <Col md={8} >
+              <Container className="p-0">
+                <Row>
+                  <Col id="player-title-player" className="title-player" align="right">
+                    <p>podcast en cours</p>
+                    <h2>{this.props.podcast.currentPodcast.podcast}</h2>
+                    <h3>{this.props.podcast.currentPodcast.title}</h3>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col align="center">
+                    <div id="cover-box" className="w-50">
+                      {/* <div className="cover-before"></div> */}
+                      {this.props.podcast.listPodcast[currentIndex - 1] && <img src={this.props.podcast.listPodcast[currentIndex - 1].img} className="cover-before" />}
+                      <div className="cover-now w-100">
+                        <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+                          <img src={this.props.podcast.currentPodcast.img} className="w-100" />
+                          {/* <div className="rounded-circle w-25 h-25 bg-dark">
+                            <PlayFill size={96} />
+                          </div> */}
+                        </div>
+                      </div>
+                      {/* <div className="cover-after"></div> */}
+                      {this.props.podcast.listPodcast[currentIndex + 1] && <img src={this.props.podcast.listPodcast[currentIndex + 1].img} className="cover-after" />}
                     </div>
-                  </div>
-                  {/* <div className="cover-after"></div> */}
-                  {console.log("debug", this.props.podcast.listPodcast[currentIndex + 1])}
-                  {this.props.podcast.listPodcast[currentIndex + 1] && <img src={this.props.podcast.listPodcast[currentIndex + 1].img} className="cover-after" />}
-                </div>
-              </Col>
-              <Col md={4}>
-                <div id="max-h-child" className="overflow-auto">
-                  {items}
-                </div>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <p className="desc-player mt-5">{this.props.podcast.currentPodcast.desc}</p>
-              </Col>
-            </Row>
-          </Container>
+                  </Col>
+                </Row>
+              </Container>
+            </Col>
+            <Col md={4} className="d-flex align-items-end mt-4">
+              <Container className="p-0">
+                <Row>
+                  <Col id="player-title-commentary" className="title-msg align-self-end">
+                    <h2>Discussions</h2>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <div id="max-h-child" className="overflow-auto">
+                      {items}
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <p className="desc-player mt-5">{this.props.podcast.currentPodcast.desc}</p>
+            </Col>
+          </Row>
         </Container>
         <PlayerBar />
-      </div>
+      </Container>
     );
   }
 }

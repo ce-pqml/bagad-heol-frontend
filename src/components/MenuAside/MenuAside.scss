@@ -267,6 +267,7 @@ a.article:hover {
         max-width: 80px;
         text-align: center;
         margin-left: -80px !important;
+        position: absolute;
     }
     .dropdown-toggle::after, .dropdown-btn::after {
         top: auto;
