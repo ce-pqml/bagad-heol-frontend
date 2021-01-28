@@ -49,7 +49,7 @@ export class Register extends Component{
           validate={(values) => this.validate(values)}
           render={({ handleSubmit, submitting, pristine }) => (
             <form onSubmit={handleSubmit}>
-              <Container className="block-bagad-heol">
+              <Container>
                 <Row className="mb-4">
                   <Col>
                     <label>Identifiant</label>
@@ -90,26 +90,24 @@ export class Register extends Component{
                     validate={composeValidators(required, noSpace)} />
                   </Col>
                 </Row>
-                <Row className="mb-5">
+                <Row className="mb-4">
                   <Col className="d-flex justify-content-end">
                     <button type="submit" className="btn-bagad-heol" disabled={submitting || pristine}>
                       Créer un compte
                     </button>
                   </Col>
                 </Row>
+                <Row>
+                  <Col className="d-flex justify-content-end">
+                    <Link to={"/login"} className="btn-bagad-heol-mdp">
+                      J'ai déjà un compte !
+                    </Link>
+                  </Col>
+                </Row>
               </Container>
             </form>
           )}
         />
-        <Container className="block-bagad-heol-mdp mb-5">
-          <Row>
-            <Col>
-              <Link to={"/login"} className="btn-bagad-heol-mdp">
-                J'ai déjà un compte !
-              </Link>
-            </Col>
-          </Row>
-        </Container>
       </Container>
     );
   }

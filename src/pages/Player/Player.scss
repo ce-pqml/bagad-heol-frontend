@@ -152,3 +152,15 @@
     font-size: 1.2rem;
   }
 }
+
+@media (max-width: 768px) {
+  .player{
+    min-height: 100vh;
+    height: auto;
+    padding-bottom: 90px;
+
+    .player-bar {
+      position: fixed !important;
+    }
+  }
+}

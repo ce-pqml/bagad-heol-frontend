@@ -25,6 +25,18 @@ export class Login extends Component{
   render(){
     return(
       <Container className="login bg-bagad-heol" fluid>
+        <ul class="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
         <Container className="mb-5">
           <Row>
             <Col className="text-center">
@@ -36,7 +48,7 @@ export class Login extends Component{
           onSubmit={(values) => this.submitForm(values)}
           render={({ handleSubmit, submitting, pristine }) => (
             <form onSubmit={handleSubmit}>
-              <Container className="block-bagad-heol">
+              <Container>
                 <Row className="mb-3">
                   <Col>
                     <label>Identifiant</label>
@@ -53,7 +65,7 @@ export class Login extends Component{
                     validate={composeValidators(required, noSpace)} />
                   </Col>
                 </Row>
-                <Row className="mb-5">
+                <Row className="mb-4">
                   <Col className="d-flex justify-content-end">
                     {/* <input type="submit" id='submit' value='Connexion' className="btn-bagad-heol"/> */}
                     <button type="submit" className="btn-bagad-heol" disabled={submitting || pristine}>
@@ -61,23 +73,21 @@ export class Login extends Component{
                     </button>
                   </Col>
                 </Row>
+                <Row className="mb-5">
+                  <Col className="d-flex justify-content-end">
+                    <Link to={"/resetpassword"} className="btn-bagad-heol-mdp">
+                      Mot de passe oublié ?
+                    </Link>
+                  </Col>
+                </Row>
               </Container>
             </form>
           )}
         />
-        <Container className="block-bagad-heol-mdp mb-5">
+        <Container>
           <Row>
             <Col>
-              <Link to={"/resetpassword"} className="btn-bagad-heol-mdp">
-                Mot de passe oublié ?
-              </Link>
-            </Col>
-          </Row>
-        </Container>
-        <Container className="block-bagad-heol">
-          <Row>
-            <Col>
-              <h3>Pas encore de compte ?</h3>
+              <h3 className="title-sec">Pas encore de compte ?</h3>
             </Col>
           </Row>
           <Row>

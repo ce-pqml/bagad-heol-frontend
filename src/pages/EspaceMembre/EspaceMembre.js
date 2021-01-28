@@ -47,19 +47,23 @@ export class EspaceMembre extends Component {
     let { currentUser } = this.props.user;
 
     return (
-      <div className="espace-membre p-5">
-        <Container>
+      <div className="bg-bagad-heol">
+        <Container className="espace-membre">
           <Form
             initialValues={currentUser}
             onSubmit={(values) => this.submitForm(values)}
             validate={(values) => this.validate(values)}
             render={({ handleSubmit, submitting, pristine }) => (
               <form onSubmit={handleSubmit}>
-                <Row className="p-3 mb-2 block-user">
+                <Row className="mb-5">
                   <Col>
                     <Container>
-                      <Row className="block-title pb-4">
-                        <Col><h3>Mon Compte</h3></Col>
+                      <Row className="pb-4">
+                        <Col>
+                          <div className="title-border-gradient mb-5">
+                            <h1 className="title-gradient">Espace Membre</h1>
+                          </div>
+                        </Col>
                       </Row>
                       <Row>
                         <Container>
@@ -88,11 +92,11 @@ export class EspaceMembre extends Component {
                     </Container>
                   </Col>
                 </Row>
-                <Row className="p-3 mb-2 block-user">
+                <Row className="mb-2">
                   <Col>
                     <Container>
                       <Row className="block-title pb-4">
-                        <Col><h3>Sécurité</h3></Col>
+                        <Col><h3 className="title-sec">Sécurité</h3></Col>
                       </Row>
                       <Row>
                         <Container>
@@ -132,12 +136,12 @@ export class EspaceMembre extends Component {
                     </Container>
                   </Col>
                 </Row>
-                <Row className="p-3 mb-5 block-user justify-content-end">
-                  <Col className="d-flex justify-content-end">
+                <Row className="mb-5 justify-content-end">
+                  <Col md={6} className="d-flex justify-content-end">
                     <Button variant="danger" className="mr-3" 
                     onClick={(e) => this.setState(prevstate => ({ ...prevstate, confirmDelete: true}))}>Supprimer mon compte</Button>
                     {/* <Button variant="success">Confirmer</Button> */}
-                    <button type="submit" className="btn-bagad-heol" disabled={submitting || pristine}>
+                    <button type="submit" className="btn-bagad-heol mr-3" disabled={submitting || pristine}>
                       Mettre à jour
                     </button>
                   </Col>
@@ -145,11 +149,11 @@ export class EspaceMembre extends Component {
               </form>
             )}
           />
-          <Row className="p-3 mb-5 block-user">
+          <Row className="mb-5">
             <Col>
               <Container>
                 <Row className="block-title pb-4">
-                  <Col><h3>Notifications</h3></Col>
+                  <Col><h3 className="title-sec">Notifications</h3></Col>
                 </Row>
                 <Row>
                   <Container>

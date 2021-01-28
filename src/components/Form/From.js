@@ -3,7 +3,7 @@ export const Input = ({ input, meta, ...rest }) => (
     <input
       {...input}
       {...rest}
-      className={(meta.touched && meta.error ? 'alert-input ' : '') + rest.className}
+      className={(meta.touched && meta.error ? 'input-bagad alert-input ' : 'input-bagad ') + rest.className}
     />
     {meta.touched && meta.error ? <span className="alert-color">{meta.error}</span> : ''}
   </div>
@@ -14,7 +14,7 @@ export const Select = ({ input, meta, children, ...rest }) => (
     <select
       {...input}
       {...rest}
-      className={(meta.touched && meta.error ? 'alert-input ' : '') + rest.className}
+      className={(meta.touched && meta.error ? 'input-bagad alert-input ' : 'input-bagad ') + rest.className}
       // onChange={(event, value) => input.onChange(value)}
       // errorText={meta.touched ? meta.error : ''}
     >
@@ -29,7 +29,7 @@ export const TextArea = ({ input, meta, children, ...rest }) => (
     <textarea
       {...input}
       {...rest}
-      className={(meta.touched && meta.error ? 'alert-input ' : '') + rest.className}
+      className={(meta.touched && meta.error ? 'input-bagad alert-input ' : 'input-bagad ') + rest.className}
       // onChange={(event, value) => input.onChange(value)}
       // errorText={meta.touched ? meta.error : ''}
     >

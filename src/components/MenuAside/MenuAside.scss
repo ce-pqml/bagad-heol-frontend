@@ -63,13 +63,15 @@ span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: rgb(207, 49, 91);
+    background: $menu-bg;
     color: #fff;
     transition: all 0.3s;
     position: sticky;
     top: 0;
     height: 100vh;
     z-index: 100;
+
+    box-shadow: 3px 0 8px 3px #888;
 
     #sidebarCollapse {
         left: 0%;
@@ -98,7 +100,7 @@ span {
 
 
 #sidebar .player-btn-menu{
-    background:  rgba(255,51,105,1);
+    background: $menu-player;
     box-shadow: 0 5px 5px -5px #333, 0 -5px 5px -5px #333;
     svg{
         // font-size: 1.6rem;
@@ -146,7 +148,7 @@ span {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: rgb(185, 37, 77);
+    background: $menu-hover;
 }
 
 #sidebar .sidebar-header strong {
@@ -156,7 +158,7 @@ span {
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid rgb(185, 37, 77);
+    border-bottom: 1px solid $menu-hover;
 }
 
 #sidebar ul li a, #sidebar ul li div a{
@@ -166,7 +168,7 @@ span {
 }
 
 #sidebar ul li a:hover, #sidebar ul li div a:hover {
-    color: rgb(185, 37, 77);
+    color: $menu-hover;
     background: #fff;
 }
 
@@ -176,12 +178,12 @@ span {
 
 #sidebar ul li.active {
     color: #fff;
-    background: rgba(255,122,54,1);
+    background: $menu-selected;
 }
 
 #sidebar ul li.active>a, #sidebar ul li div.show {
     color: #fff;
-    background: rgba(255,122,54,1);
+    background: $menu-selected;
 }
 
 a[data-toggle="collapse"] {
@@ -192,7 +194,7 @@ a[data-toggle="collapse"] {
     position: relative;
     float: none;
     padding: 0;
-    background: rgb(185, 37, 77);
+    background: $menu-hover;
     border: 0;
     // max-height: 0;
     transition: max-height 0.5s ease-out;
@@ -267,7 +269,7 @@ a.article:hover {
         max-width: 80px;
         text-align: center;
         margin-left: -80px !important;
-        position: absolute;
+        position: fixed;
     }
     .dropdown-toggle::after, .dropdown-btn::after {
         top: auto;

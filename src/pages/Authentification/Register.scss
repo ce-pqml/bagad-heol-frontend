@@ -10,27 +10,16 @@
     box-shadow: 3px 3px 5px rgba(82, 82, 82, 0.6);
     border-radius: 5px;
     padding: 15px;
-    color: white;
   }
 
-  .block-bagad-heol-mdp {
-    width: 20%;
-    color: white;
+  .btn-bagad-heol-mdp {
     text-align: right;
-
-    .btn-bagad-heol-mdp {
-      text-align: right;
-      border-bottom: 1px solid;
-
-      &:hover {
-        color: black;
-        border-bottom: 1px solid black;
-      }
-    }
-  }
-  
-  h3 {
     border-bottom: 1px solid;
+
+    &:hover {
+      color: black;
+      border-bottom: 1px solid black;
+    }
   }
 }
 

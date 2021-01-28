@@ -45,10 +45,10 @@ export class ResetPassword extends Component{
           validate={(values) => this.validate(values)}
           render={({ handleSubmit, submitting, pristine }) => (
             <form onSubmit={handleSubmit}>
-              <Container className="block-bagad-heol">
+              <Container>
                 <Row>
                   <Col>
-                    <h3>Mot de passe oublié</h3>
+                    <h3 className="title-sec">Mot de passe oublié</h3>
                   </Col>
                 </Row>
                 <Row className="mb-3">

@@ -423,9 +423,9 @@ export class PlayerBar extends Component {
         <Container fluid className="player-bar-container">
           <svg style={{width:0,height:0,position:'absolute'}} aria-hidden="true" focusable="false">
             <linearGradient id="gradient-heol" x2="1" y2="1">
-              <stop offset="22%" stop-color="rgba(255,51,105,1)" />
-              <stop offset="57%" stop-color="rgba(255,122,54,1)" />
-              <stop offset="100%" stop-color="rgba(255,219,28,1)" />
+              <stop offset="20%" stop-color="#f9d423" />
+              <stop offset="35%" stop-color="#fc903a" />
+              <stop offset="60.84%" stop-color="#ff4e50" />
             </linearGradient>
           </svg>
           <Row className="player-bar-cmd h-100">
