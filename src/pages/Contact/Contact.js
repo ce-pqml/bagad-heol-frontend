@@ -26,7 +26,7 @@ export class Contact extends Component {
   render() {
     return (
       <Container className="contact bg-bagad-heol" fluid>
-        <ul class="circles">
+        <ul className="circles">
           <li></li>
           <li></li>
           <li></li>

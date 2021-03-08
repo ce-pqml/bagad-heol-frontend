@@ -5,7 +5,8 @@ import {
   USER_CREATE_USER_FAILURE,
   USER_CREATE_USER_DISMISS_ERROR,
 } from './constants';
-import { WEB_SERVICE_URL, USER_URL } from '../../../config/webService';
+import { WEB_SERVICE_URL, REGISTER_URL } from '../../../config/webService';
+import { setMessage } from '../../message/actions';
 
 export function createUser(args) {
   return dispatch => {
@@ -14,9 +15,10 @@ export function createUser(args) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.post(WEB_SERVICE_URL + USER_URL, args);
+      const doRequest = axios.post(WEB_SERVICE_URL + REGISTER_URL, args);
       doRequest.then(
         res => {
+          dispatch(setMessage(res.data));
           dispatch({
             type: USER_CREATE_USER_SUCCESS,
             data: res.data,
@@ -24,6 +26,7 @@ export function createUser(args) {
           resolve(res);
         },
         err => {
+          dispatch(setMessage(err.response.data));
           dispatch({
             type: USER_CREATE_USER_FAILURE,
             data: { error: err },

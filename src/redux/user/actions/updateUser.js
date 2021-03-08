@@ -5,7 +5,7 @@ import {
   USER_UPDATE_USER_FAILURE,
   USER_UPDATE_USER_DISMISS_ERROR,
 } from './constants';
-import { WEB_SERVICE_URL, USER_URL } from '../../../config/webService';
+import { WEB_SERVICE_URL, ACCOUNT_URL } from '../../../config/webService';
 
 export function updateUser(args) {
   return dispatch => {
@@ -14,7 +14,7 @@ export function updateUser(args) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.put(WEB_SERVICE_URL + USER_URL + '/' + args.id, args);
+      const doRequest = axios.put(WEB_SERVICE_URL + ACCOUNT_URL + '/' + args.id, args);
       doRequest.then(
         res => {
           dispatch({

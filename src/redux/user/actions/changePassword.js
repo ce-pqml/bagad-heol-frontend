@@ -5,7 +5,7 @@ import {
   USER_CHANGE_PASSWORD_FAILURE,
   USER_CHANGE_PASSWORD_DISMISS_ERROR
 } from './constants';
-import { WEB_SERVICE_URL, USER_URL } from '../../../config/webService';
+import { WEB_SERVICE_URL, ACCOUNT_URL } from '../../../config/webService';
 
 export function changePassword(args) {
   return dispatch => {
@@ -14,7 +14,7 @@ export function changePassword(args) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.post(WEB_SERVICE_URL + USER_URL, args);
+      const doRequest = axios.post(WEB_SERVICE_URL + ACCOUNT_URL, args);
       doRequest.then(
         res => {
           dispatch({

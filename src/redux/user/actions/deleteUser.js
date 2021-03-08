@@ -5,7 +5,7 @@ import {
   USER_DELETE_USER_FAILURE,
   USER_DELETE_USER_DISMISS_ERROR,
 } from './constants';
-import { WEB_SERVICE_URL, USER_URL } from '../../../config/webService';
+import { WEB_SERVICE_URL, ACCOUNT_URL } from '../../../config/webService';
 
 export function deleteUser(id) {
   return dispatch => {
@@ -14,7 +14,7 @@ export function deleteUser(id) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.delete(WEB_SERVICE_URL + USER_URL + '/' + id);
+      const doRequest = axios.delete(WEB_SERVICE_URL + ACCOUNT_URL + '/' + id);
       doRequest.then(
         res => {
           dispatch({

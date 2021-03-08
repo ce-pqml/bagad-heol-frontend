@@ -34,11 +34,12 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set \"HOST=bagad-heol.test\" && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://bagad-heol.test",
   "eslintConfig": {
     "extends": "react-app"
   },

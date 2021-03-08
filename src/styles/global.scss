@@ -20,7 +20,7 @@ h2 {
 }
 
 p {
-  font-size: 1.5rem ;
+  font-size: 1.1rem ;
 }
 
 #root{
@@ -52,10 +52,14 @@ $alert-color: rgb(206, 9, 19);
 
 $block-bg: rgba(199, 199, 199, 0.3);
 
-  h3.title-sec {
-    color: $sec-bg;
-    border-bottom: 2px solid;
-  }
+.flex {
+  display: flex;
+}
+
+h3.title-sec {
+  color: $sec-bg;
+  border-bottom: 2px solid;
+}
 
 .title-border-gradient {
   background: $gradient-title;
@@ -72,6 +76,61 @@ $block-bg: rgba(199, 199, 199, 0.3);
   background: $gradient-title;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.option-desc {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.alert-exclamation-container {
+  background: rgba(173, 0, 0, 0.4);
+  border: 2px solid  rgba(173, 0, 0, 1);
+  color: rgba(173, 0, 0, 1);
+  width: 42px;
+  border-radius: 52px;
+  text-align: center;
+  margin-right: 5px;
+  font-size: 1.6rem;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+}
+
+.alert-check-container {
+  background: rgba(55, 173, 0, 0.4);
+  border: 2px solid  rgb(98, 173, 0);
+  color: rgb(98, 173, 0);
+  width: 42px;
+  border-radius: 52px;
+  text-align: center;
+  margin-right: 5px;
+  font-size: 1.6rem;
+}
+
+.alert-exclamation-container-small {
+  background: rgba(173, 0, 0, 0.4);
+  border: 2px solid  rgba(173, 0, 0, 1);
+  color: rgba(173, 0, 0, 1);
+  width: 28px;
+  border-radius: 42px;
+  text-align: center;
+  margin-right: 5px;
+  font-size: 1rem;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+}
+
+.alert-check-container-small {
+  background: rgba(55, 173, 0, 0.4);
+  border: 2px solid  rgb(98, 173, 0);
+  color: rgb(98, 173, 0);
+  width: 28px;
+  border-radius: 42px;
+  text-align: center;
+  margin-right: 5px;
+  font-size: 1rem;
 }
 
 .bg-bagad-heol {

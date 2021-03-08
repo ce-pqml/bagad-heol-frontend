@@ -5,7 +5,8 @@ import {
   AUTH_LOGIN_FAILURE,
   AUTH_LOGIN_DISMISS_ERROR
 } from './constants';
-import { WEB_SERVICE_URL, AUTH_URL } from '../../../config/webService';
+import { WEB_SERVICE_URL, LOGIN_URL } from '../../../config/webService';
+import { setMessage } from '../../message/actions';
 
 export function login(args) {
   return dispatch => {
@@ -14,10 +15,11 @@ export function login(args) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.post(WEB_SERVICE_URL + AUTH_URL, args);
+      const doRequest = axios.post(WEB_SERVICE_URL + LOGIN_URL, args);
       doRequest.then(
         res => {
-          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('token', res.data.jwt);
+          localStorage.setItem('userLogged', JSON.stringify(res.data));
           dispatch({
             type: AUTH_LOGIN_SUCCESS,
             data: res.data,
@@ -25,6 +27,7 @@ export function login(args) {
           resolve(res);
         },
         err => {
+          dispatch(setMessage(err.response.data));
           dispatch({
             type: AUTH_LOGIN_FAILURE,
             data: { error: err },

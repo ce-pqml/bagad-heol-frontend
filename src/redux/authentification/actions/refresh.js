@@ -5,7 +5,7 @@ import {
   AUTH_REFRESH_FAILURE,
   AUTH_REFRESH_DISMISS_ERROR
 } from './constants';
-import { WEB_SERVICE_URL, USER_URL } from '../../../config/webService';
+import { WEB_SERVICE_URL, LOGIN_URL } from '../../../config/webService';
 
 export function refresh(args) {
   return dispatch => {
@@ -14,7 +14,7 @@ export function refresh(args) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.put(WEB_SERVICE_URL + USER_URL + '/' + args.id, args);
+      const doRequest = axios.put(WEB_SERVICE_URL + LOGIN_URL + '/' + args.id, args);
       doRequest.then(
         res => {
           dispatch({

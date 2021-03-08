@@ -5,7 +5,7 @@ import { Exclamation } from 'react-bootstrap-icons';
 import logo from '../../logo.svg';
 import * as exampleActions from '../../redux/example/actions';
 
-function ModalConfirmation(props) {
+function ModalError(props) {
   // const examples = useSelector(state => state.examples);
   // const dispatch = useDispatch();
 
@@ -19,24 +19,21 @@ function ModalConfirmation(props) {
         <div className="alert-exclamation-container">
           <Exclamation />
         </div>
-        <Modal.Title>{props.title}</Modal.Title>
+        <Modal.Title>Une erreur est survenue</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {props.msg}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.closeAction}>
-          Annuler
-        </Button>
-        <Button variant="danger" onClick={props.confirmAction}>
-          Confirmer
+          Fermer
         </Button>
       </Modal.Footer>
     </Modal>
   );
 }
 
-ModalConfirmation.propTypes = {};
-ModalConfirmation.defaultProps = {};
+ModalError.propTypes = {};
+ModalError.defaultProps = {};
 
-export default ModalConfirmation;
+export default ModalError;

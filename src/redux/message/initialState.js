@@ -1,8 +1,9 @@
 const initialState = {
-  message: {
-    'http': 200,
-    'message': 'Mise à jour réussie'
-  },
+  // message: [{
+  //   'status': 'success',
+  //   'type': 'incorrectCaptcha',
+  //   'message': 'Merci de recopier correctement l\'image de verification.'
+  // }],
 };
 
 export default initialState;

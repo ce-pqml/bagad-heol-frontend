@@ -39,7 +39,7 @@ export class Home extends Component {
 
     return (
       <Container className="home bg-bagad-heol" fluid>
-        <ul class="circles">
+        <ul className="circles">
           <li></li>
           <li></li>
           <li></li>
@@ -70,7 +70,7 @@ export class Home extends Component {
                 </svg>
               }/>
 
-              {/* <div class="buttons d-none">
+              {/* <div className="buttons d-none">
                 <Link to="/player" className="blob-btn">
                   <span>Player</span>
                   <svg className="ml-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58.752 58.752" width="2em" height="2em" fill="currentColor">
@@ -81,12 +81,12 @@ export class Home extends Component {
                       c0.042-0.025,0.09-0.038,0.139-0.038c0.051,0,0.099,0.013,0.142,0.038l40.01,23.098c0.089,0.052,0.145,0.147,0.145,0.249
                     C49.663,29.47,49.611,29.561,49.524,29.612z"/>
                   </svg>
-                  <span class="blob-btn__inner">
-                    <span class="blob-btn__blobs">
-                      <span class="blob-btn__blob"></span>
-                      <span class="blob-btn__blob"></span>
-                      <span class="blob-btn__blob"></span>
-                      <span class="blob-btn__blob"></span>
+                  <span className="blob-btn__inner">
+                    <span className="blob-btn__blobs">
+                      <span className="blob-btn__blob"></span>
+                      <span className="blob-btn__blob"></span>
+                      <span className="blob-btn__blob"></span>
+                      <span className="blob-btn__blob"></span>
                     </span>
                   </span>
                 </Link>

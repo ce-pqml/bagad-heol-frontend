@@ -1,6 +1,24 @@
-export const WEB_SERVICE_URL = "https://bagad-heol.fr/api";
+export const WEB_SERVICE_URL = "/api";
+export const SERVICE_URL = "http://bagad-heol.test";
 
-export const ACCOUNT_URL = "/account";
-export const USER_URL = "/user";
+export const DISCONNECT_URL = "/account/disconnect";
+export const REGISTER_URL = "/account/register";
+export const LOGIN_URL = "/account/login";
+export const ACCOUNT_URL = "/account/myaccount";
+export const RECOVERY_URL = "/account/recovery";
+export const PROFIL_URL = "/account/user-profile";
+
+export const FORUM_ACTION_URL = "/forum/action";
+export const FORUM_EDIT_URL = "/forum/edit";
+export const FORUM_INDEX_URL = "/forum/index";
+export const FORUM_SECTION_URL = "/forum/section";
+export const FORUM_SUBJECT_URL = "/forum/subject";
+
+export const SLIDER_URL = "/slider";
+
+export const TCHAT_URL = "/tchat/index";
+
+export const CAPTCHA_URL = "/auths.php";
+
 export const PODCAST_URL = "/podcast";
 export const AUTH_URL = "/auth";

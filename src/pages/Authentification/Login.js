@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 import * as authActions from '../../redux/authentification/actions';
 
 import { Container, Row, Col, Image } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { Input } from '../../components/Form/From';
 import { required, noSpace, email, composeValidators } from '../../helpers/validationForm';
+import ModalMessage from '../../components/ModalMessage/ModalMessage';
 import logo from '../../assets/img/logo_bagad_heol.jpg';
 
 export class Login extends Component{
@@ -20,12 +21,16 @@ export class Login extends Component{
 
   async submitForm(values) {
     await this.props.actions.login(values);
+    if (localStorage.getItem('token') && localStorage.getItem('token') !== null && localStorage.getItem('token') !== '') {
+      this.props.history.push("/");
+    }
   }
 
   render(){
+    const { message } = this.props.message;
     return(
       <Container className="login bg-bagad-heol" fluid>
-        <ul class="circles">
+        <ul className="circles">
           <li></li>
           <li></li>
           <li></li>
@@ -53,7 +58,7 @@ export class Login extends Component{
                   <Col>
                     <label>Identifiant</label>
                     {/* <input type="text" placeholder="Entrer le nom d'utilisateur" name="username" className="w-100 form-control form-control-sm" required /> */}
-                    <Field name="username" component={Input} type="text" placeholder="Entrer le nom d'utilisateur" className="w-100 form-control form-control-sm"
+                    <Field name="login" component={Input} type="text" placeholder="Entrer le nom d'utilisateur" className="w-100 form-control form-control-sm"
                     validate={composeValidators(required, noSpace)} />
                   </Col>
                 </Row>
@@ -98,6 +103,7 @@ export class Login extends Component{
             </Col>
           </Row>
         </Container>
+        {message && Array.isArray(message) && message.length >= 1 && <ModalMessage show={true} />}
       </Container>
     );
   }
@@ -106,6 +112,7 @@ export class Login extends Component{
 function mapStateToProps(state) {
   return {
     authentification: state.authentification,
+    message: state.message,
   };
 }
 
@@ -115,7 +122,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+
+
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(Login));

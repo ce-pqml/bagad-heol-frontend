@@ -5,7 +5,7 @@ import {
   AUTH_LOGOUT_FAILURE,
   AUTH_LOGOUT_DISMISS_ERROR
 } from './constants';
-import { WEB_SERVICE_URL, AUTH_URL } from '../../../config/webService';
+import { WEB_SERVICE_URL, DISCONNECT_URL } from '../../../config/webService';
 
 export function logout(args) {
   return dispatch => {
@@ -14,7 +14,7 @@ export function logout(args) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.post(WEB_SERVICE_URL + AUTH_URL, args);
+      const doRequest = axios.post(WEB_SERVICE_URL + DISCONNECT_URL, args);
       doRequest.then(
         res => {
           dispatch({
