@@ -13,7 +13,7 @@ export const VIEW_HOME = {
     childRoutes: [
         {path:'/', component: pages.Home},
         {path:'/player', component: pages.Player},
-        {path:'/espace-membre', component: pages.EspaceMembre/*, isPrivate: true*/},
+        {path:'/espace-membre', component: pages.EspaceMembre, isPrivate: true},
         {path:'/contact', component: pages.Contact},
         {path:'/login', component: pages.Login},
         {path:'/register', component: pages.Register},

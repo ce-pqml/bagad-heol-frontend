@@ -1,6 +1,6 @@
 const initialState = {
-  customer: {},
-  currentCustomer: {},
+  user: {},
+  currentUser: {},
 };
 
 export default initialState;

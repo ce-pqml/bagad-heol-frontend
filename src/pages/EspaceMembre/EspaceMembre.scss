@@ -1,27 +1,43 @@
 .espace-membre {
-  background: rgb(255,51,105);
-  background: linear-gradient(90deg, rgba(255,51,105,1) 22%, rgba(255,122,54,1) 57%, rgba(255,219,28,1) 100%);
   width: 100%;
   min-height: 100vh;
-  color: white;
 
-  .block-user {
-    background: rgba(199, 199, 199, 0.3);
-    box-shadow: 3px 3px 5px rgba(0,0,0,0.6);
-    border-radius: 5px;
+  .block-title h3{
+    font-weight: bold;
+  }
 
-    .block-title h3{
-      border-bottom: 1px solid;
-      font-weight: bold;
-    }
+  .switch-notif {
+    width: 100px;
+  }
 
-    .option-desc {
-      font-size: 0.8rem;
-      color: gray;
-    }
+  button {
+    height: 40px;
+  }
 
-    .switch-notif {
-      width: 100px;
+  input:checked {
+    & ~ label {
+      &::before {
+        background-color: $prim-bg !important;
+        border-color: $prim-bg !important;
+      }
     }
   }
+
+  input:not(:disabled):active {
+    & ~ label {
+      &::before {
+        background-color: rgb(255, 125, 127) !important;
+        border-color:  rgb(255, 125, 127) !important;
+      }
+    }
+  }
+
+  input:focus {
+    & ~ label {
+      &::before {
+        box-shadow: 0 0 0 0.2rem rgba(255, 78, 80, 0.25) !important;
+      }
+    }
+  }
+  
 }

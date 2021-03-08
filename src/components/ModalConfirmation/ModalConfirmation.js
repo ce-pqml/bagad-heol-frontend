@@ -16,7 +16,7 @@ function ModalConfirmation(props) {
   return (
     <Modal show={props.show} onHide={props.closeAction}>
       <Modal.Header closeButton className="header-confirm-modal align-items-center">
-        <div className="exclamation-container">
+        <div className="alert-exclamation-container">
           <Exclamation />
         </div>
         <Modal.Title>{props.title}</Modal.Title>

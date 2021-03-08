@@ -1,0 +1,10 @@
+.input-bagad {
+  border: 1px solid $prim-color;
+  &.alert-input {
+    border: 1px solid $alert-color;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0.2rem;
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+  }
+}

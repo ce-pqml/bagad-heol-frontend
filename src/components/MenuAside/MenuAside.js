@@ -45,7 +45,7 @@ const CustomMenu = React.forwardRef(
 
 export class MenuAside extends Component {
   static propTypes = {
-    podcast: PropTypes.object.isRequired,
+    // podcast: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -70,12 +70,12 @@ export class MenuAside extends Component {
         <div id="sidebarCollapse" className="justify-content-center align-items-center" onClick={(e) => this.setMenuRetract()}>
           <List />
         </div>
-        <div class="sidebar-header">
+        <div className="sidebar-header">
           <h3>Bagad Heol</h3>
           <strong>BH</strong>
         </div>
 
-        <ul class="list-unstyled components">
+        <ul className="list-unstyled components">
           <li className={this.props.menuAside.currentPage === "Accueil" ? "active" : ""} onClick={(e) => this.setCurrentPage("Accueil")}>
             <Link to="/">
               <House />
@@ -173,12 +173,12 @@ export class MenuAside extends Component {
           </li>
         </ul>
 
-        {/* <ul class="list-unstyled CTAs">
+        {/* <ul className="list-unstyled CTAs">
           <li>
-            <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+            <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" className="download">Download source</a>
           </li>
           <li>
-            <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+            <a href="https://bootstrapious.com/p/bootstrap-sidebar" className="article">Back to article</a>
           </li>
         </ul> */}
       </nav>

@@ -14,7 +14,6 @@ export function reducer(state, action) {
         ...state,
         message: action.data,
       };
-
     default:
       return state;
   }

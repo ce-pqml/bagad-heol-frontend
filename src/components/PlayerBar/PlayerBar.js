@@ -423,23 +423,23 @@ export class PlayerBar extends Component {
         <Container fluid className="player-bar-container">
           <svg style={{width:0,height:0,position:'absolute'}} aria-hidden="true" focusable="false">
             <linearGradient id="gradient-heol" x2="1" y2="1">
-              <stop offset="22%" stop-color="rgba(255,51,105,1)" />
-              <stop offset="57%" stop-color="rgba(255,122,54,1)" />
-              <stop offset="100%" stop-color="rgba(255,219,28,1)" />
+              <stop offset="20%" stop-color="#f9d423" />
+              <stop offset="35%" stop-color="#fc903a" />
+              <stop offset="60.84%" stop-color="#ff4e50" />
             </linearGradient>
           </svg>
-          <Row className="h-100">
+          <Row className="player-bar-cmd h-100">
             <Col md={4} className="h-100 player-bar-info d-flex align-items-center" align="left">
               {/* <div className="player-bar-cover mr-3"></div> */}
               <img src={this.props.podcast.currentPodcast.img} className="player-bar-cover mr-3" />
-              <div>
+              <div className="player-bar-text-info">
                 <h2>Bagad Heol</h2>
                 <h3 className="mb-2">{this.props.podcast.currentPodcast.title}</h3>
                 <span>{this.formatTimecode(this.state.timebar.currentTime)} / {this.formatTimecode(this.state.timebar.duration)}</span>
               </div>
             </Col>
             <Col md={4} className="h-100 d-flex justify-content-center align-items-center">
-              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickPrev15Sec()}>
+              <div id="player-bar-prev-sec" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickPrev15Sec()}>
                 <ArrowCounterclockwise className="player-bar-btn-little-adv h-100"/>
               </div>
               <div id="player-bar-prev" className="rounded-circle player-bar-btn-box ml-3" onClick={(e) => this.onClickPrev()}>
@@ -451,11 +451,11 @@ export class PlayerBar extends Component {
               <div id="player-bar-next" className="rounded-circle player-bar-btn-box mr-3" onClick={(e) => this.onClickNext()}>
                 <SkipEndFill className="player-bar-btn h-100"/>
               </div>
-              <div id="player-bar-prev" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickNext15Sec()}>
+              <div id="player-bar-next-sec" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickNext15Sec()}>
                 <ArrowClockwise className="player-bar-btn-little-adv h-100"/>
               </div>
             </Col>
-            <Col md={4} className="h-100 d-flex justify-content-end align-items-center" align="right">
+            <Col md={4} className="player-bar-volume-box h-100 d-flex justify-content-end align-items-center" align="right">
               <div id="player-bar-mute" className="rounded-circle player-bar-btn-box" onClick={(e) => this.onClickMuteSound()}>
                 <BtnMute timebar={this.state.timebar}/>
               </div>

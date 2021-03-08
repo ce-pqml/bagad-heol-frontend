@@ -2,21 +2,19 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: white;
+  // color: white;
   // justify-content: space-around;
 
   .block-bagad-heol {
-    width: 60%;
-    background: rgba(199, 199, 199, 0.3);
-    box-shadow: 3px 3px 5px rgba(0,0,0,0.6);
-    border-radius: 5px;
-    padding: 15px;
-    color: white;
+    // width: 60%;
+    // border-radius: 5px;
+    padding: 0px;
+    // color: white;
   }
 
   .block-bagad-heol-mdp {
     width: 20%;
-    color: white;
+    // color: white;
     text-align: right;
 
     .btn-bagad-heol-mdp {

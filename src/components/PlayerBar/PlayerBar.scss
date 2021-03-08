@@ -10,8 +10,8 @@
     height: calc(100% - 5px);
   }
   .player-bar-btn-box{
-    background: rgb(255,51,105);
-    background: linear-gradient(90deg, rgba(255,51,105,1) 22%, rgba(255,122,54,1) 57%, rgba(255,219,28,1) 100%);
+    background: $prim-bg;
+    background: $gradient-title;
     color: whitesmoke;
     border: 1px solid rgba(255, 255, 255, 1);
     &:hover{
@@ -64,8 +64,8 @@
         top: 0;
         left: 0;
         height: 5px;
-        background: rgb(255,51,105);
-        background: linear-gradient(90deg, rgba(255,51,105,1) 22%, rgba(255,122,54,1) 57%, rgba(255,219,28,1) 100%);
+        background: $prim-bg;
+        background: $gradient-title;
         // transition: all 0.5s ease; 
       }
       .timecode-select{
@@ -75,7 +75,7 @@
         transform: translate(-50%, -50%);
         width: 20px;
         height: 20px;
-        background: rgb(255,51,105);
+        background: $prim-bg;
         border-radius: 20px;
         opacity: 0;     
         // transition: all 0.5s ease; 
@@ -104,8 +104,8 @@
         top: 0;
         left: 0;
         height: 5px;
-        background: rgb(255,51,105);
-        background: linear-gradient(90deg, rgba(255,51,105,1) 22%, rgba(255,122,54,1) 57%, rgba(255,219,28,1) 100%);
+        background: $prim-bg;
+        background: $gradient-title;
         // transition: all 0.5s ease; 
       }
       .sound-select{
@@ -115,7 +115,7 @@
         transform: translate(-50%, -50%);
         width: 20px;
         height: 20px;
-        background: rgb(255,51,105);
+        background: $prim-bg;
         border-radius: 20px;
         opacity: 0;     
         // transition: all 0.5s ease; 
@@ -139,15 +139,46 @@
       width: 85px;
       height: 85px;
     }
+    .player-bar-text-info {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     h2{
       font-size: 1.4rem;
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     h3{
       font-size: 1.2rem;
       font-weight: bold;
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-   
+  }
+}
+
+@media (max-width: 1200px) {
+  .player-bar{
+    .player-bar-cover {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .player-bar{
+    #player-bar-prev-sec, #player-bar-next-sec, .player-bar-volume-box {
+      display: none !important;
+    }
+    .player-bar-cmd {
+      & > div {
+        width: 50%;
+      }
+    }
   }
 }
