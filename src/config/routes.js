@@ -25,9 +25,10 @@ export const VIEW_HOME = {
 export const VIEW_ADMIN = {
     path: '/admin',
     // layout: pages.Home,
+    layout: (<MenuAside />),
     childRoutes: [
-        {path:'/', component: pages.Authentification},
-        {path:'/test', component: pages.Authentification},
+        {path:'/general', component: pages.AdminGeneral},
+        {path:'/podcast', component: pages.AdminPodcast},
     ]
 };
 

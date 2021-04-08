@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
-import { Play, Envelope, FileEarmark, House, Image, QuestionCircle, ChevronDoubleRight, ChevronDoubleLeft, PersonBadge, List } from 'react-bootstrap-icons';
+import { Play, Envelope, FileEarmark, House, Image, QuestionCircle, ChevronDoubleRight, ChevronDoubleLeft, PersonBadge, List, Gear } from 'react-bootstrap-icons';
 import { Link } from "react-router-dom";
 import * as menuAsideActions from '../../redux/menu-aside/actions';
 
@@ -154,16 +154,53 @@ export class MenuAside extends Component {
               <span>Contact</span>
             </Link>
           </li>
-          <li className={this.props.menuAside.currentPage === "EspaceMembre" ? "active" : ""} onClick={(e) => this.setCurrentPage("EspaceMembre")}>
-            {/* <a href="#" className="d-flex align-items-center">
-              <Image />
-              <span>Equipe</span>
-            </a> */}
-            <Link to="/espace-membre">
-              <PersonBadge />
-              <span>Espace Membre</span>
-            </Link>
-          </li>
+          {localStorage.getItem('token') && (
+            <li className={this.props.menuAside.currentPage === "EspaceMembre" ? "active" : ""} onClick={(e) => this.setCurrentPage("EspaceMembre")}>
+              {/* <a href="#" className="d-flex align-items-center">
+                <Image />
+                <span>Equipe</span>
+              </a> */}
+              <Link to="/espace-membre">
+                <PersonBadge />
+                <span>Espace Membre</span>
+              </Link>
+            </li>
+          )}
+          {localStorage.getItem('token') && (
+            <li className={this.props.menuAside.currentPage === "Administration" ? "active" : ""} onClick={(e) => this.setCurrentPage("Administration")}>
+              {/* <a href="#" className="d-flex align-items-center">
+                <Image />
+                <span>Equipe</span>
+              </a> */}
+              <Dropdown>
+                <Dropdown.Toggle as={CustomToggle} className="d-flex align-items-center">
+                  <Gear />
+                  <span>Administration</span>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu as={CustomMenu} className="dropdown-collapse-custom">
+                  <li><Dropdown.Item as={Link} to="/admin/general"><span>Général</span></Dropdown.Item></li>
+                  <li><Dropdown.Item as={Link} to="/admin/podcast"><span>Podcast</span></Dropdown.Item></li>
+                </Dropdown.Menu>
+              </Dropdown>
+              {/* <Link to="/admin">
+                <Gear />
+                <span>Administration</span>
+              </Link> */}
+            </li>
+          )}
+          {!localStorage.getItem('token') && (
+            <li className={this.props.menuAside.currentPage === "Connexion" ? "active" : ""} onClick={(e) => this.setCurrentPage("Connexion")}>
+              {/* <a href="#" className="d-flex align-items-center">
+                <Image />
+                <span>Equipe</span>
+              </a> */}
+              <Link to="/login">
+                <PersonBadge />
+                <span>Login</span>
+              </Link>
+            </li>
+          )}
           <li id="retractInsideMenu" onClick={(e) => this.setMenuRetract()}>
             <a href="#" className="d-flex justify-content-end align-items-center" onClick={(e) => e.preventDefault()}>
               {/* <ChevronDoubleRight /> */}

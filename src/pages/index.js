@@ -13,6 +13,9 @@ import EspaceMembre from './EspaceMembre/EspaceMembre';
 import Error404 from './404/404';
 import Contact from './Contact/Contact';
 
+import AdminGeneral from './Administration/General';
+import AdminPodcast from './Administration/Podcast';
+
 export default {
     Home,
     Authentification,
@@ -24,5 +27,7 @@ export default {
     Player,
     EspaceMembre,
     Contact,
+    AdminGeneral,
+    AdminPodcast,
     Error404
 }

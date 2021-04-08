@@ -4,7 +4,7 @@ export const SERVICE_URL = "http://bagad-heol.test";
 export const DISCONNECT_URL = "/account/disconnect";
 export const REGISTER_URL = "/account/register";
 export const LOGIN_URL = "/account/login";
-export const ACCOUNT_URL = "/account/myaccount";
+export const ACCOUNT_URL = "/account/myaccount"; //POST editer profil
 export const RECOVERY_URL = "/account/recovery";
 export const PROFIL_URL = "/account/user-profile";
 

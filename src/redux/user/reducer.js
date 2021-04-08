@@ -7,6 +7,8 @@ import { reducer as deleteUserReducer } from './actions/deleteUser';
 import { reducer as changePasswordReducer } from './actions/changePassword';
 import { reducer as forgotPasswordReducer } from './actions/forgotPassword';
 
+import { reducer as getProfilReducer } from './actions/getProfil';
+
 import { reducer as setCurrentReducer } from './actions/setCurrent';
 
 const reducers = [
@@ -16,7 +18,8 @@ const reducers = [
   deleteUserReducer,
   setCurrentReducer,
   changePasswordReducer,
-  forgotPasswordReducer
+  forgotPasswordReducer,
+  getProfilReducer
 ];
 
 export default function reducer(state = initialState, action) {

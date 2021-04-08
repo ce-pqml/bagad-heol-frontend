@@ -8,16 +8,19 @@ import * as userActions from '../../redux/user/actions';
 import { Container, Row, Col, Form as BootstrapForm, Button, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
-import { Input, Select, TextArea } from '../../components/Form/From';
+import { Input, Select, TextArea, File } from '../../components/Form/From';
 import { required, noSpace, email, composeValidators } from '../../helpers/validationForm';
 import logo from '../../assets/img/logo_bagad_heol.jpg';
 
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation';
+import DropZone from '../../components/Form/DropZone';
 
 export class EspaceMembre extends Component {
   constructor(props) {
     super(props);
     this.state = {confirmDelete: false};
+
+    this.props.actions.getProfil()
   }
 
   static propTypes = {
@@ -25,8 +28,11 @@ export class EspaceMembre extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  componentWill
+
   async submitForm(values) {
-    await this.props.actions.updateUser(values);
+    // await this.props.actions.updateUser(values);
+    console.log(values)
   }
 
   validate(values) {
@@ -44,13 +50,13 @@ export class EspaceMembre extends Component {
   }
 
   render() {
-    let { currentUser } = this.props.user;
+    let { profil } = this.props.user;
 
     return (
       <div className="bg-bagad-heol">
         <Container className="espace-membre">
           <Form
-            initialValues={currentUser}
+            initialValues={profil}
             onSubmit={(values) => this.submitForm(values)}
             validate={(values) => this.validate(values)}
             render={({ handleSubmit, submitting, pristine }) => (
@@ -68,13 +74,38 @@ export class EspaceMembre extends Component {
                       <Row>
                         <Container>
                           <Row>
+                            <Col md={4}>
+                              <div className="d-flex justify-content-between align-items-end flex-wrap">
+                                <label className="m-0">Image de profil</label>
+                                <p className="option-desc m-0">Affiché sur le forum, commentaire, en public</p>
+                              </div>
+                              {/* <input type="text" className="w-100 form-control form-control-sm" /> */}
+                              <Image id="img-avatar" className="img-avatar" src={profil && profil.avatar} roundedCircle />
+                            </Col>
+                            <Col md={8} className="d-flex flex-column justify-content-end">
+                              {/* <input type="text" className="w-100 form-control form-control-sm" /> */}
+                              {/* <Field name="avatar-file" component={File} type="file" className="w-100 form-control form-control-sm"/> */}
+                              <Field name="avatar-file">
+                                {props => (
+                                  <div>
+                                    <DropZone {...props.input} onChange={(file) => document.getElementById('img-avatar').src = file[0].preview} />
+                                  </div>
+                                )}
+                              </Field>
+                            </Col>
+                          </Row>
+                        </Container>
+                      </Row>
+                      <Row>
+                        <Container>
+                          <Row>
                             <Col md={6}>
                               <div className="d-flex justify-content-between align-items-end flex-wrap">
                                 <label className="m-0">Pseudonyme</label>
                                 <p className="option-desc m-0">Affiché sur le forum, commentaire, en public</p>
                               </div>
                               {/* <input type="text" className="w-100 form-control form-control-sm" /> */}
-                              <Field name="pseudonyme" component={Input} type="text" className="w-100 form-control form-control-sm" 
+                              <Field name="login" component={Input} type="text" className="w-100 form-control form-control-sm" 
                               validate={composeValidators(required, noSpace)} />
                             </Col>
                             <Col md={6}>
@@ -149,7 +180,7 @@ export class EspaceMembre extends Component {
               </form>
             )}
           />
-          <Row className="mb-5">
+          {/* <Row className="mb-5">
             <Col>
               <Container>
                 <Row className="block-title pb-4">
@@ -237,7 +268,7 @@ export class EspaceMembre extends Component {
                 </Row>
               </Container>
             </Col>
-          </Row>
+          </Row> */}
         </Container>
         {/* {this.state.confirmDelete && */}
           <ModalConfirmation

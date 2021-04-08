@@ -63,7 +63,7 @@ function buildRoute(routes, dispatch) {
 }
 
 function isPrivate(item, dispatch) {
-  if (item.isPrivate) {
+  if (item.isPrivate && !localStorage.getItem('token')) {
     dispatch(setMessage([{
       'status': 'error',
       'type': 'needLogin',
