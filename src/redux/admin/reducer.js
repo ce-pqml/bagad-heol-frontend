@@ -1,12 +1,10 @@
 import initialState from './initialState';
-import { reducer as loginReducer } from './actions/login';
-import { reducer as logoutReducer } from './actions/logout';
-import { reducer as refreshReducer } from './actions/refresh';
+import { reducer as getListTicketReducer } from './actions/getListTicket';
+import { reducer as getTicketByIdReducer } from './actions/getTicketById';
 
 const reducers = [
-  loginReducer,
-  logoutReducer,
-  refreshReducer
+  getListTicketReducer,
+  getTicketByIdReducer
 ];
 
 export default function reducer(state = initialState, action) {

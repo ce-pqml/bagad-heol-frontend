@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as userActions from '../../redux/user/actions';
+import * as adminActions from '../../redux/admin/actions';
 
-import { Container, Row, Col, Form as BootstrapForm, Button, Image, Tabs, Tab } from 'react-bootstrap';
+import { Container, Row, Col, Form as BootstrapForm, Button, Image, Tabs, Tab, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { Input, Select, TextArea, File } from '../../components/Form/From';
@@ -14,13 +15,14 @@ import logo from '../../assets/img/logo_bagad_heol.jpg';
 
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation';
 import DropZone from '../../components/Form/DropZone';
+import { Pencil } from 'react-bootstrap-icons';
 
 export class AdminGeneral extends Component {
   constructor(props) {
     super(props);
     this.state = {confirmDelete: false};
 
-    this.props.actions.getProfil()
+    this.props.actions.getListTicket()
   }
 
   static propTypes = {
@@ -60,6 +62,8 @@ export class AdminGeneral extends Component {
   render() {
     let { profil } = this.props.user;
 
+    const { listTicket } = this.props.admin;
+
     return (
       <div className="bg-bagad-heol">
         <Container className="espace-membre">
@@ -78,7 +82,43 @@ export class AdminGeneral extends Component {
           </Row>
           <Tabs defaultActiveKey="general" id="uncontrolled-tab-example">
             <Tab eventKey="general" title="General">
-              
+              <Row className="mt-2 mb-2">
+                <Col>
+                  <Container>
+                    <Row className="block-title pb-4">
+                      <Col><h3 className="title-sec">Gestion tickets</h3></Col>
+                    </Row>
+                    <Row>
+                      <Table striped bordered hover>
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Type</th>
+                            <th>Auteur</th>
+                            <th>Titre</th>
+                            <th>Statut</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {listTicket && Array.isArray(listTicket) && listTicket.map((ticket) => 
+                            <tr>
+                              <td>{ticket.id}</td>
+                              <td>{ticket.type}</td>
+                              <td>{ticket.author}</td>
+                              <td>{ticket.title}</td>
+                              <td>{ticket.status}</td>
+                              <td className="text-center">
+                                <Link to={"/admin/ticket/"+ticket.id}><Pencil /></Link>
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </Table>
+                    </Row>
+                  </Container>
+                </Col>
+              </Row>
             </Tab>
             <Tab eventKey="utilisateur" title="Utilisateur">
               <Row className="mt-2 mb-2">
@@ -223,12 +263,13 @@ export class AdminGeneral extends Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
+    admin: state.admin,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...userActions }, dispatch)
+    actions: bindActionCreators({ ...userActions, ...adminActions }, dispatch)
   };
 }
 

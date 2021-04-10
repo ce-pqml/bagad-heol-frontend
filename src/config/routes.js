@@ -29,6 +29,7 @@ export const VIEW_ADMIN = {
     childRoutes: [
         {path:'/general', component: pages.AdminGeneral},
         {path:'/podcast', component: pages.AdminPodcast},
+        {path:'/ticket/:id', component: pages.AdminTicket},
     ]
 };
 
