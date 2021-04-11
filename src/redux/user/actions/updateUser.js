@@ -14,7 +14,7 @@ export function updateUser(args) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.put(WEB_SERVICE_URL + ACCOUNT_URL + '/' + args.id, args);
+      const doRequest = axios.put(WEB_SERVICE_URL + ACCOUNT_URL, args);
       doRequest.then(
         res => {
           dispatch({

@@ -7,7 +7,7 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
-// import './helpers/axiosInterceptor';
+import './helpers/axiosInterceptor';
 
 // const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 

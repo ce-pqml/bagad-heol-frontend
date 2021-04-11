@@ -7,14 +7,16 @@ import {
 } from './constants';
 import { WEB_SERVICE_URL, DISCONNECT_URL } from '../../../config/webService';
 
-export function logout(args) {
+export function logout() {
   return dispatch => {
     dispatch({
       type: AUTH_LOGOUT_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.post(WEB_SERVICE_URL + DISCONNECT_URL, args);
+      const doRequest = axios.post(WEB_SERVICE_URL + DISCONNECT_URL);
+      localStorage.removeItem('userLogged');
+      localStorage.removeItem('token');
       doRequest.then(
         res => {
           dispatch({
@@ -49,7 +51,7 @@ export function reducer(state, action) {
     case AUTH_LOGOUT_SUCCESS:
       return {
         ...state,
-        logout: action.data,
+        // logout: action.data,
         logoutPending: false,
         logoutError: null,
       };

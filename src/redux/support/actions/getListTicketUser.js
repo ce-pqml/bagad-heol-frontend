@@ -8,7 +8,7 @@ import {
 import { WEB_SERVICE_URL, SUPPORT_LIST_TICKETS_URL } from '../../../config/webService';
 import { setMessage } from '../../message/actions';
 
-export function getListTicket() {
+export function getListTicketUser() {
   return dispatch => {
     dispatch({
       type: GET_LIST_TICKET_BEGIN,
@@ -44,29 +44,29 @@ export function reducer(state, action) {
     case GET_LIST_TICKET_BEGIN:
       return {
         ...state,
-        getListTicketPending: true,
-        getListTicketError: null,
+        getListTicketUserPending: true,
+        getListTicketUserError: null,
       };
 
     case GET_LIST_TICKET_SUCCESS:
       return {
         ...state,
-        listTicket: action.data,
-        getListTicketPending: false,
-        getListTicketError: null,
+        listTicketUser: action.data,
+        getListTicketUserPending: false,
+        getListTicketUserError: null,
       };
 
     case GET_LIST_TICKET_FAILURE:
       return {
         ...state,
-        getListTicketPending: false,
-        getListTicketError: action.data.error,
+        getListTicketUserPending: false,
+        getListTicketUserError: action.data.error,
       };
 
     case GET_LIST_TICKET_DISMISS_ERROR:
       return {
         ...state,
-        getListTicketError: null,
+        getListTicketUserError: null,
       };
 
     default:

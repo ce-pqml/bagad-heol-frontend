@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
-import { Play, Envelope, FileEarmark, House, Image, QuestionCircle, ChevronDoubleRight, ChevronDoubleLeft, PersonBadge, List, Gear } from 'react-bootstrap-icons';
-import { Link } from "react-router-dom";
+import { Play, Envelope, FileEarmark, House, Image, QuestionCircle, ChevronDoubleRight, ChevronDoubleLeft, PersonBadge, List, Gear, BoxArrowRight } from 'react-bootstrap-icons';
+import { Link, withRouter } from "react-router-dom";
 import * as menuAsideActions from '../../redux/menu-aside/actions';
+import * as authActions from '../../redux/authentification/actions';
 
 const CustomToggle = React.forwardRef(({ children, onClick, className }, ref) => (
   <a
@@ -172,6 +173,18 @@ export class MenuAside extends Component {
                 <Image />
                 <span>Equipe</span>
               </a> */}
+              <div className="btn-menu-aside" onClick={() => {this.props.history.push("/"); this.props.actions.logout();}}>
+                <BoxArrowRight />
+                <span>Deconnexion</span>
+              </div>
+            </li>
+          )}
+           {localStorage.getItem('token') && (
+            <li className={this.props.menuAside.currentPage === "Deconnexion" ? "active" : ""} onClick={(e) => this.setCurrentPage("Deconnexion")}>
+              {/* <a href="#" className="d-flex align-items-center">
+                <Image />
+                <span>Equipe</span>
+              </a> */}
               <Dropdown>
                 <Dropdown.Toggle as={CustomToggle} className="d-flex align-items-center">
                   <Gear />
@@ -231,12 +244,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...menuAsideActions }, dispatch)
+    actions: bindActionCreators({ ...menuAsideActions, ...authActions }, dispatch)
   };
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(MenuAside);
+)(MenuAside));
 

@@ -8,6 +8,9 @@ export const ACCOUNT_URL = "/account/myaccount"; //POST editer profil
 export const RECOVERY_URL = "/account/recovery";
 export const PROFIL_URL = "/account/user-profile";
 
+export const RECOVERY_PSW = "/account/recovery";
+
+export const SUPPORT_ADD_TICKETS_URL = "/support/new";
 export const SUPPORT_LIST_TICKETS_URL = "/support/index";
 export const SUPPORT_VIEW_TICKET_URL = "/support/view";
 

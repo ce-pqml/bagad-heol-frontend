@@ -7,7 +7,7 @@ import * as authActions from '../../redux/authentification/actions';
 import * as userActions from '../../redux/user/actions';
 
 import { Container, Row, Col, Image } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { Input } from '../../components/Form/From';
 import { required, noSpace, email, composeValidators } from '../../helpers/validationForm';
@@ -15,6 +15,14 @@ import ModalMessage from '../../components/ModalMessage/ModalMessage';
 import logo from '../../assets/img/logo_bagad_heol.jpg';
 
 export class Register extends Component{
+  constructor(props) {
+    super(props);
+
+    if (localStorage.getItem('token') && localStorage.getItem('token') !== null && localStorage.getItem('token') !== '') {
+      this.props.history.push("/");
+    }
+  }
+
   static propTypes = {
     authentification: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -53,16 +61,16 @@ export class Register extends Component{
         <Form
           onSubmit={(values) => this.submitForm(values)}
           validate={(values) => this.validate(values)}
-          initialValues={{
-            pseudo: "test",
-            email: "test@local.fr",
-            confirmEmail: "test@local.fr",
-            password: "test",
-            confirmPassword: "test",
-            country: "test",
-            question: "test",
-            response: "test",
-          }}
+          // initialValues={{
+          //   pseudo: "test",
+          //   email: "test@local.fr",
+          //   confirmEmail: "test@local.fr",
+          //   password: "test",
+          //   confirmPassword: "test",
+          //   country: "test",
+          //   question: "test",
+          //   response: "test",
+          // }}
           render={({ handleSubmit, submitting, pristine }) => (
             <form onSubmit={handleSubmit}>
               <Container>
@@ -204,7 +212,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Register);
+)(Register));

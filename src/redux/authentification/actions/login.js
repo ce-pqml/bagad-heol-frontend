@@ -27,7 +27,7 @@ export function login(args) {
           resolve(res);
         },
         err => {
-          dispatch(setMessage(err.response.data));
+          if (err && err.response && err.response.data) dispatch(setMessage(err.response.data));
           dispatch({
             type: AUTH_LOGIN_FAILURE,
             data: { error: err },

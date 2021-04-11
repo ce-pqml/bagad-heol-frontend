@@ -14,6 +14,14 @@ import ModalMessage from '../../components/ModalMessage/ModalMessage';
 import logo from '../../assets/img/logo_bagad_heol.jpg';
 
 export class Login extends Component{
+  constructor(props) {
+    super(props);
+
+    if (localStorage.getItem('token') && localStorage.getItem('token') !== null && localStorage.getItem('token') !== '') {
+      this.props.history.push("/");
+    }
+  }
+  
   static propTypes = {
     authentification: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,

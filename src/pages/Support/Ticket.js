@@ -23,7 +23,8 @@ export class AdminTicket extends Component {
     this.state = {confirmDelete: false};
 
     // console.log('test : '+this.props.match.params.id)
-    this.props.actions.getTicketById(this.props.match.params.id)
+    this.props.actions.getProfil();
+    this.props.actions.getTicketById(this.props.match.params.id);
   }
 
   static propTypes = {
@@ -31,17 +32,7 @@ export class AdminTicket extends Component {
     actions: PropTypes.object.isRequired,
   };
 
-  async submitForm(values) {
-    // await this.props.actions.updateUser(values);
-    console.log(values)
-  }
-
-  async submitCreateUser(values) {
-    // await this.props.actions.updateUser(values);
-    console.log(values)
-  }
-
-  async submitBanUser(values) {
+  async sendResponse(values) {
     // await this.props.actions.updateUser(values);
     console.log(values)
   }
@@ -61,25 +52,26 @@ export class AdminTicket extends Component {
   }
 
   render() {
+    const { profil } = this.props.user;
     const { ticket } = this.props.admin;
 
     return (
       <div className="bg-bagad-heol">
-        <Container className="espace-membre">
-          <Row className="mb-5">
+        <Container className="ticket-page">
+          <Row>
             <Col>
               <Container>
                 <Row className="pb-4">
                   <Col>
                     <div className="title-border-gradient mb-5">
-                      <h1 className="title-gradient">Admin - Général</h1>
+                      <h1 className="title-gradient">Ticket</h1>
                     </div>
                   </Col>
                 </Row>
               </Container>
             </Col>
           </Row>
-          <Row className="mt-2 mb-2">
+          <Row className="mb-2">
             <Col>
               <Container>
                 <Row className="block-title pb-4">
@@ -94,35 +86,39 @@ export class AdminTicket extends Component {
                 </Row>
                 {ticket.responses && Array.isArray(ticket.responses) && ticket.responses.map((response) => 
                   <Row className="mb-2">
-                    <Col>
-                      <span>{response.author}&nbsp;-&nbsp;</span>
-                      <span>{response.date}</span>
-                      <Container className="border p-3 shadow-sm bg-white rounded">
+                    <Col md={12} className={response.author == profil?.login ? "d-flex flex-column justify-content-end align-items-end" : ""}>
+                      <div className={response.author == profil?.login ? "w-75 text-right ticket-response" : "w-75 ticket-response"}>
+                        <span>{response.author}&nbsp;-&nbsp;</span>
+                        <span>{response.date}</span>
+                      </div>
+                      <Container fluid className="w-75 border p-3 shadow-sm bg-white rounded m-0 ticket-response">
                         {response.text}
                       </Container>
                     </Col>
                   </Row>
                 )}
                 <Form
-                  onSubmit={(values) => this.submitCreateUser(values)}
+                  onSubmit={(values) => this.sendResponse(values)}
                   // validate={(values) => this.validate(values)}
                   render={({ handleSubmit, submitting, pristine }) => (
                     <form className="w-100" onSubmit={handleSubmit}>
                       <Row className="mt-5">
                         <Col>
+                          <span>Votre réponse</span>
                           <Field name="response" component={TextArea} type="text" className="w-100 form-control form-control-sm" 
                             validate={composeValidators(required)} />
                         </Col>
                       </Row>
-                      <Row>
-                        <Col>
-                        
+                      <Row className="mt-2 justify-content-end">
+                        <Col md={6} className="d-flex justify-content-end">
+                          <button type="submit" className="btn-bagad-heol" disabled={submitting || pristine}>
+                            Envoyer
+                          </button>
                         </Col>
                       </Row>
                     </form>
                   )}
                 />
-                
               </Container>
             </Col>
           </Row>

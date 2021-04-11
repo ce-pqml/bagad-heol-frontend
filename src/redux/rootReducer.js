@@ -6,6 +6,7 @@ import menuAsideReducer from './menu-aside/reducer';
 import messageReducer from './message/reducer';
 import userReducer from './user/reducer';
 import authentificationReducer from './authentification/reducer';
+import supportReducer from './support/reducer';
 import adminReducer from './admin/reducer';
 
 const reducerMap = {
@@ -15,6 +16,7 @@ const reducerMap = {
   message: messageReducer,
   user: userReducer,
   authentification: authentificationReducer,
+  support: supportReducer,
   admin: adminReducer
 };
 

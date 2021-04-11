@@ -35,7 +35,7 @@ export function getProfil() {
           resolve(res);
         },
         err => {
-          dispatch(setMessage(err.response.data));
+          if (err && err.response && err.response.data) dispatch(setMessage(err.response.data));
           dispatch({
             type: GET_PROFIL_FAILURE,
             data: { error: err },

@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as userActions from '../../redux/user/actions';
+import * as supportActions from '../../redux/support/actions';
 
-import { Container, Row, Col, Form as BootstrapForm, Button, Image } from 'react-bootstrap';
+import { Container, Row, Col, Form as BootstrapForm, Button, Image, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { Input, Select, TextArea, File } from '../../components/Form/From';
@@ -14,13 +15,21 @@ import logo from '../../assets/img/logo_bagad_heol.jpg';
 
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation';
 import DropZone from '../../components/Form/DropZone';
+import { Pencil } from 'react-bootstrap-icons';
+import ModalAddTicket from '../../components/ModalAddTicket/ModalAddTicket';
 
 export class EspaceMembre extends Component {
   constructor(props) {
     super(props);
-    this.state = {confirmDelete: false};
+    this.state = {
+      confirmDelete: false,
+      addTicket: false,
+    };
 
-    this.props.actions.getProfil()
+    if (localStorage.getItem('token') && localStorage.getItem('token') !== null && localStorage.getItem('token') !== '') {
+      this.props.actions.getProfil();
+      this.props.actions.getListTicketUser();
+    }
   }
 
   static propTypes = {
@@ -28,35 +37,43 @@ export class EspaceMembre extends Component {
     actions: PropTypes.object.isRequired,
   };
 
-  componentWill
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.addTicket !== this.state.addTicket) {
+      this.props.actions.getListTicketUser();
+    }
+  }
 
   async submitForm(values) {
-    // await this.props.actions.updateUser(values);
+    await this.props.actions.updateUser(values);
     console.log(values)
   }
 
   validate(values) {
     const errors = {}
-    if (values['new-password'] && !values['new-password-confirm']) {
-      errors['new-password-confirm'] = 'Requis'
+    if (values['passwordUpdate'] && !values['passwordUpdate-confirm']) {
+      errors['passwordUpdate-confirm'] = 'Requis'
     }
-    if (!values['new-password'] && values['new-password-confirm']) {
-      errors['new-password'] = 'Requis'
+    if (!values['passwordUpdate'] && values['passwordUpdate-confirm']) {
+      errors['passwordUpdate'] = 'Requis'
     }
-    if (values['new-password'] && values['new-password-confirm'] && values['new-password'] !== values['new-password-confirm']) {
-      errors['new-password-confirm'] = 'Doit être similaire'
+    if (values['passwordUpdate'] && values['passwordUpdate-confirm'] && values['passwordUpdate'] !== values['passwordUpdate-confirm']) {
+      errors['passwordUpdate-confirm'] = 'Doit être similaire'
     }
     return errors
   }
 
   render() {
-    let { profil } = this.props.user;
+    const { profil } = this.props.user;
+    const { listTicketUser } = this.props.support;
 
     return (
       <div className="bg-bagad-heol">
         <Container className="espace-membre">
           <Form
-            initialValues={profil}
+            initialValues={{
+              emailUpdate: profil?.email,
+              loginUpdate: profil?.login
+            }}
             onSubmit={(values) => this.submitForm(values)}
             validate={(values) => this.validate(values)}
             render={({ handleSubmit, submitting, pristine }) => (
@@ -105,7 +122,7 @@ export class EspaceMembre extends Component {
                                 <p className="option-desc m-0">Affiché sur le forum, commentaire, en public</p>
                               </div>
                               {/* <input type="text" className="w-100 form-control form-control-sm" /> */}
-                              <Field name="login" component={Input} type="text" className="w-100 form-control form-control-sm" 
+                              <Field name="loginUpdate" component={Input} type="text" className="w-100 form-control form-control-sm" 
                               validate={composeValidators(required, noSpace)} />
                             </Col>
                             <Col md={6}>
@@ -114,7 +131,7 @@ export class EspaceMembre extends Component {
                                 <p className="option-desc m-0">Pour les notifications, contact</p>
                               </div>
                               {/* <input type="text" className="w-100 form-control form-control-sm" /> */}
-                              <Field name="email" component={Input} type="text" className="w-100 form-control form-control-sm" 
+                              <Field name="emailUpdate" component={Input} type="text" className="w-100 form-control form-control-sm" 
                               validate={composeValidators(required, noSpace, email)} />
                             </Col>
                           </Row>
@@ -149,7 +166,7 @@ export class EspaceMembre extends Component {
                                 <p className="option-desc m-0"></p>
                               </div>
                               {/* <input type="text" className="w-100 form-control form-control-sm" /> */}
-                              <Field name="new-password" component={Input} type="password" className="w-100 form-control form-control-sm" 
+                              <Field name="passwordUpdate" component={Input} type="password" className="w-100 form-control form-control-sm" 
                               validate={composeValidators(noSpace)} />
                             </Col>
                             <Col md={6}>
@@ -158,7 +175,7 @@ export class EspaceMembre extends Component {
                                 <p className="option-desc m-0"></p>
                               </div>
                               {/* <input type="text" className="w-100 form-control form-control-sm" /> */}
-                              <Field name="new-password-confirm" component={Input} type="password" className="w-100 form-control form-control-sm" 
+                              <Field name="passwordUpdate-confirm" component={Input} type="password" className="w-100 form-control form-control-sm" 
                               validate={composeValidators(noSpace)} />
                             </Col>
                           </Row>
@@ -170,7 +187,7 @@ export class EspaceMembre extends Component {
                 <Row className="mb-5 justify-content-end">
                   <Col md={6} className="d-flex justify-content-end">
                     <Button variant="danger" className="mr-3" 
-                    onClick={(e) => this.setState(prevstate => ({ ...prevstate, confirmDelete: true}))}>Supprimer mon compte</Button>
+                      onClick={(e) => this.setState(prevstate => ({ ...prevstate, confirmDelete: true}))}>Supprimer mon compte</Button>
                     {/* <Button variant="success">Confirmer</Button> */}
                     <button type="submit" className="btn-bagad-heol mr-3" disabled={submitting || pristine}>
                       Mettre à jour
@@ -180,6 +197,43 @@ export class EspaceMembre extends Component {
               </form>
             )}
           />
+          <Row className="mb-5">
+            <Col>
+              <Container>
+                <Row className="block-title pb-4">
+                  <Col className="d-flex title-tickets">
+                    <h3 className="title-sec">Tickets</h3>
+                    <Button variant="success"
+                      onClick={() => this.setState(prevstate => ({ ...prevstate, addTicket: true}))}>Nouvelle demande</Button>
+                  </Col>
+                </Row>
+                <Row>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>Titre</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {listTicketUser && Array.isArray(listTicketUser) && listTicketUser.map((ticket) => 
+                        <tr>
+                          <td>{ticket.type}</td>
+                          <td>{ticket.title}</td>
+                          <td>{ticket.status}</td>
+                          <td className="text-center">
+                            <Link to={"/admin/ticket/"+ticket.id}><Pencil /></Link>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </Table>
+                </Row>
+              </Container>
+            </Col>
+          </Row>
           {/* <Row className="mb-5">
             <Col>
               <Container>
@@ -278,6 +332,13 @@ export class EspaceMembre extends Component {
             title={"Confirmation suppression compte"}
             msg={"Êtes-vous sûr de vouloir supprimer votre compte ?<br/> Vous n'aurez plus accès à notre fantastique communauté ! Au partage, à l'échange..."}
           />
+          <ModalAddTicket 
+            show={this.state.addTicket}
+            closeAction={() => this.setState(prevstate => ({ ...prevstate, addTicket: false}))}
+            confirmAction={() => this.setState(prevstate => ({ ...prevstate, addTicket: false}))}
+            title={"Nouveau ticket"}
+            msg={"Veuillez indiquer avec détails votre problème."}
+          />
         {/* } */}
       </div>
     );
@@ -287,12 +348,13 @@ export class EspaceMembre extends Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
+    support: state.support,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...userActions }, dispatch)
+    actions: bindActionCreators({ ...userActions, ...supportActions }, dispatch)
   };
 }
 

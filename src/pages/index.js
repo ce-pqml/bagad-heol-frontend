@@ -15,7 +15,7 @@ import Contact from './Contact/Contact';
 
 import AdminGeneral from './Administration/General';
 import AdminPodcast from './Administration/Podcast';
-import AdminTicket from './Administration/Ticket';
+import AdminTicket from './Support/Ticket';
 
 export default {
     Home,

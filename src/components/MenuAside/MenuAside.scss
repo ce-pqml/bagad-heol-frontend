@@ -1,9 +1,16 @@
 a,
 a:hover,
-a:focus {
+a:focus,
+.btn-menu-aside,
+.btn-menu-aside:hover,
+.btn-menu-aside:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
+}
+
+.btn-menu-aside:hover {
+    cursor: pointer;
 }
 
 .navbar {
@@ -87,7 +94,7 @@ span {
         left: 15%;
     }
 
-    ul li a, ul li div a {
+    ul li a, ul li div a, ul li .btn-menu-aside {
         svg {
             width: 100%;
             font-size: 2.25rem;
@@ -116,24 +123,24 @@ span {
     display: block;
 }
 
-#sidebar ul li a, #sidebar ul li div a {
+#sidebar ul li a, #sidebar ul li div a, #sidebar ul li .btn-menu-aside {
     text-align: left;
 }
 
-#sidebar.active ul li a, #sidebar.active ul li div a {
+#sidebar.active ul li a, #sidebar.active ul li div a, #sidebar.active ul li .btn-menu-aside {
     padding: 20px 10px;
     text-align: center;
     font-size: 0.85em;
 }
 
-#sidebar.active ul li a i, #sidebar.active ul li svg {
+#sidebar.active ul li a i, #sidebar.active ul li svg, #sidebar.active ul li .btn-menu-aside svg, #sidebar.active ul li .btn-menu-aside i  {
     margin-right: 0;
     display: block;
     font-size: 1.8em;
     margin-bottom: 5px;
 }
 
-#sidebar.active ul ul a, #sidebar.active ul ul div a {
+#sidebar.active ul ul a, #sidebar.active ul ul div a, #sidebar.active ul ul .btn-menu-aside {
     padding: 10px !important;
 }
 
@@ -161,13 +168,13 @@ span {
     border-bottom: 1px solid $menu-hover;
 }
 
-#sidebar ul li a, #sidebar ul li div a{
+#sidebar ul li a, #sidebar ul li div a, #sidebar ul li .btn-menu-aside {
     padding: 10px;
     font-size: 1.1em;
     display: block;
 }
 
-#sidebar ul li a:hover, #sidebar ul li div a:hover {
+#sidebar ul li a:hover, #sidebar ul li div a:hover, #sidebar ul li .btn-menu-aside:hover {
     color: $menu-hover;
     background: #fff;
 }

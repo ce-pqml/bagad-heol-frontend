@@ -1,26 +1,25 @@
 import axios from 'axios';
 import {
-  USER_CREATE_USER_BEGIN,
-  USER_CREATE_USER_SUCCESS,
-  USER_CREATE_USER_FAILURE,
-  USER_CREATE_USER_DISMISS_ERROR,
+  ADD_TICKET_BEGIN,
+  ADD_TICKET_SUCCESS,
+  ADD_TICKET_FAILURE,
+  ADD_TICKET_DISMISS_ERROR
 } from './constants';
-import { WEB_SERVICE_URL, REGISTER_URL } from '../../../config/webService';
+import { WEB_SERVICE_URL, SUPPORT_ADD_TICKETS_URL } from '../../../config/webService';
 import { setMessage } from '../../message/actions';
 
-export function createUser(args) {
+export function addTicket(args) {
   return dispatch => {
     dispatch({
-      type: USER_CREATE_USER_BEGIN,
+      type: ADD_TICKET_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.post(WEB_SERVICE_URL + REGISTER_URL, args);
+      const doRequest = axios.post(WEB_SERVICE_URL + SUPPORT_ADD_TICKETS_URL, args);
       doRequest.then(
         res => {
-          dispatch(setMessage(res.data));
           dispatch({
-            type: USER_CREATE_USER_SUCCESS,
+            type: ADD_TICKET_SUCCESS,
             data: res.data,
           });
           resolve(res);
@@ -28,7 +27,7 @@ export function createUser(args) {
         err => {
           if (err && err.response && err.response.data) dispatch(setMessage(err.response.data));
           dispatch({
-            type: USER_CREATE_USER_FAILURE,
+            type: ADD_TICKET_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -42,32 +41,31 @@ export function createUser(args) {
 
 export function reducer(state, action) {
   switch (action.type) {
-    case USER_CREATE_USER_BEGIN:
+    case ADD_TICKET_BEGIN:
       return {
         ...state,
-        createUserPending: true,
-        createUserError: null,
+        addTicketPending: true,
+        addTicketError: null,
       };
 
-    case USER_CREATE_USER_SUCCESS:
+    case ADD_TICKET_SUCCESS:
       return {
         ...state,
-        createUser: action.data,
-        createUserPending: false,
-        createUserError: null,
+        addTicketPending: false,
+        addTicketError: null,
       };
 
-    case USER_CREATE_USER_FAILURE:
+    case ADD_TICKET_FAILURE:
       return {
         ...state,
-        createUserPending: false,
-        createUserError: action.data.error,
+        addTicketPending: false,
+        addTicketError: action.data.error,
       };
 
-    case USER_CREATE_USER_DISMISS_ERROR:
+    case ADD_TICKET_DISMISS_ERROR:
       return {
         ...state,
-        createUserError: null,
+        addTicketError: null,
       };
 
     default:

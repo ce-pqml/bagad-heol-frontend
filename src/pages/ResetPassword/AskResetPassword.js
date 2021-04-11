@@ -6,13 +6,21 @@ import { connect } from 'react-redux';
 import * as userActions from '../../redux/user/actions';
 
 import { Container, Row, Col, Image } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { Input, Select, TextArea } from '../../components/Form/From';
 import { required, noSpace, email, composeValidators } from '../../helpers/validationForm';
 import logo from '../../assets/img/logo_bagad_heol.jpg';
 
 export class AskResetPassword extends Component{
+  constructor(props) {
+    super(props);
+
+    if (localStorage.getItem('token') && localStorage.getItem('token') !== null && localStorage.getItem('token') !== '') {
+      this.props.history.push("/");
+    }
+  }
+
   static propTypes = {
     user: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -46,12 +54,23 @@ export class AskResetPassword extends Component{
                 <Row className="mb-3">
                   <Col>
                     <label>Email</label>
-                    <Field name="lost-password" component={Input} type="text" placeholder="Email du compte perdu" className="w-100 form-control form-control-sm" 
+                    <Field name="email" component={Input} type="text" placeholder="Email du compte perdu" className="w-100 form-control form-control-sm" 
                     validate={composeValidators(required, noSpace, email)} />
                   </Col>
                 </Row>
                 <Row className="mb-5">
-                  <Col className="d-flex justify-content-end">
+                  <Col className="d-flex justify-content-between">
+                    <div className="d-flex">
+                      <img src="/auths.php" className="mr-2" width="100px" alt="" />
+                      <div>
+                        <div className="d-flex justify-content-between align-items-end flex-wrap">
+                          <label className="m-0">Captcha</label>
+                        </div>
+                        {/* <input type="password" placeholder="Confirmer votre mot de passe" name="password-confirm"  className="w-100 form-control form-control-sm" required /> */}
+                        <Field name="captcha" component={Input} type="text" placeholder="Répétez le captcha" className="w-100 form-control form-control-sm"
+                        validate={composeValidators(required)} />
+                      </div>
+                    </div>
                     <button type="submit" className="btn-bagad-heol" disabled={submitting || pristine}>
                       Réinitialiser mot de passe
                     </button>
@@ -78,7 +97,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(AskResetPassword);
+)(AskResetPassword));

@@ -5,7 +5,7 @@ import {
   USER_FORGOT_PASSWORD_FAILURE,
   USER_FORGOT_PASSWORD_DISMISS_ERROR
 } from './constants';
-import { WEB_SERVICE_URL, ACCOUNT_URL } from '../../../config/webService';
+import { WEB_SERVICE_URL, RECOVERY_PSW } from '../../../config/webService';
 
 export function forgotPassword(args) {
   return dispatch => {
@@ -14,7 +14,7 @@ export function forgotPassword(args) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.post(WEB_SERVICE_URL + ACCOUNT_URL, args);
+      const doRequest = axios.post(WEB_SERVICE_URL + RECOVERY_PSW, args);
       doRequest.then(
         res => {
           dispatch({
