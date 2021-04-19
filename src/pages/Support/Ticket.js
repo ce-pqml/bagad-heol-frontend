@@ -6,16 +6,13 @@ import { connect } from 'react-redux';
 import * as userActions from '../../redux/user/actions';
 import * as adminActions from '../../redux/admin/actions';
 
-import { Container, Row, Col, Form as BootstrapForm, Button, Image, Tabs, Tab, Table } from 'react-bootstrap';
-import { Link, withRouter } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
-import { Input, Select, TextArea, File } from '../../components/Form/From';
-import { required, noSpace, email, composeValidators } from '../../helpers/validationForm';
-import logo from '../../assets/img/logo_bagad_heol.jpg';
+import { TextArea } from '../../components/Form/From';
+import { required, composeValidators } from '../../helpers/validationForm';
 
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation';
-import DropZone from '../../components/Form/DropZone';
-import { Pencil } from 'react-bootstrap-icons';
 
 export class AdminTicket extends Component {
   constructor(props) {
@@ -74,15 +71,18 @@ export class AdminTicket extends Component {
           <Row className="mb-2">
             <Col>
               <Container>
-                <Row className="block-title pb-4">
+                <Row className="block-title pb-1">
                   <Col><h3 className="title-sec">Gestion du ticket # {this.props.match.params.id}</h3></Col>
                 </Row>
                 <Row>
-                  <Col>Titre : {ticket.title}</Col>
+                  <Col><p><span className="font-weight-bold">Titre : </span> {ticket.title}</p></Col>
                 </Row>
-                <Row className="pb-4">
-                  <Col>Type : {ticket.type}</Col>
-                  <Col>Statut : {ticket.status}</Col>
+                <Row className="pb-1">
+                  <Col><p><span className="font-weight-bold">Type : </span> {ticket.type}</p></Col>
+                  <Col><p><span className="font-weight-bold">Statut : </span> {ticket.status}</p></Col>
+                </Row>
+                <Row className="border-bottom mb-3">
+                  
                 </Row>
                 {ticket.responses && Array.isArray(ticket.responses) && ticket.responses.map((response) => 
                   <Row className="mb-2">

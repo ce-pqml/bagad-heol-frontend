@@ -5,6 +5,7 @@ import {
   PODCAST_GET_PODCAST_FAILURE,
   PODCAST_GET_PODCAST_DISMISS_ERROR,
 } from './constants';
+import { WEB_SERVICE_URL, GET_PODCAST } from '../../../config/webService';
 
 export function getPodcast() {
   return dispatch => {
@@ -13,7 +14,7 @@ export function getPodcast() {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.get('http://www.reddit.com/r/reactjs.json');
+      const doRequest = axios.post(WEB_SERVICE_URL + GET_PODCAST);
       doRequest.then(
         res => {
           dispatch({

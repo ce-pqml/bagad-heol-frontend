@@ -15,6 +15,7 @@ import Contact from './Contact/Contact';
 
 import AdminGeneral from './Administration/General';
 import AdminPodcast from './Administration/Podcast';
+import AdminEditPodcast from './Administration/EditPodcast';
 import AdminTicket from './Support/Ticket';
 
 export default {
@@ -30,6 +31,7 @@ export default {
     Contact,
     AdminGeneral,
     AdminPodcast,
+    AdminEditPodcast,
     AdminTicket,
     Error404
 }

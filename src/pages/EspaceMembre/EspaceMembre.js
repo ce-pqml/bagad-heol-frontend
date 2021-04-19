@@ -17,6 +17,7 @@ import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmat
 import DropZone from '../../components/Form/DropZone';
 import { Pencil } from 'react-bootstrap-icons';
 import ModalAddTicket from '../../components/ModalAddTicket/ModalAddTicket';
+import ModalMessage from '../../components/ModalMessage/ModalMessage';
 
 export class EspaceMembre extends Component {
   constructor(props) {
@@ -44,8 +45,26 @@ export class EspaceMembre extends Component {
   }
 
   async submitForm(values) {
-    await this.props.actions.updateUser(values);
-    console.log(values)
+    if (values.avatar && values.avatar[0]) {
+      const payload = new FormData();
+      payload.append('avatar', values.avatar[0])
+      await this.props.actions.updateUser(payload);
+    }
+
+    if (!this.props.message.message[0].status && this.props.message.message[0].status !== "error" && values.emailUpdate && values.emailUpdate !== this.props.user.profil.email) {
+      await this.props.actions.updateUser({
+        emailUpdate: values.emailUpdate
+      });
+    }
+
+    if (!this.props.message.message[0].status && this.props.message.message[0].status !== "error" && values['passwordUpdate'] && values['passwordUpdate-confirm']) {
+      await this.props.actions.updateUser({
+        passwordUpdate: values.passwordUpdate,
+        'passwordUpdate-confirm': values['passwordUpdate-confirm']
+      });
+    }
+
+    this.props.actions.getProfil();
   }
 
   validate(values) {
@@ -65,6 +84,7 @@ export class EspaceMembre extends Component {
   render() {
     const { profil } = this.props.user;
     const { listTicketUser } = this.props.support;
+    const { message } = this.props.message;
 
     return (
       <div className="bg-bagad-heol">
@@ -101,11 +121,11 @@ export class EspaceMembre extends Component {
                             </Col>
                             <Col md={8} className="d-flex flex-column justify-content-end">
                               {/* <input type="text" className="w-100 form-control form-control-sm" /> */}
-                              {/* <Field name="avatar-file" component={File} type="file" className="w-100 form-control form-control-sm"/> */}
-                              <Field name="avatar-file">
+                              {/* <Field name="avatar" component={File} type="file" className="w-100 form-control form-control-sm"/> */}
+                              <Field name="avatar">
                                 {props => (
                                   <div>
-                                    <DropZone {...props.input} onChange={(file) => document.getElementById('img-avatar').src = file[0].preview} />
+                                    <DropZone {...props.input} /*onChange={(file) => document.getElementById('img-avatar').src = file[0].preview} *//>
                                   </div>
                                 )}
                               </Field>
@@ -340,6 +360,7 @@ export class EspaceMembre extends Component {
             msg={"Veuillez indiquer avec détails votre problème."}
           />
         {/* } */}
+        {message && Array.isArray(message) && message.length >= 1 && <ModalMessage show={true} />}
       </div>
     );
   }
@@ -349,6 +370,7 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     support: state.support,
+    message: state.message
   };
 }
 

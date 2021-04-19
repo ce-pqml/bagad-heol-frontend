@@ -7,7 +7,6 @@ import {
 } from './constants';
 import { WEB_SERVICE_URL, PROFIL_URL } from '../../../config/webService';
 import { setMessage } from '../../message/actions';
-import { history } from 'react-router-dom'
 
 export function getProfil() {
   return dispatch => {
@@ -16,7 +15,7 @@ export function getProfil() {
     });
 
     const promise = new Promise((resolve, reject) => {
-      if (localStorage.getItem('userLogged') && localStorage.getItem('token') && JSON.parse(localStorage.getItem('userLogged')).id) {
+      if (!localStorage.getItem('userLogged') || !localStorage.getItem('token') || !JSON.parse(localStorage.getItem('userLogged')).id) {
         dispatch(setMessage([
           {
             'status': 'error',

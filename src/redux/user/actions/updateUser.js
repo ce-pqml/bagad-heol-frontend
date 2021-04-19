@@ -6,6 +6,7 @@ import {
   USER_UPDATE_USER_DISMISS_ERROR,
 } from './constants';
 import { WEB_SERVICE_URL, ACCOUNT_URL } from '../../../config/webService';
+import { setMessage } from '../../message/actions';
 
 export function updateUser(args) {
   return dispatch => {
@@ -14,16 +15,18 @@ export function updateUser(args) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.put(WEB_SERVICE_URL + ACCOUNT_URL, args);
+      const doRequest = axios.post(WEB_SERVICE_URL + ACCOUNT_URL, args);
       doRequest.then(
         res => {
           dispatch({
             type: USER_UPDATE_USER_SUCCESS,
             data: res.data,
           });
+          dispatch(setMessage([res.data]));
           resolve(res);
         },
         err => {
+          if (err && err.response && err.response.data) dispatch(setMessage(err.response.data));
           dispatch({
             type: USER_UPDATE_USER_FAILURE,
             data: { error: err },
@@ -49,7 +52,6 @@ export function reducer(state, action) {
     case USER_UPDATE_USER_SUCCESS:
       return {
         ...state,
-        updateUser: action.data,
         updateUserPending: false,
         updateUserError: null,
       };

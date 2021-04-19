@@ -192,8 +192,8 @@ export class MenuAside extends Component {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu as={CustomMenu} className="dropdown-collapse-custom">
-                  <li><Dropdown.Item as={Link} to="/admin/general"><span>Général</span></Dropdown.Item></li>
-                  <li><Dropdown.Item as={Link} to="/admin/podcast"><span>Podcast</span></Dropdown.Item></li>
+                  <li><Dropdown.Item as={Link} to="/admin/general"><span className="sub_menu">Général</span></Dropdown.Item></li>
+                  <li><Dropdown.Item as={Link} to="/admin/podcast"><span className="sub_menu">Podcast</span></Dropdown.Item></li>
                 </Dropdown.Menu>
               </Dropdown>
               {/* <Link to="/admin">

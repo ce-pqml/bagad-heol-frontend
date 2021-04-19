@@ -31,6 +31,7 @@ export const VIEW_ADMIN = {
         {path:'/general', component: pages.AdminGeneral},
         {path:'/podcast', component: pages.AdminPodcast},
         {path:'/ticket/:id', component: pages.AdminTicket},
+        {path:'/podcast/:id', component: pages.AdminEditPodcast},
     ]
 };
 
