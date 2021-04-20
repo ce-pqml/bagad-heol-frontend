@@ -16,6 +16,7 @@ import { required, composeValidators, noSpace } from '../../helpers/validationFo
 import { decode } from 'html-entities';
 
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation';
+import ModalMessage from '../../components/ModalMessage/ModalMessage';
 
 export class AdminEditPodcast extends Component {
   constructor(props) {
@@ -23,8 +24,15 @@ export class AdminEditPodcast extends Component {
     this.state = {confirmDelete: false};
 
     // console.log('test : '+this.props.match.params.id)
-    this.props.actions.getPodcastById(this.props.match.params.id);
+    
 
+    // if (!this.props.podcast.podcast) {
+    //   this.props.history.replace("/admin/podcast");
+    // }
+  }
+
+  async componentWillMount() {
+    await this.props.actions.getPodcastById(this.props.match.params.id);
     if (!this.props.podcast.podcast) {
       this.props.history.replace("/admin/podcast");
     }
@@ -52,6 +60,7 @@ export class AdminEditPodcast extends Component {
 
   render() {
     const { podcast } = this.props.podcast;
+    const { message } = this.props.message;
 
     return (
       <div className="bg-bagad-heol">
@@ -526,6 +535,7 @@ export class AdminEditPodcast extends Component {
           </Row>
         </Container>
         {/* {this.state.confirmDelete && */}
+        {message && Array.isArray(message) && message.length >= 1 && <ModalMessage show={true} />}
           <ModalConfirmation
             show={this.state.confirmDelete}
             closeAction={() => this.setState(prevstate => ({ ...prevstate, confirmDelete: false}))}
@@ -541,7 +551,8 @@ export class AdminEditPodcast extends Component {
 
 function mapStateToProps(state) {
   return {
-    podcast: state.podcast
+    podcast: state.podcast,
+    message: state.message
   };
 }
 

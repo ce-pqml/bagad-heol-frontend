@@ -1,7 +1,10 @@
+import { decode } from 'html-entities';
+
 export const Input = ({ input, meta, ...rest }) => (
   <div className={rest.parentClass}>
     <input
       {...input}
+      value={decode(input.value)}
       {...rest}
       className={(meta.touched && meta.error ? 'input-bagad alert-input ' : 'input-bagad ') + rest.className}
     />
@@ -28,6 +31,7 @@ export const TextArea = ({ input, meta, children, ...rest }) => (
   <div>
     <textarea
       {...input}
+      value={decode(input.value)}
       {...rest}
       className={(meta.touched && meta.error ? 'input-bagad alert-input ' : 'input-bagad ') + rest.className}
       // onChange={(event, value) => input.onChange(value)}

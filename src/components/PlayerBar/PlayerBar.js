@@ -6,6 +6,8 @@ import { Container, Row, Col, Image } from 'react-bootstrap';
 import { ArrowRightShort, PlayFill, PauseFill, SkipEndFill, SkipStartFill, VolumeMuteFill, VolumeUpFill, ThreeDots, ArrowCounterclockwise, ArrowClockwise } from 'react-bootstrap-icons';
 import * as podcastActions from '../../redux/podcast/actions';
 
+import { decode } from 'html-entities';
+
 function BtnPlayPause(props){
   if(props.timebar.played) {
     return (<PauseFill className="player-bar-btn-play h-100"/>)
@@ -301,7 +303,7 @@ export class PlayerBar extends Component {
       this.props.actions.setCurrentPodcast(prevPodcast)
       // clearInterval(intervalTimeCode);
 
-      let prevAudio = new Audio(prevPodcast.url_audio);
+      let prevAudio = new Audio(decode(prevPodcast.url_audio));
       prevAudio.onloadedmetadata = () => {
         this.setState(prevState => ({
           timebar:{
@@ -332,7 +334,7 @@ export class PlayerBar extends Component {
       this.props.actions.setCurrentPodcast(nextPodcast)
       // clearInterval(intervalTimeCode);
 
-      let nextAudio = new Audio(nextPodcast.url_audio);
+      let nextAudio = new Audio(decode(nextPodcast.url_audio));
       nextAudio.onloadedmetadata = () => {
         this.setState(prevState => ({
           timebar:{
@@ -434,7 +436,7 @@ export class PlayerBar extends Component {
               <img src={this.props.podcast.currentPodcast.cover} className="player-bar-cover mr-3" />
               <div className="player-bar-text-info">
                 <h2>Bagad Heol</h2>
-                <h3 className="mb-2">{this.props.podcast.currentPodcast.title}</h3>
+                <h3 className="mb-2">{decode(this.props.podcast.currentPodcast.title)}</h3>
                 <span>{this.formatTimecode(this.state.timebar.currentTime)} / {this.formatTimecode(this.state.timebar.duration)}</span>
               </div>
             </Col>

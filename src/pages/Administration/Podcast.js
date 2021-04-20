@@ -12,7 +12,7 @@ import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { Input, Select, TextArea, File } from '../../components/Form/From';
 import { required, noSpace, email, composeValidators } from '../../helpers/validationForm';
-import logo from '../../assets/img/logo_bagad_heol.jpg';
+import { decode } from 'html-entities';
 
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation';
 import DropZone from '../../components/Form/DropZone';
@@ -87,8 +87,8 @@ export class AdminPodcast extends Component {
                           {listPodcast && Array.isArray(listPodcast) && listPodcast.map((podcast) => 
                             <tr>
                               <td>{podcast.id}</td>
-                              <td>{podcast.title}</td>
-                              <td>{podcast.description}</td>
+                              <td>{decode(podcast.title)}</td>
+                              <td>{decode(podcast.description)}</td>
                               <td>{podcast.number_season}</td>
                               <td>{podcast.number_episode}</td>
                               <td className="text-center">
@@ -203,7 +203,7 @@ export class AdminPodcast extends Component {
                                             </Row>
                                             <Row>
                                               <Col md={3}>
-                                                <Field name="audio">
+                                                <Field name="audio" validate={composeValidators(required)}>
                                                   {props => (
                                                     <div>
                                                       <DropZone {...props.input} max={1} multiple={false} accept=".mp3" />
@@ -229,7 +229,7 @@ export class AdminPodcast extends Component {
                                                   <label className="m-0">Image / Cover</label>
                                                   <p className="option-desc m-0"></p>
                                                 </div>
-                                                <Field name="cover">
+                                                <Field name="cover" validate={composeValidators(required)}>
                                                   {props => (
                                                     <div>
                                                       <DropZone {...props.input} max={1} multiple={false} accept="image/*" />

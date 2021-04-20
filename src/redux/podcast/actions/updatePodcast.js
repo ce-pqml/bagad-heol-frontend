@@ -6,6 +6,7 @@ import {
   PODCAST_GET_PODCAST_BY_ID_DISMISS_ERROR,
 } from './constants';
 import { WEB_SERVICE_URL, GET_PODCAST_BY_ID } from '../../../config/webService';
+import { setMessage } from '../../message/actions';
 
 export function updatePodcast(id, args) {
   return dispatch => {
@@ -17,6 +18,7 @@ export function updatePodcast(id, args) {
       const doRequest = axios.post(WEB_SERVICE_URL + GET_PODCAST_BY_ID +'/'+ id, args);
       doRequest.then(
         res => {
+          dispatch(setMessage(res.data))
           dispatch({
             type: PODCAST_GET_PODCAST_BY_ID_SUCCESS,
             data: res.data,
@@ -24,6 +26,7 @@ export function updatePodcast(id, args) {
           resolve(res);
         },
         err => {
+          if (err && err.response && err.response.data) dispatch(setMessage(err.response.data));
           dispatch({
             type: PODCAST_GET_PODCAST_BY_ID_FAILURE,
             data: { error: err },

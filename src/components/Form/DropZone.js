@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { decode } from 'html-entities';
 
 const DropZone = (props) => {
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
@@ -19,15 +20,12 @@ const DropZone = (props) => {
   });
 
   const ContentText = () => {
-    if (acceptedFiles && Array.isArray(acceptedFiles) && acceptedFiles.length > 0) {
-        return acceptedFiles.map((file, index) => {
-        if (file.name) (<p key={index}>{file.name}</p>)
-      })
-    } else if (acceptedFiles && Array.isArray(acceptedFiles) && acceptedFiles.length == 0 && props.value) {
-      return (<p className="value-dropzone">{props.value}</p>)
+    if (acceptedFiles && Array.isArray(acceptedFiles) && acceptedFiles.length == 0 && props.value && typeof props.value !== 'object') {
+      return (<p className="value-dropzone">{decode(props.value)}</p>)
     } else if (acceptedFiles && Array.isArray(acceptedFiles) && acceptedFiles.length == 0) {
       return (<p>Faites glisser et déposez votre ficher ici, ou cliquez pour sélectionner un fichier</p>)
     }
+    return null
   }
 
   return (
@@ -41,10 +39,10 @@ const DropZone = (props) => {
           })}
         </div>
         
-        {/* {acceptedFiles && Array.isArray(acceptedFiles) && acceptedFiles.map((file, index) => {
+        {acceptedFiles && Array.isArray(acceptedFiles) && acceptedFiles.length > 0 && acceptedFiles.map((file, index) => {
           if (file.name) return(<p key={index}>{file.name}</p>)
         })}
-        {acceptedFiles && Array.isArray(acceptedFiles) && acceptedFiles.length == 0 && (
+        {/* {acceptedFiles && Array.isArray(acceptedFiles) && acceptedFiles.length == 0 && (
           <p>Faites glisser et déposez votre ficher ici, ou cliquez pour sélectionner un fichier</p>
         )} */}
         <ContentText />

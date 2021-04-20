@@ -10,6 +10,7 @@ import * as podcastActions from '../../redux/podcast/actions';
 import album from '../../assets/img/album-img.png';
 import profil from '../../assets/img/profil.png';
 
+import { decode } from 'html-entities';
 
 export class Player extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ export class Player extends Component {
     let currentIndex = listPodcast.findIndex(element => element.id == currentPodcast.id);
     let elementStyle = document.querySelector('.player');
     if (elementStyle) {
-      elementStyle.style.setProperty('--background', `url(${currentPodcast.cover}) center`);
+      elementStyle.style.setProperty('--background', `url(${decode(currentPodcast.cover)}) center`);
     }
     
     return (
@@ -115,25 +116,25 @@ export class Player extends Component {
                 <Row>
                   <Col id="player-title-player" className="title-player" align="right">
                     <p>podcast en cours</p>
-                    <h2>{currentPodcast.podcast}</h2>
-                    <h3>{currentPodcast.title}</h3>
+                    <h2>{decode(currentPodcast.podcast)}</h2>
+                    <h3>{decode(currentPodcast.title)}</h3>
                   </Col>
                 </Row>
                 <Row>
                   <Col align="center">
                     <div id="cover-box" className="w-50">
                       {/* <div className="cover-before"></div> */}
-                      {listPodcast[currentIndex - 1] && <img src={listPodcast[currentIndex - 1].cover} className="cover-before" />}
+                      {listPodcast[currentIndex - 1] && <img src={decode(listPodcast[currentIndex - 1].cover)} className="cover-before" />}
                       <div className="cover-now w-100">
                         <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                          <img src={currentPodcast.cover} className="w-100" />
+                          <img src={decode(currentPodcast.cover)} className="w-100" />
                           {/* <div className="rounded-circle w-25 h-25 bg-dark">
                             <PlayFill size={96} />
                           </div> */}
                         </div>
                       </div>
                       {/* <div className="cover-after"></div> */}
-                      {listPodcast[currentIndex + 1] && <img src={listPodcast[currentIndex + 1].cover} className="cover-after" />}
+                      {listPodcast[currentIndex + 1] && <img src={decode(listPodcast[currentIndex + 1].cover)} className="cover-after" />}
                     </div>
                   </Col>
                 </Row>
@@ -158,7 +159,7 @@ export class Player extends Component {
           </Row>
           <Row>
             <Col>
-              <p className="desc-player mt-5">{currentPodcast.description}</p>
+              <p className="desc-player mt-5">{decode(currentPodcast.description)}</p>
             </Col>
           </Row>
         </Container>

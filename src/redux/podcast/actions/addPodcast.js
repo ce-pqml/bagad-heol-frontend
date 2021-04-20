@@ -6,6 +6,7 @@ import {
   PODCAST_ADD_PODCAST_DISMISS_ERROR,
 } from './constants';
 import { WEB_SERVICE_URL, ADD_PODCAST } from '../../../config/webService';
+import { setMessage } from '../../message/actions';
 
 export function addPodcast(args) {
   return dispatch => {
@@ -17,6 +18,7 @@ export function addPodcast(args) {
       const doRequest = axios.post(WEB_SERVICE_URL + ADD_PODCAST, args);
       doRequest.then(
         res => {
+          dispatch(setMessage(res.data))
           dispatch({
             type: PODCAST_ADD_PODCAST_SUCCESS,
             data: res.data,
@@ -24,6 +26,7 @@ export function addPodcast(args) {
           resolve(res);
         },
         err => {
+          if (err && err.response && err.response.data) dispatch(setMessage(err.response.data));
           dispatch({
             type: PODCAST_ADD_PODCAST_FAILURE,
             data: { error: err },
