@@ -42,7 +42,7 @@ axios.interceptors.response.use(
     //   // Si c'est une erreur, reject le promise pour passer dans le catch
     //   return Promise.reject(err.response);
     // }
-    console.log(res, err.config)
+    // console.log(res, err.config)
     // return axios(originalRequest).then(res => {
     //   return res;
     // });

@@ -1,6 +1,10 @@
 import { MESSAGE_SET_MESSAGE } from './constants';
 
 export function setMessage(obj) {
+  console.log(obj !== null, !Array.isArray(obj))
+  if (obj !== null && !Array.isArray(obj)) {
+    obj = [obj]
+  }
   return {
     type: MESSAGE_SET_MESSAGE,
     data: obj,

@@ -25,7 +25,7 @@ function ModalMessage(props) {
     if (Array.isArray(message.message) && message.message.length > 1) {
       return ('');
     } else {
-      if (message.message?.[0]?.status == 'error') {
+      if (message.message?.[0]?.status == 'error' || [400, 401, 403, 500].includes(message.message?.[0]?.status)) {
         return (
           <div className="alert-exclamation-container">
             <Exclamation />
@@ -45,7 +45,7 @@ function ModalMessage(props) {
     if (Array.isArray(message.message) && message.message.length > 1) {
       return ('Merci de faire attention aux messages suivants');
     } else {
-      if (message.message?.[0]?.status == 'error') {
+      if (message.message?.[0]?.status == 'error' || [400, 401, 403, 500].includes(message.message?.[0]?.status)) {
         return ('Une erreur est survenue');
       } else {
         return ('Demande réalisé avec succès !');

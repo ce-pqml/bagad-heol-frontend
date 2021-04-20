@@ -29,10 +29,10 @@ export const VIEW_ADMIN = {
     // layout: pages.Home,
     layout: (<MenuAside />),
     childRoutes: [
-        {path:'/general', component: pages.AdminGeneral},
-        {path:'/podcast', component: pages.AdminPodcast},
-        {path:'/ticket/:id', component: pages.AdminTicket},
-        {path:'/podcast/:id', component: pages.AdminEditPodcast},
+        {path:'/general', component: pages.AdminGeneral, isPrivate: true},
+        {path:'/podcast', component: pages.AdminPodcast, isPrivate: true},
+        {path:'/ticket/:id', component: pages.AdminTicket, isPrivate: true},
+        {path:'/podcast/:id', component: pages.AdminEditPodcast, isPrivate: true},
     ]
 };
 
