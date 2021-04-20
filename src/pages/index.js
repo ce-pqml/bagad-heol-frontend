@@ -8,6 +8,8 @@ import Register from './Authentification/Register';
 import ResetPassword from './ResetPassword/ResetPassword';
 import AskResetPassword from './ResetPassword/AskResetPassword';
 
+import Cgu from './Cgu/Cgu';
+
 import Player from './Player/Player';
 import EspaceMembre from './EspaceMembre/EspaceMembre';
 import Error404 from './404/404';
@@ -26,6 +28,7 @@ export default {
     Register,
     ResetPassword,
     AskResetPassword,
+    Cgu,
     Player,
     EspaceMembre,
     Contact,

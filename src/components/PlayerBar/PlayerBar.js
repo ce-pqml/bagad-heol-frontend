@@ -64,7 +64,7 @@ export class PlayerBar extends Component {
     this.setState(prevState => ({
       timebar:{
         ...prevState.timebar,
-        audio: new Audio(this.props.podcast.listPodcast.slice(-1)[0].url),
+        audio: new Audio(this.props.podcast.listPodcast.slice(-1)[0].url_audio),
       }
     }));
   }
@@ -301,7 +301,7 @@ export class PlayerBar extends Component {
       this.props.actions.setCurrentPodcast(prevPodcast)
       // clearInterval(intervalTimeCode);
 
-      let prevAudio = new Audio(prevPodcast.url);
+      let prevAudio = new Audio(prevPodcast.url_audio);
       prevAudio.onloadedmetadata = () => {
         this.setState(prevState => ({
           timebar:{
@@ -332,7 +332,7 @@ export class PlayerBar extends Component {
       this.props.actions.setCurrentPodcast(nextPodcast)
       // clearInterval(intervalTimeCode);
 
-      let nextAudio = new Audio(nextPodcast.url);
+      let nextAudio = new Audio(nextPodcast.url_audio);
       nextAudio.onloadedmetadata = () => {
         this.setState(prevState => ({
           timebar:{
@@ -431,7 +431,7 @@ export class PlayerBar extends Component {
           <Row className="player-bar-cmd h-100">
             <Col md={4} className="h-100 player-bar-info d-flex align-items-center" align="left">
               {/* <div className="player-bar-cover mr-3"></div> */}
-              <img src={this.props.podcast.currentPodcast.img} className="player-bar-cover mr-3" />
+              <img src={this.props.podcast.currentPodcast.cover} className="player-bar-cover mr-3" />
               <div className="player-bar-text-info">
                 <h2>Bagad Heol</h2>
                 <h3 className="mb-2">{this.props.podcast.currentPodcast.title}</h3>

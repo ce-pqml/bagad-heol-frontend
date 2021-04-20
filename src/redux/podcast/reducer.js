@@ -1,10 +1,14 @@
 import initialState from './initialState';
-import { reducer as getPodcastReducer } from './actions/getPodcast';
+import { reducer as getPodcastListReducer } from './actions/getPodcastList';
+import { reducer as getPodcastById } from './actions/getPodcastById';
+import { reducer as updatePodcast } from './actions/updatePodcast';
 import { reducer as addPodcastReducer } from './actions/addPodcast';
 import { reducer as setCurrentPodcastReducer } from './actions/setCurrentPodcast';
 
 const reducers = [
-  getPodcastReducer,
+  getPodcastListReducer,
+  getPodcastById,
+  updatePodcast,
   addPodcastReducer,
   setCurrentPodcastReducer,
 ];

@@ -13,6 +13,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { Input, TextArea } from '../../components/Form/From';
 import DropZone from '../../components/Form/DropZone';
 import { required, composeValidators, noSpace } from '../../helpers/validationForm';
+import { decode } from 'html-entities';
 
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation';
 
@@ -22,7 +23,11 @@ export class AdminEditPodcast extends Component {
     this.state = {confirmDelete: false};
 
     // console.log('test : '+this.props.match.params.id)
-    this.props.actions.getPodcast();
+    this.props.actions.getPodcastById(this.props.match.params.id);
+
+    if (!this.props.podcast.podcast) {
+      this.props.history.replace("/admin/podcast");
+    }
   }
 
   static propTypes = {
@@ -30,17 +35,23 @@ export class AdminEditPodcast extends Component {
     actions: PropTypes.object.isRequired,
   };
 
-  async sendResponse(values) {
-    // await this.props.actions.updateUser(values);
+  async submitForm(values) {
+    const payload = new FormData();
+    if (values.audio && Array.isArray(values.audio)) payload.append('audio', values.audio[0]);
+    if (values.cover && Array.isArray(values.cover)) payload.append('cover', values.cover[0]);
+    delete values.audio;
+    delete values.cover;
+    delete values.publish_date;
+    delete values.modif_date;
+    values.published ? values.published = 1 : values.published = 0
+    values.explicit ? values.explicit = 1 : values.explicit = 0
+    payload.append('request', JSON.stringify(values));
+    await this.props.actions.updatePodcast(this.props.match.params.id, payload);
     console.log(values)
   }
 
   render() {
     const { podcast } = this.props.podcast;
-    let podcastToEdit = {};
-    if (podcast && Array.isArray(podcast)) {
-      podcastToEdit = podcast.find(x => x.id === this.props.match.params.id);
-    }
 
     return (
       <div className="bg-bagad-heol">
@@ -71,7 +82,10 @@ export class AdminEditPodcast extends Component {
                       ...arrayMutators
                     }}
                     // validate={(values) => this.validate(values)}
-                    initialValues={podcastToEdit}
+                    initialValues={{
+                      ...podcast,
+                      audio: podcast?.url_audio
+                    }}
                     render={({ 
                       handleSubmit,
                       submitting,
@@ -128,7 +142,7 @@ export class AdminEditPodcast extends Component {
                                               <label className="m-0">Auteur</label>
                                               <p className="option-desc m-0"></p>
                                             </div>
-                                            <Field name="author" component={Input} type="text" className="w-100 form-control form-control-sm" 
+                                            <Field name="publish_author" component={Input} type="text" className="w-100 form-control form-control-sm" 
                                             validate={composeValidators(required)} />
                                           </Col>
                                           <Col md={2}>
@@ -158,10 +172,10 @@ export class AdminEditPodcast extends Component {
                                         </Row>
                                         <Row>
                                           <Col md={3}>
-                                            <Field name="audio">
+                                            <Field name="audio" validate={composeValidators(required)}>
                                               {props => (
                                                 <div>
-                                                  <DropZone {...props.input} max={1} multiple={false} accept=".mp3" />
+                                                  <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept=".mp3" />
                                                 </div>
                                               )}
                                             </Field>
@@ -184,7 +198,7 @@ export class AdminEditPodcast extends Component {
                                               <label className="m-0">Image / Cover</label>
                                               <p className="option-desc m-0"></p>
                                             </div>
-                                            <Field name="cover">
+                                            <Field name="cover" validate={composeValidators(required)}>
                                               {props => (
                                                 <div>
                                                   <DropZone {...props.input} max={1} multiple={false} accept="image/*" />
@@ -430,7 +444,7 @@ export class AdminEditPodcast extends Component {
                                                         <label className="m-0">&nbsp;</label>
                                                         <p className="option-desc m-0">Nom</p>
                                                       </div>
-                                                      <Field name={`${name}.name`} component={Input} type="text" className="w-100 form-control form-control-sm" 
+                                                      <Field name={`${name}.description`} component={Input} type="text" className="w-100 form-control form-control-sm" 
                                                       validate={composeValidators(required)} />
                                                     </Col>
                                                     <Col md={3}>

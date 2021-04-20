@@ -10,8 +10,9 @@ export const PROFIL_URL = "/account/user-profile";
 
 export const RECOVERY_PSW = "/account/recovery";
 
-export const ADD_PODCAST = "/podcast/new"
-export const GET_PODCAST = "/podcast/index"
+export const ADD_PODCAST = "/podcast/new";
+export const GET_PODCAST = "/podcast/index";
+export const GET_PODCAST_BY_ID = "/podcast/view";
 
 export const SUPPORT_ADD_TICKETS_URL = "/support/new";
 export const SUPPORT_LIST_TICKETS_URL = "/support/index";

@@ -20,6 +20,7 @@ export const VIEW_HOME = {
         {path:'/register', component: pages.Register},
         {path:'/resetpassword', component: pages.AskResetPassword},
         {path:'/resetpassword/new', component: pages.ResetPassword},
+        {path:'/cgu', component: pages.Cgu},
     ]
 };
 

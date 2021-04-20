@@ -23,7 +23,7 @@ export class AdminPodcast extends Component {
     super(props);
     this.state = {confirmDelete: false};
 
-    this.props.actions.getPodcast()
+    this.props.actions.getPodcastList()
   }
 
   static propTypes = {
@@ -34,14 +34,18 @@ export class AdminPodcast extends Component {
   async submitForm(values) {
     const payload = new FormData();
     payload.append('audio', values.audio[0]);
-    payload.append('cover', values.cover);
-    payload.append('request', values);
+    payload.append('cover', values.cover[0]);
+    delete values.audio;
+    delete values.cover;
+    values.published ? values.published = 1 : values.published = 0
+    values.explicit ? values.explicit = 1 : values.explicit = 0
+    payload.append('request', JSON.stringify(values));
     await this.props.actions.addPodcast(payload);
-    console.log(values)
+    console.log(values, payload)
   }
 
   render() {
-    const { podcast } = this.props.podcast;
+    const { listPodcast } = this.props.podcast;
 
     return (
       <div className="bg-bagad-heol">
@@ -80,15 +84,15 @@ export class AdminPodcast extends Component {
                           </tr>
                         </thead>
                         <tbody>
-                          {podcast && Array.isArray(podcast) && podcast.map((item) => 
+                          {listPodcast && Array.isArray(listPodcast) && listPodcast.map((podcast) => 
                             <tr>
-                              <td>{item.id}</td>
-                              <td>{item.title}</td>
-                              <td>{item.description}</td>
-                              <td>{item.number_season}</td>
-                              <td>{item.number_episode}</td>
+                              <td>{podcast.id}</td>
+                              <td>{podcast.title}</td>
+                              <td>{podcast.description}</td>
+                              <td>{podcast.number_season}</td>
+                              <td>{podcast.number_episode}</td>
                               <td className="text-center">
-                                <Link to={"/admin/podcast/"+item.id}><Pencil /></Link>
+                                <Link to={"/admin/podcast/"+podcast.id}><Pencil /></Link>
                               </td>
                             </tr>
                           )}
@@ -169,7 +173,7 @@ export class AdminPodcast extends Component {
                                                   <label className="m-0">Auteur</label>
                                                   <p className="option-desc m-0"></p>
                                                 </div>
-                                                <Field name="author" component={Input} type="text" className="w-100 form-control form-control-sm" 
+                                                <Field name="publish_author" component={Input} type="text" className="w-100 form-control form-control-sm" 
                                                 validate={composeValidators(required)} />
                                               </Col>
                                               <Col md={2}>
@@ -471,7 +475,7 @@ export class AdminPodcast extends Component {
                                                             <label className="m-0">&nbsp;</label>
                                                             <p className="option-desc m-0">Nom</p>
                                                           </div>
-                                                          <Field name={`${name}.name`} component={Input} type="text" className="w-100 form-control form-control-sm" 
+                                                          <Field name={`${name}.description`} component={Input} type="text" className="w-100 form-control form-control-sm" 
                                                           validate={composeValidators(required)} />
                                                         </Col>
                                                         <Col md={3}>

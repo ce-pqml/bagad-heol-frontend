@@ -8,6 +8,15 @@
     border-top-right-radius: 0.2rem;
   }
 }
+.dropzone-bagad {
+  &.alert-input {
+    border: 1px solid $alert-color;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0.2rem;
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+  }
+}
 
 .input-bagad-file {
   background: none;

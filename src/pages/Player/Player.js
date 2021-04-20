@@ -12,6 +12,11 @@ import profil from '../../assets/img/profil.png';
 
 
 export class Player extends Component {
+  constructor(props) {
+    super(props);
+    this.props.actions.getPodcastList()
+  }
+
   static propTypes = {
     podcast: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -24,6 +29,8 @@ export class Player extends Component {
 
   render() {
     const items = [];
+    const { listPodcast, currentPodcast } = this.props.podcast;
+
     for (let i = 0; i < 15; i++) {
       items.push(
         <div className="msg-box d-flex">
@@ -47,10 +54,10 @@ export class Player extends Component {
       );
     };
 
-    let currentIndex = this.props.podcast.listPodcast.findIndex(element => element.id == this.props.podcast.currentPodcast.id);
+    let currentIndex = listPodcast.findIndex(element => element.id == currentPodcast.id);
     let elementStyle = document.querySelector('.player');
     if (elementStyle) {
-      elementStyle.style.setProperty('--background', `url(${this.props.podcast.currentPodcast.img}) center`);
+      elementStyle.style.setProperty('--background', `url(${currentPodcast.cover}) center`);
     }
     
     return (
@@ -60,8 +67,8 @@ export class Player extends Component {
       //       <Row>
       //         <Col className="title-player" align="right" md={8}>
       //           <p>podcast en cours</p>
-      //           <h2>{this.props.podcast.currentPodcast.podcast}</h2>
-      //           <h3>{this.props.podcast.currentPodcast.title}</h3>
+      //           <h2>{currentPodcast.podcast}</h2>
+      //           <h3>{currentPodcast.title}</h3>
       //         </Col>
       //         <Col className="title-msg align-self-end" md={4}>
       //           <h2>Discussions</h2>
@@ -71,18 +78,18 @@ export class Player extends Component {
       //         <Col md={8} align="center">
       //           <div id="cover-box" className="w-50">
       //             {/* <div className="cover-before"></div> */}
-      //             {this.props.podcast.listPodcast[currentIndex - 1] && <img src={this.props.podcast.listPodcast[currentIndex - 1].img} className="cover-before" />}
+      //             {listPodcast[currentIndex - 1] && <img src={listPodcast[currentIndex - 1].img} className="cover-before" />}
       //             <div className="cover-now w-100">
       //               <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-      //                 <img src={this.props.podcast.currentPodcast.img} className="w-100" />
+      //                 <img src={currentPodcast.img} className="w-100" />
       //                 {/* <div className="rounded-circle w-25 h-25 bg-dark">
       //                   <PlayFill size={96} />
       //                 </div> */}
       //               </div>
       //             </div>
       //             {/* <div className="cover-after"></div> */}
-      //             {console.log("debug", this.props.podcast.listPodcast[currentIndex + 1])}
-      //             {this.props.podcast.listPodcast[currentIndex + 1] && <img src={this.props.podcast.listPodcast[currentIndex + 1].img} className="cover-after" />}
+      //             {console.log("debug", listPodcast[currentIndex + 1])}
+      //             {listPodcast[currentIndex + 1] && <img src={listPodcast[currentIndex + 1].img} className="cover-after" />}
       //           </div>
       //         </Col>
       //         <Col md={4}>
@@ -93,7 +100,7 @@ export class Player extends Component {
       //       </Row>
       //       <Row>
       //         <Col>
-      //           <p className="desc-player mt-5">{this.props.podcast.currentPodcast.desc}</p>
+      //           <p className="desc-player mt-5">{currentPodcast.desc}</p>
       //         </Col>
       //       </Row>
       //     </Container>
@@ -108,25 +115,25 @@ export class Player extends Component {
                 <Row>
                   <Col id="player-title-player" className="title-player" align="right">
                     <p>podcast en cours</p>
-                    <h2>{this.props.podcast.currentPodcast.podcast}</h2>
-                    <h3>{this.props.podcast.currentPodcast.title}</h3>
+                    <h2>{currentPodcast.podcast}</h2>
+                    <h3>{currentPodcast.title}</h3>
                   </Col>
                 </Row>
                 <Row>
                   <Col align="center">
                     <div id="cover-box" className="w-50">
                       {/* <div className="cover-before"></div> */}
-                      {this.props.podcast.listPodcast[currentIndex - 1] && <img src={this.props.podcast.listPodcast[currentIndex - 1].img} className="cover-before" />}
+                      {listPodcast[currentIndex - 1] && <img src={listPodcast[currentIndex - 1].cover} className="cover-before" />}
                       <div className="cover-now w-100">
                         <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                          <img src={this.props.podcast.currentPodcast.img} className="w-100" />
+                          <img src={currentPodcast.cover} className="w-100" />
                           {/* <div className="rounded-circle w-25 h-25 bg-dark">
                             <PlayFill size={96} />
                           </div> */}
                         </div>
                       </div>
                       {/* <div className="cover-after"></div> */}
-                      {this.props.podcast.listPodcast[currentIndex + 1] && <img src={this.props.podcast.listPodcast[currentIndex + 1].img} className="cover-after" />}
+                      {listPodcast[currentIndex + 1] && <img src={listPodcast[currentIndex + 1].cover} className="cover-after" />}
                     </div>
                   </Col>
                 </Row>
@@ -151,7 +158,7 @@ export class Player extends Component {
           </Row>
           <Row>
             <Col>
-              <p className="desc-player mt-5">{this.props.podcast.currentPodcast.desc}</p>
+              <p className="desc-player mt-5">{currentPodcast.description}</p>
             </Col>
           </Row>
         </Container>
