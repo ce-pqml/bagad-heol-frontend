@@ -6,6 +6,7 @@ import {
   USER_FORGOT_PASSWORD_DISMISS_ERROR
 } from './constants';
 import { WEB_SERVICE_URL, RECOVERY_PSW } from '../../../config/webService';
+import { setMessage } from '../../message/actions';
 
 export function forgotPassword(args) {
   return dispatch => {
@@ -17,6 +18,7 @@ export function forgotPassword(args) {
       const doRequest = axios.post(WEB_SERVICE_URL + RECOVERY_PSW, args);
       doRequest.then(
         res => {
+          dispatch(setMessage(res.data));
           dispatch({
             type: USER_FORGOT_PASSWORD_SUCCESS,
             data: res.data,
@@ -24,6 +26,7 @@ export function forgotPassword(args) {
           resolve(res);
         },
         err => {
+          if (err && err.response && err.response.data) dispatch(setMessage(err.response.data));
           dispatch({
             type: USER_FORGOT_PASSWORD_FAILURE,
             data: { error: err },

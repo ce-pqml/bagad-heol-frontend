@@ -125,26 +125,26 @@ export class MenuAside extends Component {
               </Dropdown.Menu>
             </Dropdown>
           </li> */}
-          <li className={this.props.menuAside.currentPage === "Equipe" ? "active" : ""} onClick={(e) => this.setCurrentPage("Equipe")}>
+          {/* <li className={this.props.menuAside.currentPage === "Equipe" ? "active" : ""} onClick={(e) => this.setCurrentPage("Equipe")}> */}
             {/* <a href="#" className="d-flex align-items-center">
               <Image />
               <span>Equipe</span>
             </a> */}
-            <Link to="/equipe">
+            {/* <Link to="/equipe">
               <Image />
               <span>Equipe</span>
             </Link>
           </li>
-          <li className={this.props.menuAside.currentPage === "FAQ" ? "active" : ""} onClick={(e) => this.setCurrentPage("FAQ")}>
+          <li className={this.props.menuAside.currentPage === "FAQ" ? "active" : ""} onClick={(e) => this.setCurrentPage("FAQ")}> */}
             {/* <a href="#" className="d-flex align-items-center">
               <QuestionCircle />
               <span>FAQ</span>
             </a> */}
-            <Link to="/faq">
+            {/* <Link to="/faq">
               <QuestionCircle />
               <span>FAQ</span>
             </Link>
-          </li>
+          </li> */}
           <li className={this.props.menuAside.currentPage === "Contact" ? "active" : ""} onClick={(e) => this.setCurrentPage("Contact")}>
             {/* <a href="#" className="d-flex align-items-center">
               <Envelope />

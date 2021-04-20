@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import * as podcastActions from '../../redux/podcast/actions';
 
-import { Container, Row, Col, Tabs, Tab, Accordion, Card  } from 'react-bootstrap';
+import { Container, Row, Col, Tabs, Tab, Accordion, Card, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -55,6 +55,9 @@ export class AdminEditPodcast extends Component {
     values.explicit ? values.explicit = 1 : values.explicit = 0
     payload.append('request', JSON.stringify(values));
     await this.props.actions.updatePodcast(this.props.match.params.id, payload);
+    if (this.props.message?.message?.[0]?.id == this.props.match.params.id) {
+      this.props.history.push('/admin/podcast')
+    }
     console.log(values)
   }
 
@@ -82,7 +85,11 @@ export class AdminEditPodcast extends Component {
             <Col>
               <Container>
                 <Row className="block-title pb-1">
-                  <Col><h3 className="title-sec">Gestion du podcast # {this.props.match.params.id}</h3></Col>
+                  <Col className="d-flex">
+                    <h3 className="title-sec w-100">Gestion du podcast # {this.props.match.params.id}</h3>
+                    <Button className="btn-bagad-heol"
+                      onClick={() => this.props.history.push("/admin/podcast")}>Retour</Button>
+                  </Col>
                 </Row>
                 <Row>
                   <Form
@@ -93,7 +100,9 @@ export class AdminEditPodcast extends Component {
                     // validate={(values) => this.validate(values)}
                     initialValues={{
                       ...podcast,
-                      audio: podcast?.url_audio
+                      audio: podcast?.url_audio,
+                      published: podcast?.published == "0" ? false : true,
+                      explicit: podcast?.explicit == "0" ? false : true,
                     }}
                     render={({ 
                       handleSubmit,
@@ -156,7 +165,7 @@ export class AdminEditPodcast extends Component {
                                           </Col>
                                           <Col md={2}>
                                             <div className="d-flex justify-content-between align-items-end flex-wrap">
-                                              <label className="m-0">Bloqué ?</label>
+                                              <label className="m-0">Publié ?</label>
                                               <p className="option-desc m-0"></p>
                                             </div>
                                             <Field name="published" component={Input} type="checkbox" className="w-auto form-control form-control-sm" 
@@ -210,7 +219,7 @@ export class AdminEditPodcast extends Component {
                                             <Field name="cover" validate={composeValidators(required)}>
                                               {props => (
                                                 <div>
-                                                  <DropZone {...props.input} max={1} multiple={false} accept="image/*" />
+                                                  <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept="image/*" />
                                                 </div>
                                               )}
                                             </Field>
@@ -225,7 +234,7 @@ export class AdminEditPodcast extends Component {
                                             <Field name="images">
                                               {props => (
                                                 <div>
-                                                  <DropZone {...props.input} max={10} multiple={true} accept="image/*" />
+                                                  <DropZone {...props.input} {...props.meta} max={10} multiple={true} accept="image/*" />
                                                 </div>
                                               )}
                                             </Field>
@@ -348,7 +357,7 @@ export class AdminEditPodcast extends Component {
                                                       <Field name={`${name}.image`}>
                                                         {props => (
                                                           <div>
-                                                            <DropZone {...props.input} max={1} multiple={false} accept="image/*" />
+                                                            <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept="image/*" />
                                                           </div>
                                                         )}
                                                       </Field>
@@ -411,7 +420,7 @@ export class AdminEditPodcast extends Component {
                                             <Field name="chapter_url_json">
                                                 {props => (
                                                   <div>
-                                                    <DropZone {...props.input} max={1} multiple={false} accept=".json" />
+                                                    <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept=".json" />
                                                   </div>
                                                 )}
                                               </Field>
@@ -487,7 +496,7 @@ export class AdminEditPodcast extends Component {
                                             <Field name="transcript">
                                               {props => (
                                                 <div>
-                                                  <DropZone {...props.input} max={1} multiple={false} accept=".pdf" />
+                                                  <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept=".pdf" />
                                                 </div>
                                               )}
                                             </Field>

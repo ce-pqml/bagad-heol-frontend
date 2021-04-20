@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as podcastActions from '../../redux/podcast/actions';
 
 import { Container, Row, Col, Table, Tabs, Tab, Accordion, Card } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -17,6 +18,7 @@ import { decode } from 'html-entities';
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation';
 import DropZone from '../../components/Form/DropZone';
 import { Pencil } from 'react-bootstrap-icons';
+import ModalMessage from '../../components/ModalMessage/ModalMessage';
 
 export class AdminPodcast extends Component {
   constructor(props) {
@@ -41,11 +43,15 @@ export class AdminPodcast extends Component {
     values.explicit ? values.explicit = 1 : values.explicit = 0
     payload.append('request', JSON.stringify(values));
     await this.props.actions.addPodcast(payload);
+    if (this.props.message?.message?.[0]?.status == 'success') {
+      this.props.history.push('/admin/podcast')
+    }
     console.log(values, payload)
   }
 
   render() {
     const { listPodcast } = this.props.podcast;
+    const { message } = this.props.message;
 
     return (
       <div className="bg-bagad-heol">
@@ -80,6 +86,7 @@ export class AdminPodcast extends Component {
                             <th>Description</th>
                             <th>Saison</th>
                             <th>Episode</th>
+                            <th>Date</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -88,9 +95,10 @@ export class AdminPodcast extends Component {
                             <tr>
                               <td>{podcast.id}</td>
                               <td>{decode(podcast.title)}</td>
-                              <td>{decode(podcast.description)}</td>
+                              <td>{decode(podcast.description).replace(/^(.{150}[^\s]*).*/, "$1...")}</td>
                               <td>{podcast.number_season}</td>
                               <td>{podcast.number_episode}</td>
+                              <td>{podcast.publish_date}</td>
                               <td className="text-center">
                                 <Link to={"/admin/podcast/"+podcast.id}><Pencil /></Link>
                               </td>
@@ -178,7 +186,7 @@ export class AdminPodcast extends Component {
                                               </Col>
                                               <Col md={2}>
                                                 <div className="d-flex justify-content-between align-items-end flex-wrap">
-                                                  <label className="m-0">Bloqué ?</label>
+                                                  <label className="m-0">Publié ?</label>
                                                   <p className="option-desc m-0"></p>
                                                 </div>
                                                 <Field name="published" component={Input} type="checkbox" className="w-auto form-control form-control-sm" 
@@ -206,7 +214,7 @@ export class AdminPodcast extends Component {
                                                 <Field name="audio" validate={composeValidators(required)}>
                                                   {props => (
                                                     <div>
-                                                      <DropZone {...props.input} max={1} multiple={false} accept=".mp3" />
+                                                      <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept=".mp3" />
                                                     </div>
                                                   )}
                                                 </Field>
@@ -232,7 +240,7 @@ export class AdminPodcast extends Component {
                                                 <Field name="cover" validate={composeValidators(required)}>
                                                   {props => (
                                                     <div>
-                                                      <DropZone {...props.input} max={1} multiple={false} accept="image/*" />
+                                                      <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept="image/*" />
                                                     </div>
                                                   )}
                                                 </Field>
@@ -247,7 +255,7 @@ export class AdminPodcast extends Component {
                                                 <Field name="images">
                                                   {props => (
                                                     <div>
-                                                      <DropZone {...props.input} max={10} multiple={true} accept="image/*" />
+                                                      <DropZone {...props.input} {...props.meta} max={10} multiple={true} accept="image/*" />
                                                     </div>
                                                   )}
                                                 </Field>
@@ -370,7 +378,7 @@ export class AdminPodcast extends Component {
                                                           <Field name={`${name}.image`}>
                                                             {props => (
                                                               <div>
-                                                                <DropZone {...props.input} max={1} multiple={false} accept="image/*" />
+                                                                <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept="image/*" />
                                                               </div>
                                                             )}
                                                           </Field>
@@ -433,7 +441,7 @@ export class AdminPodcast extends Component {
                                                 <Field name="chapter_url_json">
                                                     {props => (
                                                       <div>
-                                                        <DropZone {...props.input} max={1} multiple={false} accept=".json" />
+                                                        <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept=".json" />
                                                       </div>
                                                     )}
                                                   </Field>
@@ -509,7 +517,7 @@ export class AdminPodcast extends Component {
                                                 <Field name="transcript">
                                                   {props => (
                                                     <div>
-                                                      <DropZone {...props.input} max={1} multiple={false} accept=".pdf" />
+                                                      <DropZone {...props.input} {...props.meta} max={1} multiple={false} accept=".pdf" />
                                                     </div>
                                                   )}
                                                 </Field>
@@ -561,6 +569,7 @@ export class AdminPodcast extends Component {
             </Tab>
           </Tabs>
         </Container>
+        {message && Array.isArray(message) && message.length >= 1 && <ModalMessage show={true} />}
         {/* {this.state.confirmDelete && */}
           <ModalConfirmation
             show={this.state.confirmDelete}
@@ -578,6 +587,7 @@ export class AdminPodcast extends Component {
 function mapStateToProps(state) {
   return {
     podcast: state.podcast,
+    message: state.message
   };
 }
 
@@ -590,5 +600,5 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminPodcast);
+)(withRouter(AdminPodcast));
 

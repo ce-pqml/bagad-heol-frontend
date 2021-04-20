@@ -10,17 +10,23 @@ import * as exampleActions from '../../redux/example/actions';
 import * as supportActions from '../../redux/support/actions';
 
 function ModalAddTicket(props) {
-  // const examples = useSelector(state => state.examples);
+  const message = useSelector(state => state.message.message);
   const dispatch = useDispatch();
 
   // useEffect( () => {
   //   dispatch(exampleActions.fetchRedditList());
   // }, []);
 
-  async function createTicket(values) {
+  useEffect(() => {
+    if (message?.[0]?.status == 'success') {
+      props.closeAction()
+    }
+  });
+
+  function createTicket(values) {
     // await this.props.actions.updateUser(values);
     dispatch(supportActions.addTicket(values))
-    console.log(values)
+    // console.log(values)
   }
 
   return (

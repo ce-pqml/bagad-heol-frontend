@@ -11,6 +11,7 @@ import { Form, Field } from 'react-final-form';
 import { Input, Select, TextArea } from '../../components/Form/From';
 import { required, noSpace, email, composeValidators } from '../../helpers/validationForm';
 import logo from '../../assets/img/logo_bagad_heol.jpg';
+import ModalMessage from '../../components/ModalMessage/ModalMessage';
 
 export class AskResetPassword extends Component{
   constructor(props) {
@@ -28,9 +29,14 @@ export class AskResetPassword extends Component{
 
   async submitForm(values) {
     await this.props.actions.forgotPassword(values);
+    if (this.props.message?.message?.[0]?.type == "success") {
+      this.props.history.push('/')
+    }
   }
 
   render(){
+    const { message } = this.props.message;
+
     return(
       <Container className="reset-password bg-bagad-heol" fluid>
         <Container className="mb-5">
@@ -80,6 +86,7 @@ export class AskResetPassword extends Component{
             </form>
           )}
         />
+        {message && Array.isArray(message) && message.length >= 1 && <ModalMessage show={true} />}
       </Container>
     );
   }
@@ -88,6 +95,7 @@ export class AskResetPassword extends Component{
 function mapStateToProps(state) {
   return {
     user: state.user,
+    message: state.message
   };
 }
 

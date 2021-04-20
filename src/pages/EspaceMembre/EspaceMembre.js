@@ -19,6 +19,8 @@ import { Pencil } from 'react-bootstrap-icons';
 import ModalAddTicket from '../../components/ModalAddTicket/ModalAddTicket';
 import ModalMessage from '../../components/ModalMessage/ModalMessage';
 
+import { decode } from 'html-entities';
+
 export class EspaceMembre extends Component {
   constructor(props) {
     super(props);
@@ -223,7 +225,7 @@ export class EspaceMembre extends Component {
                 <Row className="block-title pb-4">
                   <Col className="d-flex title-tickets">
                     <h3 className="title-sec">Tickets</h3>
-                    <Button variant="success"
+                    <Button className="btn-bagad-heol"
                       onClick={() => this.setState(prevstate => ({ ...prevstate, addTicket: true}))}>Nouvelle demande</Button>
                   </Col>
                 </Row>
@@ -238,13 +240,13 @@ export class EspaceMembre extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {listTicketUser && Array.isArray(listTicketUser) && listTicketUser.map((ticket) => 
-                        <tr>
+                      {listTicketUser && Array.isArray(listTicketUser) && listTicketUser.map((ticket, index) => 
+                        <tr key={index}>
                           <td>{ticket.type}</td>
-                          <td>{ticket.title}</td>
+                          <td>{decode(ticket.title)}</td>
                           <td>{ticket.status}</td>
                           <td className="text-center">
-                            <Link to={"/admin/ticket/"+ticket.id}><Pencil /></Link>
+                            <Link to={"/espace-membre/ticket/"+ticket.id}><Pencil /></Link>
                           </td>
                         </tr>
                       )}

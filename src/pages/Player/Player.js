@@ -58,7 +58,7 @@ export class Player extends Component {
     let currentIndex = listPodcast.findIndex(element => element.id == currentPodcast.id);
     let elementStyle = document.querySelector('.player');
     if (elementStyle) {
-      elementStyle.style.setProperty('--background', `url(${decode(currentPodcast.cover)}) center`);
+      elementStyle.style.setProperty('--background', `url(${'/'+decode(currentPodcast.cover)}) center`);
     }
     
     return (
@@ -163,7 +163,7 @@ export class Player extends Component {
             </Col>
           </Row>
         </Container>
-        <PlayerBar />
+        {listPodcast && Array.isArray(listPodcast) && listPodcast.length > 0 && currentPodcast && <PlayerBar />}
       </Container>
     );
   }

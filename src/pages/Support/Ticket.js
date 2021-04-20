@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as userActions from '../../redux/user/actions';
 import * as adminActions from '../../redux/admin/actions';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { TextArea } from '../../components/Form/From';
@@ -52,6 +52,9 @@ export class AdminTicket extends Component {
     const { profil } = this.props.user;
     const { ticket } = this.props.admin;
 
+    const url_return = window.location.pathname.split('/')[1] == 'espace-membre' ? '/espace-membre' : '/admin/general'
+    console.log(window.location.pathname.split('/')[1])
+
     return (
       <div className="bg-bagad-heol">
         <Container className="ticket-page">
@@ -72,7 +75,11 @@ export class AdminTicket extends Component {
             <Col>
               <Container>
                 <Row className="block-title pb-1">
-                  <Col><h3 className="title-sec">Gestion du ticket # {this.props.match.params.id}</h3></Col>
+                  <Col className='d-flex'>
+                    <h3 className="title-sec w-100">Gestion du ticket # {this.props.match.params.id}</h3>
+                    <Button className="btn-bagad-heol"
+                      onClick={() => this.props.history.push(url_return)}>Retour</Button>
+                  </Col>
                 </Row>
                 <Row>
                   <Col><p><span className="font-weight-bold">Titre : </span> {ticket.title}</p></Col>

@@ -18,6 +18,7 @@ export function addTicket(args) {
       const doRequest = axios.post(WEB_SERVICE_URL + SUPPORT_ADD_TICKETS_URL, args);
       doRequest.then(
         res => {
+          dispatch(setMessage(res.data))
           dispatch({
             type: ADD_TICKET_SUCCESS,
             data: res.data,

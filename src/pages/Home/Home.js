@@ -14,6 +14,7 @@ import home_6 from '../../assets/img-home/home-6.JPG';
 import home_7 from '../../assets/img-home/home-7.JPG';
 
 import { Container, Row, Col, Image } from 'react-bootstrap';
+import ModalMessage from '../../components/ModalMessage/ModalMessage';
 
 export class Home extends Component {
   static propTypes = {
@@ -36,6 +37,8 @@ export class Home extends Component {
     ]
     let i = Math.floor(Math.random() * 5);
     console.log(i, arrayImg[i])
+
+    const { message } = this.props.message;
 
     return (
       <Container className="home bg-bagad-heol" fluid>
@@ -126,6 +129,7 @@ export class Home extends Component {
             <Col><h2>Les coups de coeurs de la communauté</h2></Col>
           </Row>          
         </Container>
+        {message && Array.isArray(message) && message.length >= 1 && <ModalMessage show={true} />}
       </Container>
     );
   }
@@ -134,6 +138,7 @@ export class Home extends Component {
 function mapStateToProps(state) {
   return {
     podcast: state.podcast,
+    message: state.message
   };
 }
 
